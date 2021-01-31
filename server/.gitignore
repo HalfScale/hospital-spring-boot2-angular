@@ -34,4 +34,3 @@ build/
 .vscode/
 
 ### MISC ###
-src/main/resources/application.properties
