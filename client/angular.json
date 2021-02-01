@@ -15,7 +15,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "outputPath": "dist/client",
             "index": "src/index.html",
@@ -25,16 +25,31 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
+              "src/assets/images/icons/favicon.ico",
               "src/assets"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
+              "src/assets/fonts/Linearicons-Free-v1.0.0/icon-font.min.css",
+              "src/assets/vendor/animate/animate.css",
+              "src/assets/vendor/css-hamburgers/hamburgers.min.css",
+              "src/assets/vendor/animsition/css/animsition.min.css",
+              "src/assets/vendor/select2/select2.min.css",
+              "src/assets/vendor/daterangepicker/daterangepicker.css",
+              "src/assets/css/util.css",
+              "src/assets/css/main.css",
               "src/styles.css"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/popper.js/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./src/assets/vendor/animsition/js/animsition.min.js",
+              "./node_modules/popper.js/dist/umd/popper.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./src/assets/vendor/select2/select2.min.js",
+              "./src/assets/vendor/daterangepicker/moment.min.js",
+              "./src/assets/vendor/daterangepicker/daterangepicker.js",
+              "./src/assets/vendor/countdowntime/countdowntime.js"
             ]
           },
           "configurations": {
