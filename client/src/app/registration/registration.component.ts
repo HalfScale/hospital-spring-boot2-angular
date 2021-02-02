@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../user';
+import { UserDetail } from '../user-detail';
+import { UserRegistrationService } from '../user-registration.service';
 
 @Component({
   selector: 'app-registration',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor() { }
+  user: User;
+
+  constructor(private registrationService: UserRegistrationService) { 
+    let userDetails = new UserDetail();
+    this.user = new User();
+  }
 
   ngOnInit(): void {
+  }
+
+  public register() {
+    // async operation
+    let registerResponse = this.registrationService.registerUser(this.user);
+    registerResponse.subscribe((result) => console.log('registration response', result));
   }
 
 }

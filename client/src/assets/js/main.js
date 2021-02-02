@@ -5,9 +5,7 @@
     /*==================================================================
     [ Focus Contact2 ]*/
     $('.input100').each(function(){
-        $(this).val('1');
         $(this).on('blur', function(){
-            console.log('on blur');
             if($(this).val().trim() != "") {
                 $(this).addClass('has-val');
             }
@@ -20,20 +18,20 @@
   
     /*==================================================================
     [ Validate ]*/
-    var input = $('.validate-input .input100');
+    // var input = $('.validate-input .input100');
 
-    $('.validate-form').on('submit',function(){
-        var check = true;
+    // $('.validate-form').on('submit',function(){
+    //     var check = true;
 
-        for(var i=0; i<input.length; i++) {
-            if(validate(input[i]) == false){
-                showValidate(input[i]);
-                check=false;
-            }
-        }
+    //     for(var i=0; i<input.length; i++) {
+    //         if(validate(input[i]) == false){
+    //             showValidate(input[i]);
+    //             check=false;
+    //         }
+    //     }
 
-        return check;
-    });
+    //     return check;
+    // });
 
 
     $('.validate-form .input100').each(function(){
