@@ -31,10 +31,6 @@ public class User {
 	@Column(name="id")
 	private int id;
 	
-	@NotNull
-	@Min(0)
-	@Max(9999)
-	@Column(name="user_type")
 	private Integer userType;
 	
 	@Column(name="registration_token")

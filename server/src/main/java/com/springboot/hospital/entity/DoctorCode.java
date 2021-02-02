@@ -19,7 +19,7 @@ public class DoctorCode {
 	private int id;
 	
 	@Column(name="doctor_code")
-	private Integer doctorCode;
+	private String doctorCode;
 	
 	@Column(name="specialization")
 	private String specialization;
@@ -47,11 +47,11 @@ public class DoctorCode {
 		this.id = id;
 	}
 
-	public Integer getDoctorCode() {
+	public String getDoctorCode() {
 		return doctorCode;
 	}
 
-	public void setDoctorCode(Integer doctorCode) {
+	public void setDoctorCode(String doctorCode) {
 		this.doctorCode = doctorCode;
 	}
 
