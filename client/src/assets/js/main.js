@@ -36,7 +36,6 @@
 
     $('.validate-form .input100').each(function(){
         $(this).focus(function(){
-            console.log('on focus');
            hideValidate(this);
         });
     });

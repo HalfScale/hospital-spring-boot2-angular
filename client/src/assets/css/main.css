@@ -306,6 +306,7 @@ iframe {
   left: 0;
   top: 20px;
 
+
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
@@ -397,6 +398,18 @@ input.input100 {
 .has-val + .focus-input100 + .label-input100 {
   top: 14px;
   font-size: 13px;
+}
+
+/* ================================================================
+[Radio Button] */
+.radio-gender {
+ font-family: Montserrat-Regular;
+  font-size: 15px;
+  color: #999999;
+  line-height: 0.1;
+  padding-left: 24px;
+  padding-bottom: 7px;
+ 
 }
 
 /*==================================================================

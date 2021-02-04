@@ -9,16 +9,16 @@ import java.util.Map;
 public class Response {
 
 	private int status;
-	private String description;
+	private String message;
 	private Map data;
 	
 	public Response() {
 		
 	}
 	
-	public Response(int status, String description, Map data) {
+	public Response(int status, String message, Map data) {
 		this.status = status;
-		this.description = description;
+		this.message = message;
 		this.data = data;
 	}
 	
@@ -28,11 +28,11 @@ public class Response {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	public String getDescription() {
-		return description;
+	public String getMessage() {
+		return message;
 	}
 	public void setDescription(String description) {
-		this.description = description;
+		this.message = description;
 	}
 	public Map getData() {
 		return data;

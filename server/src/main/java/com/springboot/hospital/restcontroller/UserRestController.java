@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springboot.hospital.dao.UserRepository;
+import com.springboot.hospital.entity.RegistrationForm;
 import com.springboot.hospital.entity.Response;
 import com.springboot.hospital.entity.User;
 import com.springboot.hospital.service.UserService;
@@ -32,7 +34,7 @@ import com.springboot.hospital.util.Utils;
 import com.springboot.hospital.validator.MySequence;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins="*")
 public class UserRestController {
 	
 	Logger logger = LoggerFactory.getLogger(UserRestController.class);
@@ -44,24 +46,26 @@ public class UserRestController {
 	private ApplicationEventPublisher eventPublisher;
 	
 	@PostMapping("/processRegistration")
-	public Response registerUser(HttpServletRequest request,
-			@Validated(MySequence.class) @RequestBody User user, 
-			BindingResult result
-			) throws MethodArgumentNotValidException, IOException {
+	public Response registerUser(
+			@Validated(MySequence.class) @RequestBody RegistrationForm form, 
+			BindingResult result,
+			HttpServletRequest request) throws MethodArgumentNotValidException, IOException {
 		
 		if (result.hasErrors()) {
 			throw new MethodArgumentNotValidException(null, result);
 		}
 		
-		ObjectMapper mapper = new ObjectMapper();
-		String json = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);
-		logger.info("request body {}", json);
-//		userService.registerNewUserAccount(user, httpEntity);
+		User savedUser = userService.registerNewUserAccount(form);
 		
 		String appUrl = request.getContextPath();
 //		eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, request.getLocale(), appUrl));
 		
-		return Utils.<User>generateResponse(0, "Registration successful!", user);
+		return Utils.<User>generateResponse(0, "Registration successful!", savedUser);
+	}
+	
+	@PostMapping("/testPost")
+	public Response testPost() throws Exception {
+		throw new MethodArgumentNotValidException(null, null);
 	}
 	
 	@GetMapping("/registration/confirm/{token}/**")
@@ -95,7 +99,7 @@ public class UserRestController {
 	}
 	
 	@GetMapping("/users")
-	public Response getUsers() {
+	public Response getUsers() throws Exception{
 		List<User> users = userService.findAll();
 		return Utils.<List<User>>generateResponse(0, "Query successful!", users);
 	}

@@ -25,6 +25,12 @@ import com.springboot.hospital.validator.Extended;
 @Entity
 @Table(name="user_details")
 public class UserDetail {
+	
+	public static class Gender{
+		public static final int MALE = 1;
+		public static final int FEMALE = 2;
+		public static final int OTHERS = 3;
+	}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

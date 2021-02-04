@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { LazyLoaderService } from './lazy-loader.service';
+import { LazyLoaderService } from './services/lazy-loader.service';
 
 declare var Lazy: any;
 

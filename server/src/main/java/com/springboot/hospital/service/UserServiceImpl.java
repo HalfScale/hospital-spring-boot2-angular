@@ -8,11 +8,13 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.springboot.hospital.dao.DoctorCodeRepository;
 import com.springboot.hospital.dao.UserRepository;
+import com.springboot.hospital.entity.DoctorCode;
+import com.springboot.hospital.entity.RegistrationForm;
 import com.springboot.hospital.entity.User;
 import com.springboot.hospital.entity.UserDetail;
 import com.springboot.hospital.restcontroller.UserRestController;
@@ -24,6 +26,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private DoctorCodeRepository doctorCodeRepository;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -39,35 +44,46 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User registerNewUserAccount(User user, HttpEntity entity) {
-		logger.info("Process registration: {}", user.toString());
-		logger.info("hospitalCode", entity.getBody());
+	public User registerNewUserAccount(RegistrationForm form) {
+		logger.info("Process registration: {}", form.toString());
+		
+		User user = new User();
+		UserDetail userDetail = new UserDetail();
 		
 		String token = generateToken();
 		
 		user.setRegistrationToken(token);
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setEmail(form.getEmail());
+		user.setPassword(passwordEncoder.encode(form.getPassword()));
 		user.setCreated(LocalDateTime.now());
 		user.setModified(LocalDateTime.now());
+		user.setUserType(User.Type.PATIENT);
 		
-		UserDetail userDetail = user.getUserDetail();
-		userDetail.setUser(user);
+		userDetail.setFirstName(form.getFirstName());
+		userDetail.setLastName(form.getLastName());
+		userDetail.setMobileNo(form.getMobileNo());
+		userDetail.setGender(form.getGender());
 		userDetail.setCreated(LocalDateTime.now());
 		userDetail.setModified(LocalDateTime.now());
 		
-		// Check the hospital code that is registered
-		// Query the hospital code and assign it to the designated user detail.
-		// and set the user type as 2
-		// else if there is no hospital cde set userType to 3 (patient)
-		userDetail.getDoctorCodeId();
-//		user.setUserType(userType);
+		Optional<DoctorCode> doctorCode = doctorCodeRepository.findByDoctorCode(form.getHospitalCode());
+		
+		if (doctorCode.isPresent()) {
+			userDetail.setDoctorCodeId(doctorCode.get().getId());
+			user.setUserType(User.Type.DOCTOR);
+		}
+		
+		user.setUserDetail(userDetail);
+		userDetail.setUser(user);
+		
 		
 		logger.info("Before saving: {}", user.toString());
-		
-		return null;
+		userRepository.save(user);
+		return user;
 	}
 	
-	private boolean emailExist(String email) {
+	@Override
+	public boolean isEmailAlreadyInUse(String email) {
 		return userRepository.findByEmail(email).isPresent();
 	}
 
