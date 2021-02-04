@@ -3,8 +3,8 @@
         <div class="wrap-login100">
             <form class="login100-form validate-form">
                 <span class="login100-form-title p-b-43">
-                  Hospital Name
-                  <br>
+                    Hospital Name
+                    <br>
                     Register
                 </span>
 
@@ -12,51 +12,85 @@
                 <div class="alert-message">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                     Invalid details
-                  </div>
-                
-                
-                <div class="wrap-input100 validate-input" data-validate = "First Name is required">
-                    <input [(ngModel)]="user.userDetail.firstName" class="input100" type="text" name="fname">
+                </div>
+
+
+                <div class="wrap-input100 validate-input" data-validate="First Name is required">
+                    <input [(ngModel)]="registrationForm.firstName" class="input100" type="text" name="fname">
                     <span class="focus-input100"></span>
                     <span class="label-input100">First Name</span>
                 </div>
-                
+
                 <div class="error-message">
-                      <span>Required Field</span>
+                    <span>{{registrationFormError.firstName}}</span>
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="Last Name is required">
-                    <input [(ngModel)]="user.userDetail.lastName" class="input100" type="text" name="lname">
+                    <input [(ngModel)]="registrationForm.lastName" class="input100" type="text" name="lname">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Last Name</span>
                 </div>
-                
+
+                <div class="error-message">
+                    <span>{{registrationFormError.lastName}}</span>
+                </div>
+
+                <div class="wrap-input100">
+                    <span class="label-input100">Gender:</span>
+                    <div class="radio-gender">
+                        <label><input type="radio" name="optradio" [checked]="registrationForm.gender == '1'" (click)="setGender('1')">Male</label>
+                    </div>
+                    <div class="radio-gender">
+                        <label><input type="radio" name="optradio" [checked]="registrationForm.gender == '2'" (click)="setGender('2')">Female</label>
+                    </div>
+                    <div class="radio-gender">
+                        <label><input type="radio" name="optradio" [checked]="registrationForm.gender == '3'" (click)="setGender('3')">Others</label>
+                    </div>
+                </div>
+
                 <div class="wrap-input100 validate-input" data-validate="Email is required">
-                    <input [(ngModel)]="user.email" class="input100" type="email" name="email">
+                    <input [(ngModel)]="registrationForm.email" class="input100" type="email" name="email">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Email Address</span>
                 </div>
 
+                <div class="error-message">
+                    <span>{{registrationFormError.email}}</span>
+                </div>
+
                 <div class="wrap-input100 validate-input" data-validate="Mobile no. is required">
-                    <input [(ngModel)]="user.userDetail.mobileNo" class="input100" type="number" name="mobile">
+                    <input [(ngModel)]="registrationForm.mobileNo" class="input100" type="number" name="mobile">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Mobile No.</span>
                 </div>
-        
+
+                <div class="error-message">
+                    <span>{{registrationFormError.mobileNo}}</span>
+                </div>
+
                 <div class="wrap-input100 validate-input" data-validate="Password is required">
-                    <input [(ngModel)]="user.password" class="input100" type="password" name="password">
+                    <input [(ngModel)]="registrationForm.password" class="input100" type="password" name="password">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Password</span>
                 </div>
-                
+
+                <div class="error-message">
+                    <span>{{registrationFormError.password}}</span>
+                </div>
+
                 <div class="wrap-input100 validate-input" data-validate="Confirm Password is required">
-                    <input class="input100" type="password" name="confirm password">
+                    <input [(ngModel)]="registrationForm.confirmPassword" class="input100" type="password"
+                        name="confirm password">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Confirm Password</span>
                 </div>
-                
+
+                <div class="error-message">
+                    <span>{{registrationFormError.confirmPassword}}</span>
+                </div>
+
                 <div class="wrap-input100">
-                    <input [(ngModel)]="user.hospitalCode" class="input100" type="text" name="code">
+                    <input [(ngModel)]="registrationForm.hospitalCode" class="input100" type="text" name="code">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Hospital Code</span>
                 </div>
@@ -64,21 +98,21 @@
                 <div class="wrap-input100">
                     <span class="label-input100">Terms of Agreement</span>
                 </div>
-                
+
                 <div class="terms-of-agreement">
                     <textarea class="form-control no-gray" id="terms" rows="5" readonly="readonly">
                        Terms of Agreement Content  
                     </textarea>
 
-                                        
+
                 </div>
 
                 <div class="contact100-form-checkbox">
-                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-                        <label class="label-checkbox100" for="ckb1">
-                            Remember me
-                        </label>
-                    </div>
+                    <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                    <label class="label-checkbox100" for="ckb1">
+                        Remember me
+                    </label>
+                </div>
 
 
                 <div class="container-register100-form-btn">
@@ -86,11 +120,11 @@
                         REGISTER
                     </button>
                 </div>
-                
+
                 <div class="text-center p-t-46 p-b-20">
                     <div>
                         <a href="#register" class="txt1">
-                            GO BACK TO LOGIN 
+                            GO BACK TO LOGIN
                         </a>
                     </div>
                 </div>

@@ -25,6 +25,12 @@ import com.springboot.hospital.validator.Extended;
 @Entity
 @Table(name="user")
 public class User {
+	
+	public static class Type {
+		public static final int ADMIN = 1;
+		public static final int DOCTOR = 2;
+		public static final int PATIENT = 3;
+	}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
