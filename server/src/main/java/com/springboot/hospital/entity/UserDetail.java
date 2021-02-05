@@ -20,7 +20,6 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.springboot.hospital.validator.Extended;
 
 @Entity
 @Table(name="user_details")
@@ -51,7 +50,6 @@ public class UserDetail {
 	private String lastName;
 	
 	@Pattern(regexp = ".*(^[0-9]+$)", message = "Invalid Mobile No")
-	@Size(min = 11, max = 13, message = "Mobile No. should be 11-13 digits", groups = Extended.class)
 	@NotBlank(message="Mobile No. is Required")
 	@Column(name="mobile_no")
 	private String mobileNo;
