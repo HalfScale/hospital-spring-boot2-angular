@@ -22,14 +22,14 @@ export class RegistrationComponent implements OnInit {
 
   public register() {
     this.registrationFormError = {}; // set errors as empty
-
+    console.log('registrationForm', this.registrationForm);
     let registerResponse = this.registrationService.registerUser(this.registrationForm);
     registerResponse.subscribe({
       next: data => {
         console.log('response', data);
       },
       error: error => {
-        // console.log('error', error.error.data);
+        console.log('error', error.error.data);
         const errorData = error.error.data;
         Object.keys(errorData).forEach(key => {
           this.registrationFormError[key] = errorData[key];

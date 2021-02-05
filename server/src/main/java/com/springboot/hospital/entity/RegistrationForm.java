@@ -5,8 +5,16 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.springboot.hospital.annotation.FieldsValueMatch;
+import com.springboot.hospital.annotation.UniqueEmail;
 import com.springboot.hospital.validator.Extended;
 
+@FieldsValueMatch(
+	message = "Password are not equal",
+	field = "password",
+	fieldMatch = "confirmPassword",
+	groups = Extended.class
+)
 public class RegistrationForm {
 	
 	@NotBlank(message="First Name is Required")
@@ -17,6 +25,7 @@ public class RegistrationForm {
 	
 	@NotBlank(message = "Email is Required")
 	@Email(message="Invalid email format", groups = Extended.class)
+	@UniqueEmail(message="Email is already in use", groups = Extended.class)
 	private String email;
 	
 	@Pattern(regexp = ".*(^[0-9]+$)", message = "Invalid Mobile No")
