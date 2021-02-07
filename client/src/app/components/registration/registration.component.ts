@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RegistrationForm } from 'src/app/entities/registration-form';
 import { UserRegistrationService } from '../../services/user-registration.service';
 
@@ -7,28 +8,46 @@ import { UserRegistrationService } from '../../services/user-registration.servic
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent {
 
   registrationForm: RegistrationForm;
   registrationFormError: any;
+  termsAndAgreementFlag: boolean;
+  hasValidationError: boolean;
+  termsAndAgreementMessage: string;
 
-  constructor(private registrationService: UserRegistrationService) { 
+  constructor(private registrationService: UserRegistrationService,
+    private router: Router) { 
     this.registrationForm = new RegistrationForm();
     this.registrationFormError = {};
+    this.hasValidationError = false;
+    this.termsAndAgreementFlag = false;
+    this.termsAndAgreementMessage = "";
   }
 
-  ngOnInit(): void {
+  private initializeForm() {
+    this.registrationFormError = {};
+    this.hasValidationError = false;
+    this.termsAndAgreementMessage = "";
+    console.log('Form Initialized!');
   }
 
   public register() {
-    this.registrationFormError = {}; // set errors as empty
-    console.log('registrationForm', this.registrationForm);
-    let registerResponse = this.registrationService.registerUser(this.registrationForm);
-    registerResponse.subscribe({
+    this.initializeForm();
+    let registrationResponse = this.registrationService.registerUser(this.registrationForm);
+
+    if(!this.termsAndAgreementFlag) { 
+      this.termsAndAgreementMessage = "Please check Terms and Agreement to Register";
+      return;
+    }
+
+    registrationResponse.subscribe({
       next: data => {
-        console.log('response', data);
+        console.log('successful redirection');
+        this.router.navigate(['home']);
       },
       error: error => {
+        this.hasValidationError = true;
         console.log('error', error.error.data);
         const errorData = error.error.data;
         Object.keys(errorData).forEach(key => {
@@ -43,4 +62,8 @@ export class RegistrationComponent implements OnInit {
     this.registrationForm.gender = gender;
   }
 
+  public tickTermsAndAgreement() {
+    // console.log('setting terms and agreement')
+    this.termsAndAgreementFlag = !this.termsAndAgreementFlag;
+  }
 }

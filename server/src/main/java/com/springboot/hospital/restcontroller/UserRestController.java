@@ -2,19 +2,21 @@ package com.springboot.hospital.restcontroller;
 
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,17 +26,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springboot.hospital.dao.UserRepository;
 import com.springboot.hospital.entity.RegistrationForm;
 import com.springboot.hospital.entity.Response;
 import com.springboot.hospital.entity.User;
+import com.springboot.hospital.handler.OnRegistrationCompleteEvent;
 import com.springboot.hospital.service.UserService;
 import com.springboot.hospital.util.Utils;
-import com.springboot.hospital.validator.MySequence;
+import com.springboot.hospital.validator.HospitalValidationSequence;
 
 @RestController
-@CrossOrigin(origins="*")
 public class UserRestController {
 	
 	Logger logger = LoggerFactory.getLogger(UserRestController.class);
@@ -43,33 +43,34 @@ public class UserRestController {
 	private UserService userService;
 	
 	@Autowired
+	private Validator validator;
+	
+	@Autowired
 	private ApplicationEventPublisher eventPublisher;
 	
 	@PostMapping("/processRegistration")
 	public Response registerUser(
-			@Validated(MySequence.class) @RequestBody RegistrationForm form, 
+			@RequestBody RegistrationForm form, 
 			BindingResult result,
 			HttpServletRequest request) throws MethodArgumentNotValidException, IOException {
 		
-		if (result.hasErrors()) {
-			throw new MethodArgumentNotValidException(null, result);
+		logger.info("form request: {}", form.toString());
+		
+		Set<ConstraintViolation<RegistrationForm>> violations  = validator.validate(form, HospitalValidationSequence.class);
+		if (!violations.isEmpty()) {
+			throw new ConstraintViolationException(violations);
 		}
 		
 		User savedUser = userService.registerNewUserAccount(form);
 		
 		String appUrl = request.getContextPath();
-//		eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, request.getLocale(), appUrl));
+		eventPublisher.publishEvent(new OnRegistrationCompleteEvent(savedUser, request.getLocale(), appUrl));
 		
 		return Utils.<User>generateResponse(0, "Registration successful!", savedUser);
 	}
 	
-	@PostMapping("/testPost")
-	public Response testPost() throws Exception {
-		throw new MethodArgumentNotValidException(null, null);
-	}
-	
 	@GetMapping("/registration/confirm/{token}/**")
-	public Response confirmUser(HttpServletRequest request) {
+	public void confirmUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String message = "Unsuccessful confirmation";
 		
 		String requestURL = request.getRequestURL().toString();
@@ -80,7 +81,7 @@ public class UserRestController {
 		
 		
 		if (user == null) {
-			return Utils.generateResponse(1, message, null);
+			response.sendRedirect("http://localhost:4200/home");
 		}
 		
 		logger.info("User: {}, Successful verification", user.getUserDetail().getFirstName());
@@ -89,7 +90,7 @@ public class UserRestController {
 		userService.save(user);
 		message = "Successful confirmation of email";
 		
-		return Utils.<User>generateResponse(0, message, user);
+		response.sendRedirect("http://localhost:4200/home");
 	}
 	
 	@PutMapping("/users/edit")
