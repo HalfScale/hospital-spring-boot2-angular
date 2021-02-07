@@ -3,6 +3,8 @@ package com.springboot.hospital.handler;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.ConstraintViolationException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,22 @@ public class GlobalExceptionHandler {
 		ex.getBindingResult().getAllErrors().forEach(error -> {
 			String fieldName = ((FieldError) error).getField();
 			String errorMessage = error.getDefaultMessage();
+			errors.put(fieldName, errorMessage);
+		});
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(new Response(1, "Validation error", errors));
+	}
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	@ResponseBody
+	public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex) {
+		logger.info("handling constraint validation exceptions");
+		Map<String, String> errors = new HashMap<>();
+		ex.getConstraintViolations().forEach(error -> {
+			String fieldName = error.getPropertyPath().toString();
+			String errorMessage = error.getMessageTemplate();
 			errors.put(fieldName, errorMessage);
 		});
 		

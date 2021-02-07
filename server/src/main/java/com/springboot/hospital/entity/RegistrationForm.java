@@ -4,16 +4,20 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.validation.groups.Default;
 
 import com.springboot.hospital.annotation.FieldsValueMatch;
 import com.springboot.hospital.annotation.UniqueEmail;
+import com.springboot.hospital.annotation.ValidHospitalCode;
 import com.springboot.hospital.validator.Extended;
+import com.springboot.hospital.validator.SecondLevel;
+import com.springboot.hospital.validator.ThirdLevel;
 
 @FieldsValueMatch(
-	message = "Password are not equal",
-	field = "password",
-	fieldMatch = "confirmPassword",
-	groups = Extended.class
+	message = "Password do not match",
+	field = "confirmPassword",
+	fieldMatch = "password",
+	groups = ThirdLevel.class
 )
 public class RegistrationForm {
 	
@@ -24,22 +28,26 @@ public class RegistrationForm {
 	private String lastName;
 	
 	@NotBlank(message = "Email is Required")
-	@Email(message="Invalid email format", groups = Extended.class)
-	@UniqueEmail(message="Email is already in use", groups = Extended.class)
+	@Email(message="Invalid email format", groups = SecondLevel.class)
+	@UniqueEmail(message="Email is already in use",groups = ThirdLevel.class)
 	private String email;
 	
-	@Pattern(regexp = ".*(^[0-9]+$)", message = "Invalid Mobile No")
-	@Size(min = 11, max = 13, message = "Mobile No. should be 11-13 digits", groups = Extended.class)
+	@NotBlank(message = "Mobile No. is Required")
+	@Pattern(regexp = ".*(^[0-9]+$)", message = "Invalid Mobile No", groups = SecondLevel.class)
+	@Size(min = 11, max = 13, message = "Mobile No. should be 11-13 digits", groups = ThirdLevel.class)
 	private String mobileNo;
 	
 	private int gender;
 	
 	@NotBlank(message="Password is Required")
+	@Size(min = 6, max = 15, message = "Password should be 6-15 characters", groups = SecondLevel.class)
 	private String password;
 	
 	@NotBlank(message="Confirm password is Required")
+	@Size(min = 6, max = 15, message = "Password should be 6-15 characters", groups = SecondLevel.class)
 	private String confirmPassword;
 	
+	@ValidHospitalCode
 	private String hospitalCode;
 	
 	public String getFirstName() {

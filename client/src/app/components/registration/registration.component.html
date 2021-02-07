@@ -9,7 +9,7 @@
                 </span>
 
 
-                <div class="alert-message">
+                <div *ngIf="hasValidationError" class="alert-message">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                     Invalid details
                 </div>
@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="Mobile no. is required">
-                    <input [(ngModel)]="registrationForm.mobileNo" class="input100" type="number" name="mobile">
+                    <input [(ngModel)]="registrationForm.mobileNo" class="input100" type="text" name="mobile">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Mobile No.</span>
                 </div>
@@ -95,6 +95,10 @@
                     <span class="label-input100">Hospital Code</span>
                 </div>
 
+                <div class="error-message">
+                    <span>{{registrationFormError.hospitalCode}}</span>
+                </div>
+
                 <div class="wrap-input100">
                     <span class="label-input100">Terms of Agreement</span>
                 </div>
@@ -108,12 +112,15 @@
                 </div>
 
                 <div class="contact100-form-checkbox">
-                    <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                    <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me" (change)="tickTermsAndAgreement()">
                     <label class="label-checkbox100" for="ckb1">
-                        Remember me
+                        I agree to the Terms and Agreement
                     </label>
                 </div>
 
+                <div class="error-message">
+                    <span>{{termsAndAgreementMessage}}</span>
+                </div>
 
                 <div class="container-register100-form-btn">
                     <button class="login100-form-btn" (click)="register()">

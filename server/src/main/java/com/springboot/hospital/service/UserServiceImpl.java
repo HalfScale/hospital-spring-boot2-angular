@@ -84,7 +84,13 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public boolean isEmailAlreadyInUse(String email) {
-		return userRepository.findByEmail(email).isPresent();
+		Optional<User> queriedUser = userRepository.findByEmail(email);
+		
+		if (queriedUser.isPresent() && !queriedUser.get().isDeleted()) { 
+			return true; 
+		}
+		
+		return false;
 	}
 
 	@Override
