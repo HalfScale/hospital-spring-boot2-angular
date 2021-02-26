@@ -9,7 +9,7 @@ import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Component;
 
 import com.springboot.hospital.annotation.FieldsValueMatch;
-import com.springboot.hospital.restcontroller.UserRestController;
+import com.springboot.hospital.controller.UserRestController;
 
 @Component
 public class FieldsValueMatchValidator implements ConstraintValidator<FieldsValueMatch, Object>{

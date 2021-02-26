@@ -7,8 +7,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 
+import com.springboot.hospital.controller.UserRestController;
 import com.springboot.hospital.entity.User;
-import com.springboot.hospital.restcontroller.UserRestController;
 import com.springboot.hospital.service.EmailService;
 
 @Component

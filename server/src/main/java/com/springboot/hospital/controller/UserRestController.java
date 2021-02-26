@@ -1,4 +1,4 @@
-package com.springboot.hospital.restcontroller;
+package com.springboot.hospital.controller;
 
 
 import java.io.IOException;
@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springboot.hospital.entity.AuthenticationResponse;
+import com.springboot.hospital.entity.LoginRequest;
 import com.springboot.hospital.entity.RegistrationForm;
 import com.springboot.hospital.entity.Response;
 import com.springboot.hospital.entity.User;
@@ -33,6 +35,7 @@ import com.springboot.hospital.handler.OnRegistrationCompleteEvent;
 import com.springboot.hospital.service.UserService;
 import com.springboot.hospital.util.Utils;
 import com.springboot.hospital.validator.HospitalValidationSequence;
+
 
 @RestController
 public class UserRestController {
@@ -71,7 +74,6 @@ public class UserRestController {
 	
 	@GetMapping("/registration/confirm/{token}/**")
 	public void confirmUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		String message = "Unsuccessful confirmation";
 		
 		String requestURL = request.getRequestURL().toString();
 		String token = requestURL.split("/confirm/")[1];
@@ -88,10 +90,14 @@ public class UserRestController {
 		
 		user.setConfirmed(true);
 		userService.save(user);
-		message = "Successful confirmation of email";
 		
-		response.sendRedirect("http://localhost:4200/home");
+		response.sendRedirect("http://localhost:4200/registration/confirm");
 	}
+	
+	@PostMapping("/auth/login")
+	public AuthenticationResponse login(@Validated(HospitalValidationSequence.class) @RequestBody LoginRequest loginRequest) {
+		return userService.login(loginRequest);
+	} 
 	
 	@PutMapping("/users/edit")
 	public Response updateUser(@RequestBody User user) throws Exception{

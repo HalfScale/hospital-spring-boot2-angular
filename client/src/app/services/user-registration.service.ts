@@ -8,7 +8,7 @@ import { User } from '../entities/user';
 const httpOptions = {
   headers: new HttpHeaders({ 
     'Accept':'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   })
 };
 
@@ -17,12 +17,12 @@ const httpOptions = {
 })
 export class UserRegistrationService {
 
-  private apiUrl = "http://localhost:8090/hospital/processRegistration";
+  private apiUrl = "http://localhost:8070/hospital";
 
   constructor(private http: HttpClient) { }
 
   public registerUser(registrationForm: RegistrationForm): Observable<any> {
-    return this.http.post<any>(this.apiUrl, registrationForm, httpOptions);
+    return this.http.post<any>(this.apiUrl + "/processRegistration", registrationForm, httpOptions);
   }
   
 }
