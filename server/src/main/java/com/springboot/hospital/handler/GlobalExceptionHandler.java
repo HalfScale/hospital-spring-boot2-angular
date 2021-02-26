@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.springboot.hospital.controller.UserRestController;
 import com.springboot.hospital.entity.Response;
-import com.springboot.hospital.restcontroller.UserRestController;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

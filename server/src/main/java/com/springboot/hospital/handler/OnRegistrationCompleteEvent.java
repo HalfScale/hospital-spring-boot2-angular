@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEvent;
 
+import com.springboot.hospital.controller.UserRestController;
 import com.springboot.hospital.entity.User;
-import com.springboot.hospital.restcontroller.UserRestController;
 
 public class OnRegistrationCompleteEvent extends ApplicationEvent {
 	

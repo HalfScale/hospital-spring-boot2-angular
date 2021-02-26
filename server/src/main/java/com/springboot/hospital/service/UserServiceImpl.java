@@ -8,16 +8,23 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.springboot.hospital.controller.UserRestController;
 import com.springboot.hospital.dao.DoctorCodeRepository;
 import com.springboot.hospital.dao.UserRepository;
+import com.springboot.hospital.entity.AuthenticationResponse;
 import com.springboot.hospital.entity.DoctorCode;
+import com.springboot.hospital.entity.LoginRequest;
 import com.springboot.hospital.entity.RegistrationForm;
 import com.springboot.hospital.entity.User;
 import com.springboot.hospital.entity.UserDetail;
-import com.springboot.hospital.restcontroller.UserRestController;
+import com.springboot.hospital.security.JwtProvider;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -26,12 +33,14 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserRepository userRepository;
-	
 	@Autowired
 	private DoctorCodeRepository doctorCodeRepository;
-	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	@Autowired
+	private JwtProvider jwtProvider;
 
 	@Override
 	public void save(User user) {
@@ -82,6 +91,18 @@ public class UserServiceImpl implements UserService{
 		return user;
 	}
 	
+	
+	@Override
+	public AuthenticationResponse login(LoginRequest loginRequest) {
+		Authentication authenticate = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authenticate);
+		
+		String token = jwtProvider.generateToken(authenticate);
+		
+		return new AuthenticationResponse(token, loginRequest.getEmail());
+	}
+
 	@Override
 	public boolean isEmailAlreadyInUse(String email) {
 		Optional<User> queriedUser = userRepository.findByEmail(email);

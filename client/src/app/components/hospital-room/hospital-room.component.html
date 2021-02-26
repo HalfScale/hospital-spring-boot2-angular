@@ -1,0 +1,35 @@
+<div style="text-align:center">
+    <h1>Hospital Name</h1>
+    <h4>List of Rooms</h4>
+    
+    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Room Code</th>
+          <th scope="col">Room Name</th>
+          <th scope="col">Created By</th>
+          <th scope="col">Updated By</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of collection.data | paginate: config">
+          <th scope="row">{{item.roomCode}}</th>
+          <td>{{item.roomName}}</td>
+          <td>{{item.createdBy}}</td>
+          <td>{{item.updatedBy}}</td>
+          <td *ngIf="item.status == 0"><span class="badge badge-success">Available</span></td>
+          <td *ngIf="item.status == 1"><span class="badge badge-warning">Under Reservation</span></td>
+          <td *ngIf="item.status == 3"><span class="badge badge-danger">Not Available</span></td>
+          <td>
+            <button type="button" class="btn btn-danger">Delete</button>
+            <button type="button" class="btn btn-info">View</button>
+            <button type="button" class="btn btn-warning">Edit</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+  </div>

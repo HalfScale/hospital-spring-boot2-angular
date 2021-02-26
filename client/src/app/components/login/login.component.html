@@ -16,20 +16,27 @@
 
 
                 <div class="wrap-input100 validate-input" data-validate="Email is required">
-                    <input class="input100" type="email" name="email">
+                    <input [(ngModel)]="loginForm.email" class="input100" type="email" name="email">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Email Address</span>
                 </div>
 
+                <div class="error-message">
+                    <span>{{loginFormError.email}}</span>
+                </div>
+
                 <div class="wrap-input100 validate-input" data-validate="Password is required">
-                    <input class="input100" type="password" name="password">
+                    <input [(ngModel)]="loginForm.password" class="input100" type="password" name="password">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Password</span>
                 </div>
 
+                <div class="error-message">
+                    <span>{{loginFormError.password}}</span>
+                </div>
 
                 <div class="container-register100-form-btn">
-                    <button class="login100-form-btn">
+                    <button class="login100-form-btn" (click)="login()">
                         Login
                     </button>
                 </div>
