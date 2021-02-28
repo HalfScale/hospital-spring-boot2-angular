@@ -33,7 +33,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 		String sender = "HospitalApp.com <auto-confirm@hospital.com>";
 		String subject = "Registration Confirmation";
 		String confirmationUrl = event.getAppUrl() + "/registration/confirm/" + user.getRegistrationToken();
-		String message = "Pleace click the link below to confirm your email address. \n" + "http://localhost:8090" + confirmationUrl;
+		String message = "Pleace click the link below to confirm your email address. \n" + confirmationUrl;
 		
 		logger.info("Message: {} sent to: {}", message, user.getEmail());
 		emailService.sendSimpleMessage(recipeintAddress, sender, subject, message);
