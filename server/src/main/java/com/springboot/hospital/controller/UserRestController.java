@@ -66,7 +66,8 @@ public class UserRestController {
 		
 		User savedUser = userService.registerNewUserAccount(form);
 		
-		String appUrl = request.getContextPath();
+		String appUrl = getAppUrl(request);
+		logger.info("server name {}", request.getServerName() + request.getServerPort());
 		eventPublisher.publishEvent(new OnRegistrationCompleteEvent(savedUser, request.getLocale(), appUrl));
 		
 		return Utils.<User>generateResponse(0, "Registration successful!", savedUser);
@@ -120,5 +121,14 @@ public class UserRestController {
 		}
 		
 		return Utils.<User>generateResponse(0, "Query successful!", user.get());
+	}
+	
+	private String getAppUrl(HttpServletRequest request) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(request.getScheme() + "://");
+		sb.append(request.getServerName() + ":");
+		sb.append(request.getServerPort());
+		sb.append(request.getContextPath());
+		return sb.toString();
 	}
 }
