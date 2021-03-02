@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -74,25 +76,25 @@ public class UserRestController {
 	}
 	
 	@GetMapping("/registration/confirm/{token}/**")
-	public void confirmUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	public ResponseEntity confirmUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		
 		String requestURL = request.getRequestURL().toString();
 		String token = requestURL.split("/confirm/")[1];
 		
 		logger.info("Catched token: {}", token);
-		User user = userService.getVerificationToken(token);
+		Optional<User> user = userService.getVerificationToken(token);
 		
 		
-		if (user == null) {
-			response.sendRedirect("http://localhost:4200/home");
+		if (!user.isPresent() || user.get().isConfirmed()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		
-		logger.info("User: {}, Successful verification", user.getUserDetail().getFirstName());
+		logger.info("User: {}, Successful verification", user.get().getUserDetail().getFirstName());
 		
-		user.setConfirmed(true);
-		userService.save(user);
+		user.get().setConfirmed(true);
+		userService.save(user.get());
 		
-		response.sendRedirect("http://localhost:4200/registration/confirm");
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	@PostMapping("/auth/login")

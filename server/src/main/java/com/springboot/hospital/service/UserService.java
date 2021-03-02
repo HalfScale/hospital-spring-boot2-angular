@@ -17,7 +17,7 @@ public interface UserService {
 	Optional<User> findById(int id);
 	String generateToken();
 	User registerNewUserAccount (RegistrationForm form);
-	User getVerificationToken(String token);
+	Optional<User> getVerificationToken(String token);
 	boolean isEmailAlreadyInUse(String email);
 	AuthenticationResponse login(LoginRequest loginRequest);
 }

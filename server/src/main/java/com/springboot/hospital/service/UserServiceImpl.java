@@ -115,8 +115,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User getVerificationToken(String token) {
-		return userRepository.findByRegistrationToken(token).get();
+	public Optional<User> getVerificationToken(String token) {
+		return userRepository.findByRegistrationToken(token);
 	}
 
 	@Override

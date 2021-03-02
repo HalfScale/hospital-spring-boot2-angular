@@ -12,6 +12,7 @@ import { ConfirmRegistrationComponent } from './components/confirm-registration/
 import {NgxWebstorageModule} from 'ngx-webstorage';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HospitalRoomComponent } from './components/hospital-room/hospital-room.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HospitalRoomComponent } from './components/hospital-room/hospital-room.
     LoginComponent,
     HomeComponent,
     ConfirmRegistrationComponent,
-    HospitalRoomComponent
+    HospitalRoomComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
