@@ -9,7 +9,7 @@
                 </span>
 
 
-                <div class="alert-message">
+                <div *ngIf="hasValidationError" class="alert-message">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                     Invalid Email or Password.
                 </div>

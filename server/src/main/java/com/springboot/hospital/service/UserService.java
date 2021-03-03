@@ -20,4 +20,5 @@ public interface UserService {
 	Optional<User> getVerificationToken(String token);
 	boolean isEmailAlreadyInUse(String email);
 	AuthenticationResponse login(LoginRequest loginRequest);
+	boolean isValidToken(User user);
 }

@@ -18,28 +18,19 @@ export class ConfirmRegistrationComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    
-    this.route.url.subscribe(segments => {
-      segments.forEach((segment, i) => {
-        if(i > 1) {
-          this.token += segment.path + '/'
-        }
-      });
+    const token = window.location.pathname.substring(22);
+    console.log('token', token);
+
+    let confirmationResponse = this.confirmRegistrationService.validateToken(token);
+
+    confirmationResponse.subscribe({
+      next: data => {
+        console.log('success page');
+      },
+      error: error => {
+        this.router.navigate(['404-page-not-found']);
+      }
     });
-    // const routeParams = this.route.snapshot.paramMap;
-    // const token = routeParams.get('token');
-
-    // console.log('tokenFromRoute', token);
-    // let confirmationResponse = this.confirmRegistrationService.validateToken(token);
-
-    // confirmationResponse.subscribe({
-    //   next: data => {
-    //     console.log('success page');
-    //   },
-    //   error: error => {
-    //     this.router.navigate(['404-page-not-found']);
-    //   }
-    // });
   }
 
 }

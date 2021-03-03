@@ -81,18 +81,20 @@ public class UserRestController {
 		String requestURL = request.getRequestURL().toString();
 		String token = requestURL.split("/confirm/")[1];
 		
-		logger.info("Catched token: {}", token);
-		Optional<User> user = userService.getVerificationToken(token);
+		logger.info("Token request: {}", token);
+		Optional<User> queriedUser = userService.getVerificationToken(token);
+		User user = queriedUser.isPresent() ? queriedUser.get() : null;
 		
 		
-		if (!user.isPresent() || user.get().isConfirmed()) {
+		if (user == null || user.isConfirmed() || user.isDeleted() || !userService.isValidToken(user)) {
+			logger.info("Invalid token");
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		
-		logger.info("User: {}, Successful verification", user.get().getUserDetail().getFirstName());
+		logger.info("User: {}, Successful verification", user.getUserDetail().getFirstName());
 		
-		user.get().setConfirmed(true);
-		userService.save(user.get());
+		user.setConfirmed(true);
+		userService.save(user);
 		
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}

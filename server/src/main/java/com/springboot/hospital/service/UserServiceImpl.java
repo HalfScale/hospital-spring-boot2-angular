@@ -161,5 +161,10 @@ public class UserServiceImpl implements UserService{
 		logger.info("User data: {}", persistedUser);
 		return persistedUser;
 	}
-	
+
+	@Override
+	public boolean isValidToken(User user) {
+		int result = LocalDateTime.now().compareTo(user.getCreated().plusDays(1));
+		return result == -1;
+	}
 }
