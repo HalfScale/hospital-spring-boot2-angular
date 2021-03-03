@@ -38,7 +38,7 @@ public class MyUserDetailsService implements UserDetailsService {
 		
 		
 		return new org.springframework.security.core.userdetails.User(storedUser.getEmail(), storedUser.getPassword(), 
-				storedUser.isConfirmed(), true, true, true, getAuthorities("USER"));
+				storedUser.isConfirmed(), !storedUser.isDeleted(), true, true, getAuthorities("USER"));
 	}
 	
 	private Collection<? extends GrantedAuthority> getAuthorities(String role) {

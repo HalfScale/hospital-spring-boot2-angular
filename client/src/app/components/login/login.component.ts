@@ -11,14 +11,17 @@ export class LoginComponent {
 
   loginForm: LoginForm;
   loginFormError: any;
+  hasValidationError: boolean;
 
   constructor(private loginService: LoginService) { 
     this.loginForm = new LoginForm();
     this.loginFormError = {};
+    this.hasValidationError = false;
   }
 
   private initializeForm() {
     this.loginFormError = {};
+    this.hasValidationError = false;
   }
 
   public login() {
@@ -36,6 +39,7 @@ export class LoginComponent {
       },
       error: error => {
         console.log('error response', error);
+        this.hasValidationError = true;
         const errorData = error.error.data;
         Object.keys(errorData).forEach(key => {
           this.loginFormError[key] = errorData[key];
