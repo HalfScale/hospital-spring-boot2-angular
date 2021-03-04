@@ -25,6 +25,9 @@ public class MyUserDetailsService implements UserDetailsService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private DoctorCodeService doctorCodeService;
 
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -33,8 +36,12 @@ public class MyUserDetailsService implements UserDetailsService {
 		
 		Optional<User> user = userRepository.findByEmail(userName);
 		
-		//Custom message for exceptions is handles in src/main/resources
-		User storedUser = user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + userName));
+		//Custom message for exceptions is handled in src/main/resources
+		User storedUser = user.orElseThrow(() -> new UsernameNotFoundException("Invalid Username and Password"));
+		
+		if(!isUserValid(storedUser)) {
+			throw new UsernameNotFoundException("Invalid Username and Password");
+		}
 		
 		
 		return new org.springframework.security.core.userdetails.User(storedUser.getEmail(), storedUser.getPassword(), 
@@ -43,6 +50,24 @@ public class MyUserDetailsService implements UserDetailsService {
 	
 	private Collection<? extends GrantedAuthority> getAuthorities(String role) {
 		return Collections.singletonList(new SimpleGrantedAuthority(role));
+	}
+	
+	private boolean isUserValid(User user) {
+		
+		if(!User.Type.ALL.contains(user.getUserType())) {
+			return false;
+		}
+		
+		Integer doctorCode = user.getUserDetail().getDoctorCodeId();
+		if( doctorCode != null) {
+			return doctorCodeService.hasCode(String.valueOf(doctorCode));
+		}
+		
+		if(user.getUserDetail() == null ) {
+			return false;
+		}
+		
+		return true;
 	}
 
 }
