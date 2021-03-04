@@ -1,6 +1,8 @@
 package com.springboot.hospital.entity;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,12 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -29,6 +26,7 @@ public class User {
 		public static final int ADMIN = 1;
 		public static final int DOCTOR = 2;
 		public static final int PATIENT = 3;
+		public static final List<Integer> ALL = Arrays.asList(ADMIN, DOCTOR, PATIENT);
 	}
 
 	@Id
