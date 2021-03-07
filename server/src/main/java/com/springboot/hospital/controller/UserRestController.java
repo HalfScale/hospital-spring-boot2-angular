@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 import javax.validation.Validator;
 
 import org.slf4j.Logger;
@@ -28,12 +29,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springboot.hospital.dto.RefreshTokenRequest;
 import com.springboot.hospital.entity.AuthenticationResponse;
 import com.springboot.hospital.entity.LoginRequest;
 import com.springboot.hospital.entity.RegistrationForm;
 import com.springboot.hospital.entity.Response;
 import com.springboot.hospital.entity.User;
 import com.springboot.hospital.handler.OnRegistrationCompleteEvent;
+import com.springboot.hospital.service.RefreshTokenService;
 import com.springboot.hospital.service.UserService;
 import com.springboot.hospital.util.Utils;
 import com.springboot.hospital.validator.HospitalValidationSequence;
@@ -52,6 +55,9 @@ public class UserRestController {
 	
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
+	
+	@Autowired
+	private RefreshTokenService refreshTokenService;
 	
 	@PostMapping("/processRegistration")
 	public Response registerUser(
@@ -102,7 +108,18 @@ public class UserRestController {
 	@PostMapping("/auth/login")
 	public AuthenticationResponse login(@Validated(HospitalValidationSequence.class) @RequestBody LoginRequest loginRequest) {
 		return userService.login(loginRequest);
-	} 
+	}
+	
+	@PostMapping("/refresh/token")
+	public AuthenticationResponse refreshTokens(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+		return userService.refreshToken(refreshTokenRequest);
+	}
+	
+	@PostMapping("/logout")
+	public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+		refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
+		return ResponseEntity.status(HttpStatus.OK).body("Refresh Token Deleted Successfully!");
+	}
 	
 	@PutMapping("/users/edit")
 	public Response updateUser(@RequestBody User user) throws Exception{

@@ -13,6 +13,8 @@ import {NgxWebstorageModule} from 'ngx-webstorage';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HospitalRoomComponent } from './components/hospital-room/hospital-room.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
     HttpClientModule,
     FormsModule,
     NgxWebstorageModule.forRoot(),
-    NgxPaginationModule
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
   ],

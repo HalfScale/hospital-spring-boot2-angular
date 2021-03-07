@@ -3,6 +3,9 @@ package com.springboot.hospital.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
+import com.springboot.hospital.dto.RefreshTokenRequest;
 import com.springboot.hospital.entity.AuthenticationResponse;
 import com.springboot.hospital.entity.LoginRequest;
 import com.springboot.hospital.entity.RegistrationForm;
@@ -21,4 +24,5 @@ public interface UserService {
 	boolean isEmailAlreadyInUse(String email);
 	AuthenticationResponse login(LoginRequest loginRequest);
 	boolean isValidToken(User user);
+	AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest);
 }
