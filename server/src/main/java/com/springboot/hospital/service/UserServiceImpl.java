@@ -1,5 +1,6 @@
 package com.springboot.hospital.service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.springboot.hospital.controller.UserRestController;
 import com.springboot.hospital.dao.DoctorCodeRepository;
 import com.springboot.hospital.dao.UserRepository;
+import com.springboot.hospital.dto.RefreshTokenRequest;
 import com.springboot.hospital.entity.AuthenticationResponse;
 import com.springboot.hospital.entity.DoctorCode;
 import com.springboot.hospital.entity.LoginRequest;
@@ -41,6 +43,8 @@ public class UserServiceImpl implements UserService{
 	private AuthenticationManager authenticationManager;
 	@Autowired
 	private JwtProvider jwtProvider;
+	@Autowired
+	private RefreshTokenService refreshTokenService;
 
 	@Override
 	public void save(User user) {
@@ -99,8 +103,19 @@ public class UserServiceImpl implements UserService{
 		SecurityContextHolder.getContext().setAuthentication(authenticate);
 		
 		String token = jwtProvider.generateToken(authenticate);
+		String refreshToken = refreshTokenService.generateRefreshToken().getToken();
 		
-		return new AuthenticationResponse(token, loginRequest.getEmail());
+		Instant expiresAt = Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis());
+		return new AuthenticationResponse(token, loginRequest.getEmail(), refreshToken, expiresAt);
+	}
+
+	@Override
+	public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
+		refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
+		String token = jwtProvider.generateTokenWithEmail(refreshTokenRequest.getEmail());
+		
+		Instant expiresAt = Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis());
+		return new AuthenticationResponse(token, refreshTokenRequest.getEmail(), refreshTokenRequest.getRefreshToken(), expiresAt);
 	}
 
 	@Override

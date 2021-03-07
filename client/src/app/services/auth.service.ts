@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
 import { JwtAuthResponse } from '../entities/jwt-auth-response';
 import { LoginForm } from '../entities/login-form';
+import { GlobalVariable } from '../globals'
 
 
 const httpOptions = {
@@ -17,9 +18,9 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
-
-  private apiUrl = "http://localhost:8070/hospital";
+export class AuthService {
+  
+  private apiUrl = GlobalVariable.BASE_API_URL;
 
   constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }
 
@@ -30,5 +31,9 @@ export class LoginService {
         this.localStorageService.store("email", data.email);
         return true;
       }));
+  }
+
+  public getJwtToken() {
+    return this.localStorageService.retrieve('authToken');
   }
 }

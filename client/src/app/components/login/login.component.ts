@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { LoginForm } from 'src/app/entities/login-form';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,9 @@ export class LoginComponent {
   loginFormError: any;
   hasValidationError: boolean;
 
-  constructor(private loginService: LoginService) { 
+  constructor(private authService: AuthService,
+    private toastr: ToastrService,
+    private router: Router) { 
     this.loginForm = new LoginForm();
     this.loginFormError = {};
     this.hasValidationError = false;
@@ -27,12 +31,13 @@ export class LoginComponent {
   public login() {
     this.initializeForm();
     console.log('login data', this.loginForm);
-    let loginResponse = this.loginService.loginUser(this.loginForm);
+    let loginResponse = this.authService.loginUser(this.loginForm);
 
     loginResponse.subscribe({
       next: data => {
         if(data) {
-          console.log('success login', data);
+          this.router.navigateByUrl('/');
+          this.toastr.success('Login Successful!');
         }else {
           console.log('error login', data);
         }

@@ -29,6 +29,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/ngx-toastr/toastr.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
               "src/assets/fonts/Linearicons-Free-v1.0.0/icon-font.min.css",
@@ -42,14 +43,14 @@
               "src/styles.css"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.min.js",
-              "./src/assets/vendor/animsition/js/animsition.min.js",
-              "./node_modules/popper.js/dist/umd/popper.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "./src/assets/vendor/select2/select2.min.js",
-              "./src/assets/vendor/daterangepicker/moment.min.js",
-              "./src/assets/vendor/daterangepicker/daterangepicker.js",
-              "./src/assets/vendor/countdowntime/countdowntime.js"
+              "node_modules/jquery/dist/jquery.slim.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/popper.js/dist/umd/popper.min.js",
+              "src/assets/vendor/animsition/js/animsition.min.js",
+              "src/assets/vendor/select2/select2.min.js",
+              "src/assets/vendor/daterangepicker/moment.min.js",
+              "src/assets/vendor/daterangepicker/daterangepicker.js",
+              "src/assets/vendor/countdowntime/countdowntime.js"
             ]
           },
           "configurations": {
