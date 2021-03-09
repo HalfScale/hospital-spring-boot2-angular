@@ -121,29 +121,6 @@ public class UserRestController {
 		return ResponseEntity.status(HttpStatus.OK).body("Refresh Token Deleted Successfully!");
 	}
 	
-	@PutMapping("/users/edit")
-	public Response updateUser(@RequestBody User user) throws Exception{
-		User persistedUser = userService.update(user);
-		return Utils.<User>generateResponse(0, "User update successful", persistedUser);
-	}
-	
-	@GetMapping("/users")
-	public Response getUsers() throws Exception{
-		List<User> users = userService.findAll();
-		return Utils.<List<User>>generateResponse(0, "Query successful!", users);
-	}
-	
-	@GetMapping("/users/{id}")
-	public Response getUser(@PathVariable int id) throws Exception{
-		Optional<User> user = userService.findById(id);
-		
-		if (!user.isPresent()) {
-			throw new Exception("User is not present");
-		}
-		
-		return Utils.<User>generateResponse(0, "Query successful!", user.get());
-	}
-	
 	private String getAppUrl(HttpServletRequest request) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(request.getScheme() + "://");
