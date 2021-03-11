@@ -1,0 +1,20 @@
+<div class="navbar">
+    <a class="active" routerLink="/">Home</a>
+    <a routerLink="/doctors">Doctors</a>
+    <a routerLink="/appointments">Appointments</a>
+    <a routerLink="/reservations">Reservations</a>
+    <div class="dropdown">
+        <!-- Display only if user is logged in -->
+        <button *ngIf="isLoggedIn" class="dropbtn">{{username}}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div *ngIf="isLoggedIn" class="dropdown-content">
+            <a href="#messages">Messages</a>
+            <a href="#notifications">Notifications</a>
+            <a href="#settings">Account Settings</a>
+            <a href="#logout">Logout</a>
+        </div>
+        <!-- Display if user is not logged in -->
+        <a *ngIf="!isLoggedIn" routerLink="/users/login">Login</a>
+    </div>
+</div>
