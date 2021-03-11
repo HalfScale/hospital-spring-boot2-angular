@@ -22,7 +22,7 @@ import com.springboot.hospital.entity.Response;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	
-	Logger logger = LoggerFactory.getLogger(UserRestController.class);
+	Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseBody

@@ -1,24 +1,4 @@
-<div class="navbar">
-    <a class="active" routerLink="/">Home</a>
-    <a routerLink="/doctors">Doctors</a>
-    <a routerLink="/appointments">Appointments</a>
-    <a routerLink="/reservations">Reservations</a>
-    <div class="dropdown">
-        <!-- Display only if user is logged in -->
-        <button class="dropbtn">Username
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-            <a href="#messages">Messages</a>
-            <a href="#notifications">Notifications</a>
-            <a href="#settings">Account Settings</a>
-            <a href="#logout">Logout</a>
-        </div>
-        <!-- Display if user is not logged in -->
-        <a routerLink="/users/login">Login</a>
-    </div>
-</div>
-
+<app-header></app-header>
 <div class="wrap-login100">
 
     <span class="login100-form-title p-b-43">

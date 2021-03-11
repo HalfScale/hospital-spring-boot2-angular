@@ -15,6 +15,9 @@ import { HospitalRoomComponent } from './components/hospital-room/hospital-room.
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { HeaderComponent } from './components/header/header.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { UpdateForgotPasswordComponent } from './components/update-forgot-password/update-forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { ToastrModule } from 'ngx-toastr';
     HomeComponent,
     ConfirmRegistrationComponent,
     HospitalRoomComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    HeaderComponent,
+    ForgotPasswordComponent,
+    UpdateForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
