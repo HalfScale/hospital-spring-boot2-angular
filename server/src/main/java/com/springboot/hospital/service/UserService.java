@@ -3,8 +3,7 @@ package com.springboot.hospital.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
+import com.springboot.hospital.dto.PasswordResetNotificationRequest;
 import com.springboot.hospital.dto.RefreshTokenRequest;
 import com.springboot.hospital.entity.AuthenticationResponse;
 import com.springboot.hospital.entity.LoginRequest;
@@ -25,4 +24,7 @@ public interface UserService {
 	AuthenticationResponse login(LoginRequest loginRequest);
 	boolean isValidToken(User user);
 	AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest);
+	void passwordReset(PasswordResetNotificationRequest passwordResetNotifRequest);
+	Optional<User> findByResetPassToken(String token);
+	boolean isValidResetPassToken(String token);
 }

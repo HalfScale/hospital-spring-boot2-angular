@@ -84,6 +84,12 @@
 		    <version>2.6</version>
 		</dependency>
 		
+		<!-- Thymeleaf -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+		
 		<!-- JWT dependencies -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>

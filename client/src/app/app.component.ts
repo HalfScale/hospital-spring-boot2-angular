@@ -10,7 +10,7 @@ declare var Lazy: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'client';
+  title = 'Apollo Hospital';
 
   constructor(private readonly svc: LazyLoaderService,
     @Inject(DOCUMENT) private readonly document:any) {}

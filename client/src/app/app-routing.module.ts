@@ -26,7 +26,7 @@ const routes: Routes = [
   },
   {path: 'users/login', component: LoginComponent},
   {path: 'password/reset', component: ForgotPasswordComponent},
-  {path: 'update-forgot-password', component: UpdateForgotPasswordComponent},
+  {path: 'password/update/:token', component: UpdateForgotPasswordComponent},
   {path: 'users/info', component: UserInfoComponent},
   {path: 'reservations', component: ReservationComponent},
   {path: 'hospital_rooms', component: HospitalRoomComponent},
