@@ -9,26 +9,32 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.springboot.hospital.controller.UserController;
 import com.springboot.hospital.dao.DoctorCodeRepository;
 import com.springboot.hospital.dao.UserRepository;
+import com.springboot.hospital.dto.PasswordResetNotificationRequest;
 import com.springboot.hospital.dto.RefreshTokenRequest;
 import com.springboot.hospital.entity.AuthenticationResponse;
 import com.springboot.hospital.entity.DoctorCode;
 import com.springboot.hospital.entity.LoginRequest;
+import com.springboot.hospital.entity.NotificationEmail;
 import com.springboot.hospital.entity.RegistrationForm;
 import com.springboot.hospital.entity.User;
 import com.springboot.hospital.entity.UserDetail;
+import com.springboot.hospital.exceptions.HospitalException;
 import com.springboot.hospital.security.JwtProvider;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService{
 	
 	Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -45,6 +51,10 @@ public class UserServiceImpl implements UserService{
 	private JwtProvider jwtProvider;
 	@Autowired
 	private RefreshTokenService refreshTokenService;
+	@Autowired
+	private MailService mailService;
+	@Value("${mail.config.url}")
+	private String appUrl;
 
 	@Override
 	public void save(User user) {
@@ -155,41 +165,56 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User update(User user) throws Exception{
-		Optional<User> queriedUser = userRepository.findById(user.getId());
-		
-		if (!queriedUser.isPresent()) {
-			throw new Exception("User not found during update");
-		}
-		
-		User persistedUser = queriedUser.get();
-		UserDetail persistedUserDetail = persistedUser.getUserDetail();
-		
-		// Update User's UserDetail
-		UserDetail userDetail = user.getUserDetail();
-		persistedUserDetail.setFirstName(userDetail.getFirstName());
-		persistedUserDetail.setLastName(userDetail.getLastName());
-		persistedUserDetail.setMobileNo(userDetail.getMobileNo());
-		persistedUserDetail.setGender(userDetail.getGender());
-		persistedUserDetail.setAddress(userDetail.getAddress());
-		persistedUserDetail.setBirthDate(userDetail.getBirthDate());
-		persistedUserDetail.setAddress(userDetail.getAddress());
-		persistedUserDetail.setModified(LocalDateTime.now());
-		
-		// Update User
-		persistedUser.setEmail(user.getEmail());
-		persistedUser.setPassword(passwordEncoder.encode(user.getPassword()));
-		persistedUser.setModified(LocalDateTime.now());
-		
-		userRepository.save(persistedUser);
-		
-		logger.info("User data: {}", persistedUser);
-		return persistedUser;
-	}
-
-	@Override
 	public boolean isValidToken(User user) {
 		int result = LocalDateTime.now().compareTo(user.getCreated().plusDays(1));
 		return result == -1;
+	}
+
+	@Override
+	public void passwordReset(PasswordResetNotificationRequest passwordResetNotifRequest) {
+		String subject = "Hospital password reset notification";
+		String token = generatePasswordResetToken();
+		String url = appUrl + "/api/auth/password/update/" + token;
+		String message = "Please click the link below to reset your password \n" + url;
+		
+		mailService.sendMail(new NotificationEmail(subject, passwordResetNotifRequest.getEmail(), message));
+		
+		// Make sure to intercept first if the email is valid or not.
+		Optional<User> storedUser = userRepository.findByEmail(passwordResetNotifRequest.getEmail());
+		storedUser.orElseThrow(() -> new HospitalException("Invalid email!"));
+		
+		User user = storedUser.get();
+		user.setResetPassToken(token);
+		user.setDateTimePasswordReset(LocalDateTime.now());
+		userRepository.save(user);
+	}
+	
+	@Override
+	public boolean isValidResetPassToken(String token) {
+		Optional<User> storedUser = userRepository.findByResetPassToken(token);
+		if(!storedUser.isPresent()) { return false; }
+		
+		User user = storedUser.get();
+		
+		if(user.isDeleted()) { return false; }
+		
+		int tokenStatus = LocalDateTime.now().compareTo(user.getDatetimePasswordReset().plusDays(1));
+		if(tokenStatus > 0) { return false; }
+		return true;
+	}
+	
+	@Override
+	public Optional<User> findByResetPassToken(String token) {
+		return userRepository.findByResetPassToken(token);
+	}
+	
+	@Override
+	public User update(User user) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	private String generatePasswordResetToken() {
+		return UUID.randomUUID().toString();
 	}
 }

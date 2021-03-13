@@ -30,7 +30,7 @@ export class AuthService {
   constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }
 
   public loginUser(loginForm: LoginForm): Observable<boolean>{
-    return this.http.post<JwtAuthResponse>(this.apiUrl + "/auth/login", loginForm, httpOptions)
+    return this.http.post<JwtAuthResponse>(this.apiUrl + "/api/auth/login", loginForm, httpOptions)
       .pipe(map(data => {
         console.log('login data', data);
         this.localStorageService.store("authToken", data.authToken);
@@ -41,6 +41,18 @@ export class AuthService {
         this.localStorageService.store("name", data.name);
         return true;
       }));
+  }
+
+  public sendResetPasswordNotif(emailString: string): Observable<any> {
+    const requestBody = {
+      email: emailString
+    };
+
+    return this.http.post(this.apiUrl + '/api/auth/password/reset/notification', requestBody);
+  }
+
+  public updatePassword(payload: any) : Observable<any> {
+    return this.http.post(this.apiUrl + '/api/auth/password/reset', payload);
   }
 
   public logout() {
