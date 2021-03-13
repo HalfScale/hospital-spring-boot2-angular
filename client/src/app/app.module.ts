@@ -18,6 +18,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { HeaderComponent } from './components/header/header.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { UpdateForgotPasswordComponent } from './components/update-forgot-password/update-forgot-password.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReservationComponent } from './components/reservation/reservation.component';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { UpdateForgotPasswordComponent } from './components/update-forgot-passwo
     ErrorPageComponent,
     HeaderComponent,
     ForgotPasswordComponent,
-    UpdateForgotPasswordComponent
+    UpdateForgotPasswordComponent,
+    ReservationComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +44,8 @@ import { UpdateForgotPasswordComponent } from './components/update-forgot-passwo
     NgxWebstorageModule.forRoot(),
     NgxPaginationModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NgbModule
   ],
   providers: [
   ],

@@ -8,6 +8,8 @@ public class AuthenticationResponse {
 	private String email;
 	private String refreshToken;
 	private Instant expiresAt;
+	private Integer role;
+	private String name;
 	
 	public AuthenticationResponse(String authToken, String username, String refreshToken, Instant expiresAt) {
 		this.authToken = authToken;
@@ -44,6 +46,21 @@ public class AuthenticationResponse {
 	public void setExpiresAt(Instant expiresAt) {
 		this.expiresAt = expiresAt;
 	}
-	
+
+	public Integer getRole() {
+		return role;
+	}
+
+	public void setRole(Integer role) {
+		this.role = role;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 }

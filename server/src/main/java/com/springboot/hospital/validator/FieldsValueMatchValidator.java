@@ -9,12 +9,12 @@ import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Component;
 
 import com.springboot.hospital.annotation.FieldsValueMatch;
-import com.springboot.hospital.controller.UserRestController;
+import com.springboot.hospital.controller.UserController;
 
 @Component
 public class FieldsValueMatchValidator implements ConstraintValidator<FieldsValueMatch, Object>{
 	
-	Logger logger = LoggerFactory.getLogger(UserRestController.class);
+	Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	private String field;
     private String fieldMatch;

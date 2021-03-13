@@ -43,9 +43,9 @@ import com.springboot.hospital.validator.HospitalValidationSequence;
 
 
 @RestController
-public class UserRestController {
+public class UserController {
 	
-	Logger logger = LoggerFactory.getLogger(UserRestController.class);
+	Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private UserService userService;

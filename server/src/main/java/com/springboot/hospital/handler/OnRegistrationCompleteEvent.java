@@ -6,12 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEvent;
 
-import com.springboot.hospital.controller.UserRestController;
+import com.springboot.hospital.controller.UserController;
 import com.springboot.hospital.entity.User;
 
 public class OnRegistrationCompleteEvent extends ApplicationEvent {
 	
-	Logger logger = LoggerFactory.getLogger(UserRestController.class);
+	Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	private static final long serialVersionUID = 1L;
 	private String appUrl;

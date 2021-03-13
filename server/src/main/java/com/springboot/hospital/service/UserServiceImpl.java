@@ -16,7 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.springboot.hospital.controller.UserRestController;
+import com.springboot.hospital.controller.UserController;
 import com.springboot.hospital.dao.DoctorCodeRepository;
 import com.springboot.hospital.dao.UserRepository;
 import com.springboot.hospital.dto.RefreshTokenRequest;
@@ -31,7 +31,7 @@ import com.springboot.hospital.security.JwtProvider;
 @Service
 public class UserServiceImpl implements UserService{
 	
-	Logger logger = LoggerFactory.getLogger(UserRestController.class);
+	Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -105,8 +105,18 @@ public class UserServiceImpl implements UserService{
 		String token = jwtProvider.generateToken(authenticate);
 		String refreshToken = refreshTokenService.generateRefreshToken().getToken();
 		
+		Optional<User> storedUser = userRepository.findByEmail(loginRequest.getEmail());
 		Instant expiresAt = Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis());
-		return new AuthenticationResponse(token, loginRequest.getEmail(), refreshToken, expiresAt);
+		
+		AuthenticationResponse authResponse = new AuthenticationResponse(token, loginRequest.getEmail(), refreshToken, expiresAt);
+		
+		if (storedUser.isPresent()) {
+			User user = storedUser.get();
+			authResponse.setRole(user.getUserType());
+			authResponse.setName(user.getUserDetail().getFirstName() + " " + user.getUserDetail().getLastName());
+		}
+		
+		return authResponse;
 	}
 
 	@Override
