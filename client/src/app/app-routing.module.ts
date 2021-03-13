@@ -7,7 +7,9 @@ import { HomeComponent } from './components/home/home.component';
 import { HospitalRoomComponent } from './components/hospital-room/hospital-room.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { ReservationComponent } from './components/reservation/reservation.component';
 import { UpdateForgotPasswordComponent } from './components/update-forgot-password/update-forgot-password.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -25,7 +27,9 @@ const routes: Routes = [
   {path: 'users/login', component: LoginComponent},
   {path: 'password/reset', component: ForgotPasswordComponent},
   {path: 'update-forgot-password', component: UpdateForgotPasswordComponent},
-  {path: 'hospitalroom', component: HospitalRoomComponent},
+  {path: 'users/info', component: UserInfoComponent},
+  {path: 'reservations', component: ReservationComponent},
+  {path: 'hospital_rooms', component: HospitalRoomComponent},
   {path: '**', component: ErrorPageComponent}
 ];
 

@@ -7,14 +7,14 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 
-import com.springboot.hospital.controller.UserRestController;
+import com.springboot.hospital.controller.UserController;
 import com.springboot.hospital.entity.User;
 import com.springboot.hospital.service.EmailService;
 
 @Component
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
 	
-	Logger logger = LoggerFactory.getLogger(UserRestController.class);
+	Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private EmailService emailService;

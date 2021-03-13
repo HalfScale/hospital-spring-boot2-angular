@@ -19,12 +19,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.springboot.hospital.controller.UserRestController;
+import com.springboot.hospital.controller.UserController;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	
-	Logger logger = LoggerFactory.getLogger(UserRestController.class);
+	Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private JwtProvider jwtProvider;

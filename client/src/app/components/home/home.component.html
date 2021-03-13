@@ -3,197 +3,227 @@
 
     <span class="login100-form-title p-b-43">
         Hospital Name
+        <br>
+        Home
     </span>
 </div>
 
-<div class="image-gallery">
-    <ul>
-        <li>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-            <img src='assets/images/1.jpg' />
-        </li>
+<div class="container">
+    <div class="mySlides">
+        <img class="home-img" src="assets/images/1.jpg" style="width:50%">
+    </div>
 
-        <li>
-            <span>Cras suscipit tempus mi, sed commodo urna aliquam sed.</span>
-            <img src='assets/images/2.jpg' />
-        </li>
+    <div class="mySlides">
+        <img class="home-img" src="assets/images/2.jpg" style="width:50%">
+    </div>
 
-        <li>
-            <span>Cras suscipit tempus mi, sed commodo urna aliquam sed.</span>
-            <img src='assets/images/3.jpg' />
-        </li>
+    <div class="mySlides">
+        <img class="home-img" src="assets/images/3.jpg" style="width:50%">
+    </div>
 
-        <li>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-            <img src='assets/images/4.jpg' />
-        </li>
+    <div class="mySlides">
+        <img class="home-img" src="assets/images/bg-01.jpg" style="width:50%">
+    </div>
 
-        <li>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-            <img src='assets/images/5.jpg' />
-        </li>
+    <div class="mySlides">
+        <img class="home-img" src="assets/images/4.jpg" style="width:50%">
+    </div>
 
-        <li>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-            <img src='assets/images/bg-01.jpg' />
-        </li>
-        <li>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
-            <img src='assets/images/6.jpg' />
-        </li>
-    </ul>
-</div>
+    <div class="mySlides">
+        <img class="home-img" src="assets/images/5.jpg" style="width:50%">
+    </div>
 
-<div class="page-content">
-    <div class="board-of-directors">
-        <h3>Board of Directors</h3>
 
-        <div class="card-row">
-            <div class="card-column">
-                <div class="card">
-                    <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                    <p>Anne Lee</p>
-                    <p>Chief Executive</p>
-                </div>
-            </div>
+    <a class="prev" onclick="plusSlides(-1)">❮</a>
+    <a class="next" onclick="plusSlides(1)">❯</a>
 
-            <div class="card-column">
-                <div class="card">
-                    <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                    <p>Jean Doe</p>
-                    <p>Medical Director</p>
-                </div>
-            </div>
+    <div class="caption-container">
+        <p id="caption">Sample Text</p>
+    </div>
 
-            <div class="card-column">
-                <div class="card">
-                    <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                    <p>Kenneth Anderson</p>
-                    <p>Director of Nursing</p>
-                </div>
-            </div>
 
-            <div class="card-column">
-                <div class="card">
-                    <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                    <p>Lyla Smith</p>
-                    <p>Director of Finance</p>
-                </div>
-            </div>
 
-            <div class="card-column">
-                <div class="card">
-                    <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                    <p>Anne Lee</p>
-                    <p>Chief Executive</p>
-                </div>
-            </div>
 
-            <div class="card-column">
-                <div class="card">
-                    <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                    <p>Jean Doe</p>
-                    <p>Medical Director</p>
-                </div>
-            </div>
-
-            <div class="card-column">
-                <div class="card">
-                    <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                    <p>Kenneth Anderson</p>
-                    <p>Director of Nursing</p>
-                </div>
-            </div>
-
-            <div class="card-column">
-                <div class="card">
-                    <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                    <p>Lyla Smith</p>
-                    <p>Director of Finance</p>
-                </div>
-            </div>
+    <div class="row">
+        <div class="column">
+            <!-- max of 6 images only if u make it 7 the next image will append below, for now max of 6 only, i'll fix this after some pages for now 
+        not major issue hehe sorry bb :*-->
+            <img class="home-img-col" src="assets/images/1.jpg" style="width:100%" onclick="currentSlide(1)"
+                alt="Sample image text/description 1">
+        </div>
+        <div class="column">
+            <img class="home-img-col" src="assets/images/2.jpg" style="width:100%" onclick="currentSlide(2)"
+                alt="Sample image text/description 2">
+        </div>
+        <div class="column">
+            <img class="home-img-col" src="assets/images/3.jpg" style="width:100%" onclick="currentSlide(3)"
+                alt="Sample image text/description 3">
+        </div>
+        <div class="column">
+            <img class="home-img-col" src="assets/images/bg-01.jpg" style="width:100%" onclick="currentSlide(4)"
+                alt="Sample image text/description 4">
+        </div>
+        <div class="column">
+            <img class="home-img-col" src="assets/images/4.jpg" style="width:100%" onclick="currentSlide(5)"
+                alt="Sample image text/description 4">
+        </div>
+        <div class="column">
+            <img class="home-img-col" src="assets/images/5.jpg" style="width:100%" onclick="currentSlide(6)"
+                alt="Sample image text/description 4">
         </div>
     </div>
 
-    <div class="about-us">
-        <h3>About Us</h3>
+    <div class="page-content">
+        <div class="board-of-directors">
+            <h3>Board of Directors</h3>
 
-        <p>
-            Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus lorem
-            leo, quis tincidunt mauris congue in.
-            Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-            orci ac justo tincidunt fringilla.
-            Phasellus mattis vel massa at gravida.
-            Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus lorem
-            leo, quis tincidunt mauris congue in.
-            Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-            orci ac justo tincidunt fringilla.
-            Phasellus mattis vel massa at gravida.
-            Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus lorem
-            leo, quis tincidunt mauris congue in.
-            Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-            orci ac justo tincidunt fringilla.
-            Phasellus mattis vel massa at gravida.
-            Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus lorem
-            leo, quis tincidunt mauris congue in.
-            Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-            orci ac justo tincidunt fringilla.
-            Phasellus mattis vel massa at gravida.
-            Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus lorem
-            leo, quis tincidunt mauris congue in.
-            Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-            orci ac justo tincidunt fringilla.
-            Phasellus mattis vel massa at gravida.
-            Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus lorem
-            leo, quis tincidunt mauris congue in.
-            Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-            orci ac justo tincidunt fringilla.
-            Phasellus mattis vel massa at gravida.
-            Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus lorem
-            leo, quis tincidunt mauris congue in.
-            Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-            orci ac justo tincidunt fringilla.
-            Phasellus mattis vel massa at gravida.
-            Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus lorem
-            leo, quis tincidunt mauris congue in.
-            Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-            orci ac justo tincidunt fringilla.
-            Phasellus mattis vel massa at gravida.
-            Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus lorem
-            leo, quis tincidunt mauris congue in.
-            Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-            orci ac justo tincidunt fringilla.
-            Phasellus mattis vel massa at gravida.
-            Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus lorem
-            leo, quis tincidunt mauris congue in.
-            Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-            orci ac justo tincidunt fringilla.
-            Phasellus mattis vel massa at gravida.
-            Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus lorem
-            leo, quis tincidunt mauris congue in.
-            Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-            orci ac justo tincidunt fringilla.
-            Phasellus mattis vel massa at gravida.
-            Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus lorem
-            leo, quis tincidunt mauris congue in.
-            Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-            orci ac justo tincidunt fringilla.
-            Phasellus mattis vel massa at gravida.
-        </p>
+            <div class="card-row">
+                <div class="card-column">
+                    <div class="card">
+                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
+                        <p>Anne Lee</p>
+                        <p>Chief Executive</p>
+                    </div>
+                </div>
+
+                <div class="card-column">
+                    <div class="card">
+                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
+                        <p>Jean Doe</p>
+                        <p>Medical Director</p>
+                    </div>
+                </div>
+
+                <div class="card-column">
+                    <div class="card">
+                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
+                        <p>Kenneth Anderson</p>
+                        <p>Director of Nursing</p>
+                    </div>
+                </div>
+
+                <div class="card-column">
+                    <div class="card">
+                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
+                        <p>Lyla Smith</p>
+                        <p>Director of Finance</p>
+                    </div>
+                </div>
+
+                <div class="card-column">
+                    <div class="card">
+                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
+                        <p>Anne Lee</p>
+                        <p>Chief Executive</p>
+                    </div>
+                </div>
+
+                <div class="card-column">
+                    <div class="card">
+                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
+                        <p>Jean Doe</p>
+                        <p>Medical Director</p>
+                    </div>
+                </div>
+
+                <div class="card-column">
+                    <div class="card">
+                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
+                        <p>Kenneth Anderson</p>
+                        <p>Director of Nursing</p>
+                    </div>
+                </div>
+
+                <div class="card-column">
+                    <div class="card">
+                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
+                        <p>Lyla Smith</p>
+                        <p>Director of Finance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-us">
+            <h3>About Us</h3>
+
+            <p>
+                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
+                lorem leo, quis tincidunt mauris congue in.
+                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
+                orci ac justo tincidunt fringilla.
+                Phasellus mattis vel massa at gravida.
+                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
+                lorem leo, quis tincidunt mauris congue in.
+                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
+                orci ac justo tincidunt fringilla.
+                Phasellus mattis vel massa at gravida.
+                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
+                lorem leo, quis tincidunt mauris congue in.
+                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
+                orci ac justo tincidunt fringilla.
+                Phasellus mattis vel massa at gravida.
+                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
+                lorem leo, quis tincidunt mauris congue in.
+                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
+                orci ac justo tincidunt fringilla.
+                Phasellus mattis vel massa at gravida.
+                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
+                lorem leo, quis tincidunt mauris congue in.
+                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
+                orci ac justo tincidunt fringilla.
+                Phasellus mattis vel massa at gravida.
+                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
+                lorem leo, quis tincidunt mauris congue in.
+                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
+                orci ac justo tincidunt fringilla.
+                Phasellus mattis vel massa at gravida.
+                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
+                lorem leo, quis tincidunt mauris congue in.
+                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
+                orci ac justo tincidunt fringilla.
+                Phasellus mattis vel massa at gravida.
+                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
+                lorem leo, quis tincidunt mauris congue in.
+                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
+                orci ac justo tincidunt fringilla.
+                Phasellus mattis vel massa at gravida.
+                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
+                lorem leo, quis tincidunt mauris congue in.
+                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
+                orci ac justo tincidunt fringilla.
+                Phasellus mattis vel massa at gravida.
+                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
+                lorem leo, quis tincidunt mauris congue in.
+                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
+                orci ac justo tincidunt fringilla.
+                Phasellus mattis vel massa at gravida.
+                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
+                lorem leo, quis tincidunt mauris congue in.
+                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
+                orci ac justo tincidunt fringilla.
+                Phasellus mattis vel massa at gravida.
+                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
+                lorem leo, quis tincidunt mauris congue in.
+                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
+                orci ac justo tincidunt fringilla.
+                Phasellus mattis vel massa at gravida.
+            </p>
+
+        </div>
 
     </div>
 
-</div>
-
-<div class="footer">
-    <section id="lab_social_icon_footer">
-        <div class="text-center center-block">
-            <a href="https://www.facebook.com/bootsnipp"><i id="social-fb"
-                    class="fa fa-facebook-square fa-3x social"></i></a>
-            <a href="https://twitter.com/bootsnipp"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
-            <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp"
-                    class="fa fa-google-plus-square fa-3x social"></i></a>
-            <a href="mailto:#"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
-        </div>
-    </section>
-</div>
+    <div class="footer">
+        <section id="lab_social_icon_footer">
+            <div class="text-center center-block">
+                <a href="https://www.facebook.com/bootsnipp" target="_blank"><i id="social-fb"
+                        class="fa fa-facebook-square fa-3x social"></i></a>
+                <a href="https://twitter.com/bootsnipp" target="_blank"><i id="social-tw"
+                        class="fa fa-twitter-square fa-3x social"></i></a>
+                <a href="https://plus.google.com/+Bootsnipp-page" target="_blank"><i id="social-gp"
+                        class="fa fa-google-plus-square fa-3x social"></i></a>
+                <a href="mailto:#"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+            </div>
+        </section>
+    </div>

@@ -14,14 +14,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.springboot.hospital.controller.UserRestController;
+import com.springboot.hospital.controller.UserController;
 import com.springboot.hospital.dao.UserRepository;
 import com.springboot.hospital.entity.User;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 	
-	Logger logger = LoggerFactory.getLogger(UserRestController.class); 
+	Logger logger = LoggerFactory.getLogger(UserController.class); 
 	
 	@Autowired
 	private UserRepository userRepository;

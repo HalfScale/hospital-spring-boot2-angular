@@ -29,7 +29,6 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
               "src/assets/fonts/Linearicons-Free-v1.0.0/icon-font.min.css",
               "src/assets/vendor/animate/animate.css",
@@ -39,8 +38,8 @@
               "src/assets/vendor/daterangepicker/daterangepicker.css",
               "src/assets/css/util.css",
               "src/assets/css/main.css",
-              "src/styles.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "src/styles.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.slim.min.js",
