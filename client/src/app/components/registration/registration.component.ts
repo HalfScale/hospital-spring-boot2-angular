@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { RegistrationForm } from 'src/app/entities/registration-form';
 import { UserRegistrationService } from '../../services/user-registration.service';
 
@@ -17,7 +18,8 @@ export class RegistrationComponent {
   termsAndAgreementMessage: string;
 
   constructor(private registrationService: UserRegistrationService,
-    private router: Router) { 
+    private router: Router,
+    private toastr: ToastrService) { 
     this.registrationForm = new RegistrationForm();
     this.registrationFormError = {};
     this.hasValidationError = false;
@@ -43,8 +45,8 @@ export class RegistrationComponent {
 
     registrationResponse.subscribe({
       next: data => {
-        console.log('successful redirection');
         this.router.navigate(['home']);
+        this.toastr.success('Registration successful. Please check your email!');
       },
       error: error => {
         this.hasValidationError = true;

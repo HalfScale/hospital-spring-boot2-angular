@@ -3,6 +3,7 @@ package com.springboot.hospital.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -11,7 +12,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.springboot.hospital.entity.NotificationEmail;
-import com.springboot.hospital.exceptions.HospitalException;
+import com.springboot.hospital.exception.HospitalException;
 
 @Service
 public class MailService {
@@ -22,13 +23,15 @@ public class MailService {
 	private JavaMailSender mailSender;
 	@Autowired
 	private MailContentBuilder mailContentBuilder;
-
+	@Value("${mail.sender.email}")
+	private String senderEmail;
+	
 	@Async
 	public void sendMail(NotificationEmail notificationEmail) {
 		
 		MimeMessagePreparator messagePreparator = mimeMessage -> {
 			MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-			messageHelper.setFrom("hospital.notification@hospital.com");
+			messageHelper.setFrom(senderEmail);
 			messageHelper.setTo(notificationEmail.getRecipient());
 			messageHelper.setSubject(notificationEmail.getSubject());
 			messageHelper.setText(mailContentBuilder.build(notificationEmail.getBody()));
