@@ -21,7 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
-import com.springboot.hospital.exceptions.HospitalException;
+import com.springboot.hospital.exception.HospitalException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

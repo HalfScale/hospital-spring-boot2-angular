@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.springboot.hospital.dao.RefreshTokenRepository;
 import com.springboot.hospital.entity.RefreshToken;
-import com.springboot.hospital.exceptions.HospitalException;
+import com.springboot.hospital.exception.HospitalException;
 
 @Service
 @Transactional

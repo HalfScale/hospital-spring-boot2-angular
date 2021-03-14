@@ -9,28 +9,9 @@ import { ConfirmRegistrationService } from 'src/app/services/confirm-registratio
 })
 export class ConfirmRegistrationComponent implements OnInit {
 
-  token: string;
-
-  constructor(private route: ActivatedRoute, 
-    private confirmRegistrationService: ConfirmRegistrationService,
-    private router: Router) { 
-      this.token = '';
-    }
+  constructor() {}
 
   ngOnInit(): void {
-    const token = window.location.pathname.substring(22);
-    console.log('token', token);
-
-    let confirmationResponse = this.confirmRegistrationService.validateToken(token);
-
-    confirmationResponse.subscribe({
-      next: data => {
-        console.log('success page');
-      },
-      error: error => {
-        this.router.navigate(['404-page-not-found']);
-      }
-    });
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -13,7 +14,7 @@ export class ForgotPasswordComponent implements OnInit {
   isValid: boolean;
 
   constructor(private authService: AuthService,
-    private toastr: ToastrService) { 
+    private router: Router) { 
     this.email = '';
     this.isValid = true;
   }
@@ -27,7 +28,7 @@ export class ForgotPasswordComponent implements OnInit {
       data => {
         this.isValid = true;
         this.email = '';
-        this.toastr.success('Reset password link sent to your email.');
+        this.router.navigateByUrl('password/reset/success');
       },
       error => {
         this.isValid = false;

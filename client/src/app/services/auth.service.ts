@@ -72,7 +72,7 @@ export class AuthService {
 
   refreshToken() {
 
-    return this.http.post<JwtAuthResponse>(this.apiUrl + '/refresh/token', this.refreshTokenPayload)
+    return this.http.post<JwtAuthResponse>(this.apiUrl + '/api/auth/refresh/token', this.refreshTokenPayload)
       .pipe(tap(response => {
         this.localStorageService.clear('authToken');
         this.localStorageService.clear('expiresAt');

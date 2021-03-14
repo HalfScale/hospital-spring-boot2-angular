@@ -30,7 +30,7 @@ import com.springboot.hospital.entity.NotificationEmail;
 import com.springboot.hospital.entity.RegistrationForm;
 import com.springboot.hospital.entity.User;
 import com.springboot.hospital.entity.UserDetail;
-import com.springboot.hospital.exceptions.HospitalException;
+import com.springboot.hospital.exception.HospitalException;
 import com.springboot.hospital.security.JwtProvider;
 
 @Service
@@ -98,10 +98,14 @@ public class UserServiceImpl implements UserService{
 		
 		user.setUserDetail(userDetail);
 		userDetail.setUser(user);
-		
-		
-		logger.info("Before saving: {}", user.toString());
+
 		userRepository.save(user);
+		
+		// Send email
+		String subject = "Hospital Account Activation";
+		String url = appUrl + "/api/auth/registration/confirm/" + token;
+		String message = "Please click the link below to activate your account \n" + url;
+		mailService.sendMail(new NotificationEmail(subject, form.getEmail(), message));
 		return user;
 	}
 	

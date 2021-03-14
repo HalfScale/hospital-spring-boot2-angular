@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ConfirmRegistrationComponent } from './components/confirm-registration/confirm-registration.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { ForgotPasswordSuccessComponent } from './components/forgot-password-success/forgot-password-success.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { HomeComponent } from './components/home/home.component';
 import { HospitalRoomComponent } from './components/hospital-room/hospital-room.component';
@@ -26,6 +27,7 @@ const routes: Routes = [
   },
   {path: 'users/login', component: LoginComponent},
   {path: 'password/reset', component: ForgotPasswordComponent},
+  {path: 'password/reset/success', component: ForgotPasswordSuccessComponent},
   {path: 'password/update/:token', component: UpdateForgotPasswordComponent},
   {path: 'users/info', component: UserInfoComponent},
   {path: 'reservations', component: ReservationComponent},

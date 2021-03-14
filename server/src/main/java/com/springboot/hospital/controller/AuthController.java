@@ -37,7 +37,6 @@ import com.springboot.hospital.entity.LoginRequest;
 import com.springboot.hospital.entity.RegistrationForm;
 import com.springboot.hospital.entity.Response;
 import com.springboot.hospital.entity.User;
-import com.springboot.hospital.handler.OnRegistrationCompleteEvent;
 import com.springboot.hospital.service.RefreshTokenService;
 import com.springboot.hospital.service.UserService;
 import com.springboot.hospital.util.Utils;
@@ -54,9 +53,6 @@ Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private Validator validator;
-	
-	@Autowired
-	private ApplicationEventPublisher eventPublisher;
 	
 	@Autowired
 	private RefreshTokenService refreshTokenService;
@@ -82,15 +78,11 @@ Logger logger = LoggerFactory.getLogger(UserController.class);
 		
 		User savedUser = userService.registerNewUserAccount(form);
 		
-		String appUrl = getAppUrl(request);
-		logger.info("server name {}", request.getServerName() + request.getServerPort());
-		eventPublisher.publishEvent(new OnRegistrationCompleteEvent(savedUser, request.getLocale(), appUrl));
-		
 		return Utils.<User>generateResponse(0, "Registration successful!", savedUser);
 	}
 	
 	@GetMapping("/registration/confirm/{token}/**")
-	public ResponseEntity confirmUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	public void confirmUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		
 		String requestURL = request.getRequestURL().toString();
 		String token = requestURL.split("/confirm/")[1];
@@ -102,15 +94,14 @@ Logger logger = LoggerFactory.getLogger(UserController.class);
 		
 		if (user == null || user.isConfirmed() || user.isDeleted() || !userService.isValidToken(user)) {
 			logger.info("Invalid token");
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			response.sendRedirect(clientAppUrl + "/invalid-token");
+		}else {
+			
+			logger.info("User: {}, Successful verification", user.getUserDetail().getFirstName());
+			user.setConfirmed(true);
+			userService.save(user);
+			response.sendRedirect(clientAppUrl + "/registration/confirm/" + token);
 		}
-		
-		logger.info("User: {}, Successful verification", user.getUserDetail().getFirstName());
-		
-		user.setConfirmed(true);
-		userService.save(user);
-		
-		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	@PostMapping("/login")
@@ -140,12 +131,13 @@ Logger logger = LoggerFactory.getLogger(UserController.class);
 		boolean isValidResetToken = userService.isValidResetPassToken(passwordResetRequest.getResetToken());
 		
 		if(isValidResetToken) {
+			logger.info("valid reset password token");
 			User user = userService.findByResetPassToken(passwordResetRequest.getResetToken()).get();
 			user.setDateTimePasswordReset(null);
 			user.setResetPassToken(null);
 			user.setPassword(passwordEncoder.encode(passwordResetRequest.getPassword()));
 			userService.save(user);
-			return ResponseEntity.ok("Change password success!");
+			return ResponseEntity.ok().build();
 		}
 		
 		return ResponseEntity.notFound().build();

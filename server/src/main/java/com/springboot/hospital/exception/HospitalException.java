@@ -1,4 +1,4 @@
-package com.springboot.hospital.exceptions;
+package com.springboot.hospital.exception;
 
 public class HospitalException extends RuntimeException{
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -12,9 +13,10 @@ export class UpdateForgotPasswordComponent implements OnInit {
   requestPayload: any;
   formError: any;
 
-  constructor(private route: ActivatedRoute, 
+  constructor(private route: ActivatedRoute,
     private authService: AuthService,
-    private router: Router) { 
+    private router: Router,
+    private toastr: ToastrService) {
     this.requestPayload = {
       resetToken: null,
       password: null,
@@ -38,22 +40,23 @@ export class UpdateForgotPasswordComponent implements OnInit {
     this.requestPayload.resetToken = token;
 
     console.log('POST request payload', this.requestPayload);
-    this.authService.updatePassword(this.requestPayload).subscribe(
-      data => {
-        this.router.navigateByUrl('login');
+    this.authService.updatePassword(this.requestPayload).subscribe({
+      next: data => {
+        this.router.navigateByUrl('users/login');
+        this.toastr.success('Password reset success!');
       },
-      error => {
+      error: error => {
         console.log('error status', error);
         const errorData = error.error ? error.error.data : null;
-        if(errorData) {
+        if (errorData && error.status == 400) {
           Object.keys(errorData).forEach(key => {
             this.formError[key] = errorData[key];
           });
-        }else {
+        } else {
           this.router.navigateByUrl('token-notfound');
         }
       }
-      );
+    });
   }
 
 }

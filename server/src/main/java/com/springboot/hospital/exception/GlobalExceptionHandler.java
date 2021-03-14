@@ -1,4 +1,4 @@
-package com.springboot.hospital.handler;
+package com.springboot.hospital.exception;
 
 import java.util.HashMap;
 import java.util.Map;
