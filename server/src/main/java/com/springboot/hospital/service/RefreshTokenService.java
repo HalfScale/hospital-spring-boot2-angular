@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.springboot.hospital.dao.RefreshTokenRepository;
-import com.springboot.hospital.entity.RefreshToken;
 import com.springboot.hospital.exception.HospitalException;
+import com.springboot.hospital.model.RefreshToken;
+import com.springboot.hospital.repository.RefreshTokenRepository;
 
 @Service
 @Transactional

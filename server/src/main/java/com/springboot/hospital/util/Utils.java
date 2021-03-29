@@ -3,7 +3,7 @@ package com.springboot.hospital.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.springboot.hospital.entity.Response;
+import com.springboot.hospital.model.Response;
 
 /**
  * 

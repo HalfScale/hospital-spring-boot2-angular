@@ -3,12 +3,12 @@ package com.springboot.hospital.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.springboot.hospital.dto.PasswordResetNotificationRequest;
-import com.springboot.hospital.dto.RefreshTokenRequest;
-import com.springboot.hospital.entity.AuthenticationResponse;
-import com.springboot.hospital.entity.LoginRequest;
-import com.springboot.hospital.entity.RegistrationForm;
-import com.springboot.hospital.entity.User;
+import com.springboot.hospital.model.AuthenticationResponse;
+import com.springboot.hospital.model.LoginRequest;
+import com.springboot.hospital.model.RegistrationForm;
+import com.springboot.hospital.model.User;
+import com.springboot.hospital.model.dto.PasswordResetNotificationRequest;
+import com.springboot.hospital.model.dto.RefreshTokenRequest;
 
 
 public interface UserService {

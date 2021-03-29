@@ -6,7 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
-import com.springboot.hospital.entity.EmailConfiguration;
+import com.springboot.hospital.model.EmailConfiguration;
 
 @Service
 public class EmailService {
