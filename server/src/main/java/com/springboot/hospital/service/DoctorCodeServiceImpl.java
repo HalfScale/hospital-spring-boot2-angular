@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.springboot.hospital.dao.DoctorCodeRepository;
-import com.springboot.hospital.entity.DoctorCode;
+import com.springboot.hospital.model.DoctorCode;
+import com.springboot.hospital.repository.DoctorCodeRepository;
 
 @Service
 public class DoctorCodeServiceImpl implements DoctorCodeService {

@@ -29,14 +29,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springboot.hospital.dto.PasswordResetNotificationRequest;
-import com.springboot.hospital.dto.PasswordResetRequest;
-import com.springboot.hospital.dto.RefreshTokenRequest;
-import com.springboot.hospital.entity.AuthenticationResponse;
-import com.springboot.hospital.entity.LoginRequest;
-import com.springboot.hospital.entity.RegistrationForm;
-import com.springboot.hospital.entity.Response;
-import com.springboot.hospital.entity.User;
+import com.springboot.hospital.model.AuthenticationResponse;
+import com.springboot.hospital.model.LoginRequest;
+import com.springboot.hospital.model.RegistrationForm;
+import com.springboot.hospital.model.Response;
+import com.springboot.hospital.model.User;
+import com.springboot.hospital.model.dto.PasswordResetNotificationRequest;
+import com.springboot.hospital.model.dto.PasswordResetRequest;
+import com.springboot.hospital.model.dto.RefreshTokenRequest;
 import com.springboot.hospital.service.RefreshTokenService;
 import com.springboot.hospital.service.UserService;
 import com.springboot.hospital.util.Utils;
@@ -46,7 +46,7 @@ import com.springboot.hospital.validator.HospitalValidationSequence;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-Logger logger = LoggerFactory.getLogger(UserController.class);
+	Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private UserService userService;

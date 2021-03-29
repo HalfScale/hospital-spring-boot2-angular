@@ -19,18 +19,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.springboot.hospital.controller.UserController;
-import com.springboot.hospital.dao.DoctorCodeRepository;
-import com.springboot.hospital.dao.UserRepository;
-import com.springboot.hospital.dto.PasswordResetNotificationRequest;
-import com.springboot.hospital.dto.RefreshTokenRequest;
-import com.springboot.hospital.entity.AuthenticationResponse;
-import com.springboot.hospital.entity.DoctorCode;
-import com.springboot.hospital.entity.LoginRequest;
-import com.springboot.hospital.entity.NotificationEmail;
-import com.springboot.hospital.entity.RegistrationForm;
-import com.springboot.hospital.entity.User;
-import com.springboot.hospital.entity.UserDetail;
 import com.springboot.hospital.exception.HospitalException;
+import com.springboot.hospital.model.AuthenticationResponse;
+import com.springboot.hospital.model.DoctorCode;
+import com.springboot.hospital.model.LoginRequest;
+import com.springboot.hospital.model.NotificationEmail;
+import com.springboot.hospital.model.RegistrationForm;
+import com.springboot.hospital.model.User;
+import com.springboot.hospital.model.UserDetail;
+import com.springboot.hospital.model.dto.PasswordResetNotificationRequest;
+import com.springboot.hospital.model.dto.RefreshTokenRequest;
+import com.springboot.hospital.repository.DoctorCodeRepository;
+import com.springboot.hospital.repository.UserRepository;
 import com.springboot.hospital.security.JwtProvider;
 
 @Service

@@ -11,8 +11,8 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.springboot.hospital.entity.NotificationEmail;
 import com.springboot.hospital.exception.HospitalException;
+import com.springboot.hospital.model.NotificationEmail;
 
 @Service
 public class MailService {
