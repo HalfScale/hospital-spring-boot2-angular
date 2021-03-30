@@ -1,5 +1,7 @@
 package com.springboot.hospital.mapper;
 
+import java.util.Objects;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +24,10 @@ public abstract class HospitalRoomMapper {
 	public abstract HospitalRoomDTO mapToDto(HospitalRoom hospitalRoom);
 	
 	String buildImageEndpoint(HospitalRoom hospitalRoom) {
+		if(Objects.isNull(hospitalRoom) || Objects.isNull(hospitalRoom.getRoomImage())) {
+			return null;
+		}
+		
 		return imageEndpoint+ "/" + hospitalRoom.getRoomImage();
 	}
 	
