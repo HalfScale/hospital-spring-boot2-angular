@@ -12,4 +12,7 @@ public interface HospitalRoomRepository extends JpaRepository<HospitalRoom, Long
 	@Query("SELECT room FROM HospitalRoom room "
 			+ "WHERE room.id = ?1 AND room.deleted = 0")
 	Optional<HospitalRoom> findByIdAndActive(Long id);
+	
+	@Query("SELECT MIN(room.id) from HospitalRoom room")
+	Long findLastId();
 }

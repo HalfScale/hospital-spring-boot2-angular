@@ -27,4 +27,6 @@ public interface UserService {
 	void passwordReset(PasswordResetNotificationRequest passwordResetNotifRequest);
 	Optional<User> findByResetPassToken(String token);
 	boolean isValidResetPassToken(String token);
+	boolean isLoggedIn();
+	User getCurrentUser();
 }

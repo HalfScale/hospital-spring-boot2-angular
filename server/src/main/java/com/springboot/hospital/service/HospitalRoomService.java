@@ -17,9 +17,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.hospital.exception.HospitalException;
 import com.springboot.hospital.mapper.HospitalRoomMapper;
 import com.springboot.hospital.model.HospitalRoom;
+import com.springboot.hospital.model.User;
 import com.springboot.hospital.model.dto.HospitalRoomDTO;
 import com.springboot.hospital.repository.HospitalRoomRepository;
+import com.springboot.hospital.util.Constants;
 import com.springboot.hospital.util.Parser;
+import com.springboot.hospital.util.Utils;
 
 @Service
 public class HospitalRoomService {
@@ -31,6 +34,9 @@ public class HospitalRoomService {
 	
 	@Autowired
 	private HospitalRoomMapper hospitalRoomMapper;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private FileService fileService;
@@ -50,18 +56,31 @@ public class HospitalRoomService {
 	
 	public void addHospitalRoom(String hospitalRoomDto, MultipartFile file) {
 		
+		if(!userService.isLoggedIn()) {
+			throw new HospitalException("User not logged in!");
+		}
+		
+		User currentUser = userService.getCurrentUser();
+		String fullName = Utils.createFullName(currentUser);
+		
+		logger.info("addHospitalRoom currentUser => [{}]", currentUser.getEmail());
+		
 		try {
 			
 			HospitalRoom hospitalRoom = hospitalRoomMapper
 					.map(Parser.parse(hospitalRoomDto, HospitalRoomDTO.class));
-			hospitalRoom.setCreatedBy("Test User");
-			hospitalRoom.setUpdatedBy("Test User");
+			hospitalRoom.setCreatedBy(fullName);
+			hospitalRoom.setUpdatedBy(fullName);
 			hospitalRoom.setCreated(LocalDateTime.now());
 			hospitalRoom.setModified(LocalDateTime.now());
 			
-			String hashedFile = fileService.uploadToLocalFileSystem(file);
+			Long lastHospitalRoomId = hospitalRoomRepository.findLastId();
+			String hashedFile = fileService.id(lastHospitalRoomId + 1)
+					.user(currentUser.getEmail())
+					.identifier(Constants.HOSPITAL_ROOM_IDENTIFIER)
+					.file(file)
+					.upload();
 			hospitalRoom.setRoomImage(hashedFile);
-			
 			hospitalRoomRepository.save(hospitalRoom);
 		} catch (JsonMappingException e) {
 			e.printStackTrace();

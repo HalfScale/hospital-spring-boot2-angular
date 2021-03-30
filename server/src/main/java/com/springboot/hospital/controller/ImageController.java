@@ -39,7 +39,7 @@ public class ImageController {
 		
 		
 		log.info("TestDto name => [{}], Image name => [{}]", objectMapper.readValue(user, TestDto.class), multipartFile.getOriginalFilename());
-		imageService.uploadToLocalFileSystem(multipartFile);
+//		imageService.uploadToLocalFileSystem(multipartFile);
 	}
 	
 	@ResponseBody
