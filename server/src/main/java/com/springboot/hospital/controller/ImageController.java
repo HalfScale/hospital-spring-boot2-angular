@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.hospital.model.dto.TestDto;
 import com.springboot.hospital.service.FileService;
+import com.springboot.hospital.util.FileStorageUtil;
 
 @RestController
 @RequestMapping("/api/img")
@@ -32,6 +33,14 @@ public class ImageController {
 	
 	@Autowired
 	private ObjectMapper objectMapper;
+	
+	@Autowired
+	private FileStorageUtil fileStorageUtil;
+	
+	@GetMapping("/{identifier}")
+	public String test(@PathVariable String identifier) {
+		return fileStorageUtil.getPath(identifier);
+	}
 
 	@PostMapping
 	public void upload(@RequestPart("user") String user, 
@@ -43,8 +52,8 @@ public class ImageController {
 	}
 	
 	@ResponseBody
-	@GetMapping(value = "/{imageName:.+}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
-	public byte[] getImageWithMediaType(@PathVariable String imageName) throws IOException {
+	@GetMapping(value = "/{identifier}/{imageName:.+}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+	public byte[] getImageWithMediaType(@PathVariable String imageName, @PathVariable String identifier) throws IOException {
 		return imageService.getImageWithMediaType(imageName);
 	}
 	

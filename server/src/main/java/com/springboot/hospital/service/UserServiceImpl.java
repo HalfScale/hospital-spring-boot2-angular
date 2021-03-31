@@ -34,6 +34,7 @@ import com.springboot.hospital.model.dto.RefreshTokenRequest;
 import com.springboot.hospital.repository.DoctorCodeRepository;
 import com.springboot.hospital.repository.UserRepository;
 import com.springboot.hospital.security.JwtProvider;
+import com.springboot.hospital.util.Utils;
 
 @Service
 @Transactional
@@ -238,5 +239,10 @@ public class UserServiceImpl implements UserService{
 		logger.info("Current user [{}]", principal.getUsername());
 		return userRepository.findByEmail(principal.getUsername())
 				.orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
+	}
+
+	@Override
+	public String getCurrentUserFullName() {
+		return Utils.createFullName(this.getCurrentUser());
 	}
 }
