@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.hospital.exception.HospitalException;
 import com.springboot.hospital.mapper.HospitalRoomMapper;
 import com.springboot.hospital.model.HospitalRoom;
@@ -21,6 +20,7 @@ import com.springboot.hospital.model.User;
 import com.springboot.hospital.model.dto.HospitalRoomDTO;
 import com.springboot.hospital.repository.HospitalRoomRepository;
 import com.springboot.hospital.util.Constants;
+import com.springboot.hospital.util.FileStorageUtil;
 import com.springboot.hospital.util.Parser;
 import com.springboot.hospital.util.Utils;
 
@@ -40,6 +40,9 @@ public class HospitalRoomService {
 	
 	@Autowired
 	private FileService fileService;
+	
+	@Autowired
+	private FileStorageUtil fileStorageUtil;
 	
 	public List<HospitalRoom> findAll() {
 		return hospitalRoomRepository.findAll();
@@ -61,9 +64,7 @@ public class HospitalRoomService {
 		}
 		
 		User currentUser = userService.getCurrentUser();
-		String fullName = Utils.createFullName(currentUser);
-		
-		logger.info("addHospitalRoom currentUser => [{}]", currentUser.getEmail());
+		String fullName = userService.getCurrentUserFullName();
 		
 		try {
 			
@@ -77,9 +78,10 @@ public class HospitalRoomService {
 			Long lastHospitalRoomId = hospitalRoomRepository.findLastId();
 			String hashedFile = fileService.id(lastHospitalRoomId + 1)
 					.user(currentUser.getEmail())
-					.identifier(Constants.HOSPITAL_ROOM_IDENTIFIER)
+					.identifier(fileStorageUtil.getPath(Constants.HOSPITAL_ROOM_IDENTIFIER))
 					.file(file)
 					.upload();
+			
 			hospitalRoom.setRoomImage(hashedFile);
 			hospitalRoomRepository.save(hospitalRoom);
 		} catch (JsonMappingException e) {

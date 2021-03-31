@@ -29,4 +29,5 @@ public interface UserService {
 	boolean isValidResetPassToken(String token);
 	boolean isLoggedIn();
 	User getCurrentUser();
+	String getCurrentUserFullName();
 }
