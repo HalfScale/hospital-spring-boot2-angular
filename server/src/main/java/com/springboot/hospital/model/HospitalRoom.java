@@ -39,10 +39,10 @@ public class HospitalRoom {
 	private int status;
 	
 	@Column(name="created_by")
-	private String createdBy;
+	private Long createdBy;
 	
 	@Column(name="updated_by")
-	private String updatedBy;
+	private Long updatedBy;
 	
 	@Column(name="created")
 	private LocalDateTime created;
@@ -56,10 +56,6 @@ public class HospitalRoom {
 	@Column(name="deleted_date")
 	private LocalDateTime deletedDate;
 	
-	// Do not put JsonManagedReference annotation, it will produce an error
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="hospitalRoom")
-	private List<RoomReservation> roomReservaition;
-
 	public Long getId() {
 		return id;
 	}
@@ -108,19 +104,19 @@ public class HospitalRoom {
 		this.status = status;
 	}
 
-	public String getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public String getUpdatedBy() {
+	public Long getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(Long updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -154,14 +150,6 @@ public class HospitalRoom {
 
 	public void setDeletedDate(LocalDateTime deletedDate) {
 		this.deletedDate = deletedDate;
-	}
-
-	public List<RoomReservation> getRoomReservaition() {
-		return roomReservaition;
-	}
-
-	public void setRoomReservaition(List<RoomReservation> roomReservaition) {
-		this.roomReservaition = roomReservaition;
 	}
 
 	@Override

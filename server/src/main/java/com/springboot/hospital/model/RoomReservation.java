@@ -26,9 +26,8 @@ public class RoomReservation {
 	@Column(name="id")
 	private int id;
 	
-	@ManyToOne(cascade= CascadeType.ALL)
-	@JsonBackReference
-	@JoinColumn(name="hospital_room_id")
+	@ManyToOne
+	@JoinColumn(name="hospital_room_id", referencedColumnName = "id")
 	private HospitalRoom hospitalRoom;
 	
 	@Column(name="room_code")

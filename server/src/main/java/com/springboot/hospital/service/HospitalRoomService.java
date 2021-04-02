@@ -2,6 +2,7 @@ package com.springboot.hospital.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,7 +24,6 @@ import com.springboot.hospital.repository.HospitalRoomRepository;
 import com.springboot.hospital.util.Constants;
 import com.springboot.hospital.util.FileStorageUtil;
 import com.springboot.hospital.util.Parser;
-import com.springboot.hospital.util.Utils;
 
 @Service
 public class HospitalRoomService {
@@ -53,36 +54,49 @@ public class HospitalRoomService {
 				.orElseThrow(() -> new HospitalException("Hospital Room not found!")));
 	}
 	
-	public Page<HospitalRoom> findAll(Pageable pageable) {
-		return hospitalRoomRepository.findAll(pageable);
+	public Page<HospitalRoom> findAllByPage(String roomCode, String roomName, 
+			Integer status, Pageable pageable) {
+		
+		roomCode = StringUtils.hasText(roomCode) ? roomCode : null;
+		roomName = StringUtils.hasText(roomName) ? roomName: null;
+		status = Objects.isNull(status) ? 0 : status;
+		
+		if(Objects.isNull(roomCode) && Objects.isNull(roomName)) {
+			return hospitalRoomRepository.findAllByStatusAndDeletedFalse(status, pageable);
+		}
+		
+		return hospitalRoomRepository.findAllHospitalRoomsByPage(roomCode, roomName, status, pageable);
 	}
 	
-	public void addHospitalRoom(String hospitalRoomDto, MultipartFile file) {
+	public void addHospitalRoom(String hospitalRoomDto, MultipartFile uploadedFile) {
 		
 		if(!userService.isLoggedIn()) {
 			throw new HospitalException("User not logged in!");
 		}
 		
 		User currentUser = userService.getCurrentUser();
-		String fullName = userService.getCurrentUserFullName();
 		
 		try {
 			
 			HospitalRoom hospitalRoom = hospitalRoomMapper
 					.map(Parser.parse(hospitalRoomDto, HospitalRoomDTO.class));
-			hospitalRoom.setCreatedBy(fullName);
-			hospitalRoom.setUpdatedBy(fullName);
+			hospitalRoom.setCreatedBy(currentUser.getId());
+			hospitalRoom.setUpdatedBy(currentUser.getId());
 			hospitalRoom.setCreated(LocalDateTime.now());
 			hospitalRoom.setModified(LocalDateTime.now());
 			
-			Long lastHospitalRoomId = hospitalRoomRepository.findLastId();
-			String hashedFile = fileService.id(lastHospitalRoomId + 1)
-					.user(currentUser.getEmail())
-					.identifier(fileStorageUtil.getPath(Constants.HOSPITAL_ROOM_IDENTIFIER))
-					.file(file)
-					.upload();
+			//if table is empty
+			Long lastHospitalRoomId = hospitalRoomRepository.save(hospitalRoom).getId();
 			
-			hospitalRoom.setRoomImage(hashedFile);
+			if(!uploadedFile.isEmpty()) {
+				String hashedFile = fileService.id(lastHospitalRoomId)
+						.identifier(fileStorageUtil.getPath(Constants.HOSPITAL_ROOM_IDENTIFIER))
+						.file(uploadedFile)
+						.upload();
+				
+				hospitalRoom.setRoomImage(hashedFile);
+			}
+			
 			hospitalRoomRepository.save(hospitalRoom);
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
@@ -91,19 +105,39 @@ public class HospitalRoomService {
 		}
 	}
 	
-	public void updateHospitalRoom(Long id, HospitalRoomDTO hospitalRoomDto) {
+	public void updateHospitalRoom(Long id, String hospitalRoomDto, 
+			MultipartFile uploadedFile) {
+		
 		HospitalRoom oldHospitalRoom = hospitalRoomRepository.findByIdAndActive(id)
 			.orElseThrow(() -> new HospitalException("Hopsital Room not found!"));
 		
-		HospitalRoom hospitalRoom = hospitalRoomMapper.mapToOld(oldHospitalRoom);
-		hospitalRoom.setRoomCode(hospitalRoomDto.getRoomCode());
-		hospitalRoom.setRoomName(hospitalRoomDto.getRoomName());
-		hospitalRoom.setStatus(hospitalRoomDto.getStatus());
-		hospitalRoom.setDescription(hospitalRoomDto.getDescription());
-		hospitalRoom.setUpdatedBy("Test User");
-		hospitalRoom.setModified(LocalDateTime.now());
+		try {
+			HospitalRoomDTO parsedHospitalRoomDto = Parser.parse(hospitalRoomDto, HospitalRoomDTO.class);
+			HospitalRoom hospitalRoom = hospitalRoomMapper.mapToOld(oldHospitalRoom);
+			
+			hospitalRoom.setRoomCode(parsedHospitalRoomDto.getRoomCode());
+			hospitalRoom.setRoomName(parsedHospitalRoomDto.getRoomName());
+			hospitalRoom.setStatus(parsedHospitalRoomDto.getStatus());
+			hospitalRoom.setDescription(parsedHospitalRoomDto.getDescription());
+			hospitalRoom.setUpdatedBy(userService.getCurrentUser().getId());
+			hospitalRoom.setModified(LocalDateTime.now());
+			
+			if(!uploadedFile.isEmpty()) {
+				String hashedFile = fileService.id(hospitalRoom.getId())
+						.identifier(fileStorageUtil.getPath(Constants.HOSPITAL_ROOM_IDENTIFIER))
+						.file(uploadedFile)
+						.upload();
+				
+				hospitalRoom.setRoomImage(hashedFile);
+			}
+			
+			hospitalRoomRepository.save(hospitalRoom);
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		
-		hospitalRoomRepository.save(hospitalRoom);
 	}
 	
 	public void deleteHospitalRoom(Long id) {
@@ -112,5 +146,8 @@ public class HospitalRoomService {
 		
 		hospitalRoom.setDeleted(true);
 		hospitalRoom.setDeletedDate(LocalDateTime.now());
+		hospitalRoom.setModified(LocalDateTime.now());
+		hospitalRoom.setUpdatedBy(userService.getCurrentUser().getId());
+		hospitalRoomRepository.save(hospitalRoom);
 	}
 }

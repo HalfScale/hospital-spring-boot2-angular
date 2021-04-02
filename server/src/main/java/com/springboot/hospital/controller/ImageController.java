@@ -37,24 +37,10 @@ public class ImageController {
 	@Autowired
 	private FileStorageUtil fileStorageUtil;
 	
-	@GetMapping("/{identifier}")
-	public String test(@PathVariable String identifier) {
-		return fileStorageUtil.getPath(identifier);
-	}
-
-	@PostMapping
-	public void upload(@RequestPart("user") String user, 
-			@RequestPart("image") MultipartFile multipartFile) throws JsonMappingException, JsonProcessingException {
-		
-		
-		log.info("TestDto name => [{}], Image name => [{}]", objectMapper.readValue(user, TestDto.class), multipartFile.getOriginalFilename());
-//		imageService.uploadToLocalFileSystem(multipartFile);
-	}
-	
 	@ResponseBody
 	@GetMapping(value = "/{identifier}/{imageName:.+}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
 	public byte[] getImageWithMediaType(@PathVariable String imageName, @PathVariable String identifier) throws IOException {
-		return imageService.getImageWithMediaType(imageName);
+		return imageService.getImageWithMediaType(imageName, identifier);
 	}
 	
 }

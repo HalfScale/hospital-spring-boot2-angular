@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import com.springboot.hospital.model.HospitalRoom;
 import com.springboot.hospital.model.dto.HospitalRoomDTO;
+import com.springboot.hospital.util.Constants;
 import com.springboot.hospital.util.FileStorageUtil;
 
 @Mapper(componentModel = "spring")
@@ -17,12 +18,8 @@ public abstract class HospitalRoomMapper {
 	@Value("${file.storage.endpoint}")
 	private String imageEndpoint;
 	
-	@Autowired
-	private FileStorageUtil fileStorageUtil;
-
 	public abstract HospitalRoom map(HospitalRoomDTO hospitalRoomDto);
 	
-	@Mapping(target = "roomReservaition", ignore = true)
 	public abstract HospitalRoom mapToOld(HospitalRoom hospitalRoom);
 	
 	@Mapping(target = "roomImage", expression = "java(buildImageEndpoint(hospitalRoom))")
@@ -33,7 +30,7 @@ public abstract class HospitalRoomMapper {
 			return null;
 		}
 		
-		return imageEndpoint+ "/" + hospitalRoom.getRoomImage();
+		return imageEndpoint + "/" + Constants.HOSPITAL_ROOM_IDENTIFIER + "/" + hospitalRoom.getRoomImage();
 	}
 	
 }
