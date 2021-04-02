@@ -12,15 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.springboot.hospital.model.HospitalRoom;
 import com.springboot.hospital.model.Response;
-import com.springboot.hospital.model.dto.HospitalRoomDTO;
 import com.springboot.hospital.service.HospitalRoomService;
 import com.springboot.hospital.util.Utils;
 
@@ -43,21 +42,24 @@ public class HospitalRoomController {
 	}
 	
 	@GetMapping("/pageable")
-	public Page<HospitalRoom> loadHospitalRoomPage(Pageable pageable) {
-		return hospitalRoomService.findAll(pageable);
+	public Page<HospitalRoom> getAllHospitalRoomByPage(@RequestParam(name = "roomCode", required = false) String roomCode, 
+			@RequestParam(name = "roomName", required = false) String roomName, 
+			@RequestParam(name = "status", required = false) Integer status, Pageable pageable) {
+		return hospitalRoomService.findAllByPage(roomCode, roomName, status, pageable);
 	}
 	
 	@PostMapping
 	public ResponseEntity<?> addHospitalRoom(@RequestPart("hospitalRoomDto") String hopsitalRoomDto, 
 			@RequestPart("file") MultipartFile file) {
-		
 		hospitalRoomService.addHospitalRoom(hopsitalRoomDto, file);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
 	@PutMapping("/{roomId}")
-	public ResponseEntity<?> updateRoom(@RequestBody HospitalRoomDTO hopsitalRoomDto, @PathVariable Long roomId) {
-		hospitalRoomService.updateHospitalRoom(roomId, hopsitalRoomDto);
+	public ResponseEntity<?> updateRoom(@RequestPart("hospitalRoomDto") String hopsitalRoomDto, 
+			@RequestPart("file") MultipartFile file, @PathVariable Long roomId) {
+		
+		hospitalRoomService.updateHospitalRoom(roomId, hopsitalRoomDto, file);
 		return ResponseEntity.ok().build();
 	}
 	

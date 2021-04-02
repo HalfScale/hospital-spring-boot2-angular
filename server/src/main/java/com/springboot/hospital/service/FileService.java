@@ -6,16 +6,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.springboot.hospital.util.FileStorageUtil;
 
 @Service
 public class FileService {
@@ -25,19 +26,15 @@ public class FileService {
 	@Value("${storage.directory.path}")
 	private String storageDirectoryPath;
 	
+	@Autowired
+	private FileStorageUtil fileStorageUtil;
+	
 	private Long entityId;
-	private String currentUser;
 	private String identifier = "\\";
 	private MultipartFile file;
 
 	public FileService id(Long id) {
 		this.setId(id);
-		return this;
-	}
-	
-	public FileService user(String currentUser) {
-		log.info("user() => [{}]", currentUser);
-		this.setCurrentUser(currentUser);
 		return this;
 	}
 	
@@ -58,12 +55,6 @@ public class FileService {
 	private void setId(Long id) {
 		this.entityId = id;
 	}
-
-
-	private void setCurrentUser(String currentUser) {
-		this.currentUser = currentUser;
-	}
-
 
 	private  void setIdentifier(String identifier) {
 		this.identifier = identifier;
@@ -103,6 +94,9 @@ public class FileService {
 		
 		try {
 			hashedFile = this.hashFile();
+			
+			log.info("hashedFile result => [{}]", hashedFile);
+			
 			Path destination = Paths.get(storageDirectory.toString() + "\\" + hashedFile);
 			Files.copy(file.getInputStream(), destination, StandardCopyOption.REPLACE_EXISTING);
 		}catch(IOException | NoSuchAlgorithmException e) {
@@ -115,14 +109,16 @@ public class FileService {
 	private String hashFile() throws NoSuchAlgorithmException {
 		StringBuilder sb = new StringBuilder();
 		
-		String modifiedFileName = sb.append(this.entityId)
-			.append(this.currentUser).toString();
+		String modifiedFileName = sb.append(this.entityId).toString();
+		
+		log.info("modifiedFileName result => [{}]", modifiedFileName);
 		
 		return DigestUtils.md5DigestAsHex(modifiedFileName.getBytes());
 	}
 	
-	public byte[] getImageWithMediaType(String imageName) throws IOException{
-		Path destination = Paths.get(this.storageDirectoryPath + "\\" + imageName);
+	public byte[] getImageWithMediaType(String imageName, String identifier) throws IOException{
+		Path destination = Paths.get(this.storageDirectoryPath + 
+				fileStorageUtil.getPath(identifier) + "\\" + imageName);
 		
 		return IOUtils.toByteArray(destination.toUri());
 	}
