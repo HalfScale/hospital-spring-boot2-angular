@@ -1,229 +1,455 @@
-<app-header></app-header>
-<div class="wrap-login100">
+<div id="preloader">
+    <div class="jumper">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>  
+<!-- ***** Preloader End ***** -->
 
-    <span class="login100-form-title p-b-43">
-        Hospital Name
-        <br>
-        Home
-    </span>
+
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="#" class="logo">
+                        <img src="assets/images/hospital2.png" alt="Hospital"/>
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="#home" class="active">Home</a></li>
+                        <li><a href="#doctors">Doctors</a></li>
+                        <li><a href="#appointments">Appointments</a></li>
+                        <li><a href="#reservations">Reservations</a></li>
+                        <li><a href="#login">Login</a></li>
+                       <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Username
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="#">Messages</a>
+                              <a class="dropdown-item" href="#">Notifications</a>
+                              <a class="dropdown-item" href="#">Account Settings</a>
+                              <a class="dropdown-item" href="#">Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ***** Header Area End ***** -->
+
+<!-- ***** Welcome Area Start ***** -->
+<div class="welcome-area" id="welcome">
+
+    <!-- ***** Header Text Start ***** -->
+    <div class="header-text">
+        <div class="container">
+            <div class="row">
+                <div class="offset-xl-3 col-xl-6 offset-lg-2 col-lg-8 col-md-12 col-sm-12">
+                    <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h1>
+                    <p>Aliquam rhoncus felis quis lacus malesuada auctor. Pellentesque habitant morbi tristique senectus
+                         et netus et malesuada fames ac turpis egestas. </p>
+                    <a href="#features" class="main-button-slider">Discover More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Header Text End ***** -->
 </div>
+<!-- ***** Welcome Area End ***** -->
 
-<div class="container">
-    <div class="mySlides">
-        <img class="home-img" src="assets/images/1.jpg" style="width:50%">
-    </div>
+<!-- ***** Features Small Start ***** -->
+<section class="section home-feature">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <!-- ***** Features Small Item Start ***** -->
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-12" data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                        <div class="features-small-item">
+                            <div class="icon">
+                                <i><img src="assets/images/featured-item-01.png" alt=""></i>
+                            </div>
+                            <h5 class="features-title">Health Facilities</h5>
+                            <p>Making health facilities safe in emergencies amidst pandemic.</p>
+                        </div>
+                    </div>
+                    <!-- ***** Features Small Item End ***** -->
 
-    <div class="mySlides">
-        <img class="home-img" src="assets/images/2.jpg" style="width:50%">
-    </div>
+                    <!-- ***** Features Small Item Start ***** -->
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-12" data-scroll-reveal="enter bottom move 50px over 0.6s after 0.4s">
+                        <div class="features-small-item">
+                            <div class="icon">
+                                <i><img src="assets/images/featured-item-01.png" alt=""></i>
+                            </div>
+                            <h5 class="features-title">Radiation safety in health care</h5>
+                            <p>Maximize the benefits while minimizing the harms.</p>
+                        </div>
+                    </div>
+                    <!-- ***** Features Small Item End ***** -->
 
-    <div class="mySlides">
-        <img class="home-img" src="assets/images/3.jpg" style="width:50%">
-    </div>
-
-    <div class="mySlides">
-        <img class="home-img" src="assets/images/bg-01.jpg" style="width:50%">
-    </div>
-
-    <div class="mySlides">
-        <img class="home-img" src="assets/images/4.jpg" style="width:50%">
-    </div>
-
-    <div class="mySlides">
-        <img class="home-img" src="assets/images/5.jpg" style="width:50%">
-    </div>
-
-
-    <a class="prev" onclick="plusSlides(-1)">❮</a>
-    <a class="next" onclick="plusSlides(1)">❯</a>
-
-    <div class="caption-container">
-        <p id="caption">Sample Text</p>
-    </div>
-
-
-
-
-    <div class="row">
-        <div class="column">
-            <!-- max of 6 images only if u make it 7 the next image will append below, for now max of 6 only, i'll fix this after some pages for now 
-        not major issue hehe sorry bb :*-->
-            <img class="home-img-col" src="assets/images/1.jpg" style="width:100%" onclick="currentSlide(1)"
-                alt="Sample image text/description 1">
-        </div>
-        <div class="column">
-            <img class="home-img-col" src="assets/images/2.jpg" style="width:100%" onclick="currentSlide(2)"
-                alt="Sample image text/description 2">
-        </div>
-        <div class="column">
-            <img class="home-img-col" src="assets/images/3.jpg" style="width:100%" onclick="currentSlide(3)"
-                alt="Sample image text/description 3">
-        </div>
-        <div class="column">
-            <img class="home-img-col" src="assets/images/bg-01.jpg" style="width:100%" onclick="currentSlide(4)"
-                alt="Sample image text/description 4">
-        </div>
-        <div class="column">
-            <img class="home-img-col" src="assets/images/4.jpg" style="width:100%" onclick="currentSlide(5)"
-                alt="Sample image text/description 4">
-        </div>
-        <div class="column">
-            <img class="home-img-col" src="assets/images/5.jpg" style="width:100%" onclick="currentSlide(6)"
-                alt="Sample image text/description 4">
+                    <!-- ***** Features Small Item Start ***** -->
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-12" data-scroll-reveal="enter bottom move 50px over 0.6s after 0.6s">
+                        <div class="features-small-item">
+                            <div class="icon">
+                                <i><img src="assets/images/featured-item-01.png" alt=""></i>
+                            </div>
+                            <h5 class="features-title">Strengthening diagnostic imaging</h5>
+                            <p>Disease diagnosis and treatment.</p>
+                        </div>
+                    </div>
+                    <!-- ***** Features Small Item End ***** -->
+                </div>
+            </div>
         </div>
     </div>
+</section>
+<!-- ***** Features Small End ***** -->
 
-    <div class="page-content">
-        <div class="board-of-directors">
-            <h3>Board of Directors</h3>
+<!-- ***** Features Big Item Start ***** -->
+<section class="section padding-top-70 padding-bottom-0" id="features">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-md-12 col-sm-12 align-self-center" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
+                <img src="assets/images/left-image.png" class="rounded img-fluid d-block mx-auto" alt="App">
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-6 col-md-12 col-sm-12 align-self-center mobile-top-fix">
+                <div class="left-heading">
+                    <h2 class="section-title">Let’s discuss about your concerns</h2>
+                </div>
+                <div class="left-text">
+                    <p>Nullam sit amet purus libero. Etiam ullamcorper nisl ut augue blandit, at finibus leo efficitur. Nam gravida purus non sapien auctor, ut aliquam magna ullamcorper.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hr"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ***** Features Big Item End ***** -->
 
-            <div class="card-row">
-                <div class="card-column">
-                    <div class="card">
-                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                        <p>Anne Lee</p>
-                        <p>Chief Executive</p>
+<!-- ***** Features Big Item Start ***** -->
+<section class="section padding-bottom-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12 align-self-center mobile-bottom-fix">
+                <div class="left-heading">
+                    <h2 class="section-title">Nam auctor lorem at turpis aliquet ultricies. </h2>
+                </div>
+                <div class="left-text">
+                    <p>Aenean pretium, ipsum et porttitor auctor, metus ipsum iaculis nisi, a bibendum lectus libero vitae urna. Sed id leo eu dolor luctus congue sed eget ipsum. Nunc nec luctus libero. Etiam quis dolor elit.</p>
+                </div>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-5 col-md-12 col-sm-12 align-self-center mobile-bottom-fix-big" data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
+                <img src="assets/images/right-image.png" class="rounded img-fluid d-block mx-auto" alt="App">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ***** Features Big Item End ***** -->
+
+<!-- ***** Home Parallax Start ***** -->
+<section class="mini" id="work-process">
+    <div class="mini-content">
+        <div class="container">
+            <div class="row">
+                <div class="offset-lg-3 col-lg-6">
+                    <div class="info">
+                        <h1>Consultation Process</h1>
+                        <p>Aenean nec tempor metus. Maecenas ligula dolor, commodo in imperdiet interdum, vehicula ut ex. Donec ante diam.</p>
                     </div>
                 </div>
+            </div>
 
-                <div class="card-column">
-                    <div class="card">
-                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                        <p>Jean Doe</p>
-                        <p>Medical Director</p>
+            <!-- ***** Mini Box Start ***** -->
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                    <a href="#" class="mini-box">
+                        <i><img src="assets/images/work-process-item-01.png" alt=""></i>
+                        <strong>Register Account</strong>
+                        <span>Godard pabst prism fam cliche.</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                    <a href="#" class="mini-box">
+                        <i><img src="assets/images/work-process-item-01.png" alt=""></i>
+                        <strong>Fill Out Patient Details</strong>
+                        <span>Godard pabst prism fam cliche.</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                    <a href="#" class="mini-box">
+                        <i><img src="assets/images/work-process-item-01.png" alt=""></i>
+                        <strong>Consult a Doctor</strong>
+                        <span>Nam auctor lorem at turpis aliquet.</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                    <a href="#" class="mini-box">
+                        <i><img src="assets/images/work-process-item-01.png" alt=""></i>
+                        <strong>Create Appointment</strong>
+                        <span>Godard pabst prism fam cliche.</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                    <a href="#" class="mini-box">
+                        <i><img src="assets/images/work-process-item-01.png" alt=""></i>
+                        <strong>Attend Appointment</strong>
+                        <span>Godard pabst prism fam cliche.</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                    <a href="#" class="mini-box">
+                        <i><img src="assets/images/work-process-item-01.png" alt=""></i>
+                        <strong>Complete Appointment</strong>
+                        <span>Suspendisse hendrerit vestibulum.</span>
+                    </a>
+                </div>
+            </div>
+            <!-- ***** Mini Box End ***** -->
+        </div>
+    </div>
+</section>
+<!-- ***** Home Parallax End ***** -->
+
+<!-- ***** Testimonials Start ***** -->
+<section class="section" id="testimonials">
+    <div class="container">
+        <!-- ***** Section Title Start ***** -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="center-heading">
+                    <h2 class="section-title">Board of Directors</h2>
+                </div>
+            </div>
+            <div class="offset-lg-3 col-lg-6">
+                <div class="center-text">
+                    <p>Donec tempus, sem non rutrum imperdiet, lectus orci fringilla nulla, at accumsan elit eros a turpis. Ut sagittis lectus libero.</p>
+                </div>
+            </div>
+        </div>
+        <!-- ***** Section Title End ***** -->
+
+        <div class="row">
+            <!-- ***** Testimonials Item Start ***** -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="team-item">
+                    <div class="team-content">
+                        <i><img src="assets/images/testimonial-icon.png" alt=""></i>
+                        <p>Proin a neque nisi. Nam ipsum nisi, venenatis ut nulla quis, egestas scelerisque orci. Maecenas a finibus odio.</p>
+                        <div class="user-image">
+                            <img src="assets/http://placehold.it/60x60" alt="">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="user-name">Catherine Soft</h3>
+                            <span>Chief Executive</span>
+                        </div>
                     </div>
                 </div>
-
-                <div class="card-column">
-                    <div class="card">
-                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                        <p>Kenneth Anderson</p>
-                        <p>Director of Nursing</p>
+            </div>
+            <!-- ***** Testimonials Item End ***** -->
+            
+            <!-- ***** Testimonials Item Start ***** -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="team-item">
+                    <div class="team-content">
+                        <i><img src="assets/images/testimonial-icon.png" alt=""></i>
+                        <p>Integer molestie aliquam gravida. Nullam nec arcu finibus, imperdiet nulla vitae, placerat nibh. Cras maximus venenatis molestie.</p>
+                        <div class="user-image">
+                            <img src="assets/http://placehold.it/60x60" alt="">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="user-name">Kelvin Wood</h3>
+                            <span>Medical Director</span>
+                        </div>
                     </div>
                 </div>
-
-                <div class="card-column">
-                    <div class="card">
-                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                        <p>Lyla Smith</p>
-                        <p>Director of Finance</p>
+            </div>
+            <!-- ***** Testimonials Item End ***** -->
+            
+            <!-- ***** Testimonials Item Start ***** -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="team-item">
+                    <div class="team-content">
+                        <i><img src="assets/images/testimonial-icon.png" alt=""></i>
+                        <p>Quisque diam odio, maximus ac consectetur eu, auctor non lorem. Cras quis est non ante ultrices molestie. Ut vehicula et diam at aliquam.</p>
+                        <div class="user-image">
+                            <img src="assets/http://placehold.it/60x60" alt="">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="user-name">David Martin</h3>
+                            <span>Director of Nursing</span>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <!-- ***** Testimonials Item End ***** -->
 
-                <div class="card-column">
-                    <div class="card">
-                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                        <p>Anne Lee</p>
-                        <p>Chief Executive</p>
+            <!-- ***** Testimonials Item Start ***** -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="team-item">
+                    <div class="team-content">
+                        <i><img src="assets/images/testimonial-icon.png" alt=""></i>
+                        <p>Quisque diam odio, maximus ac consectetur eu, auctor non lorem. Cras quis est non ante ultrices molestie. Ut vehicula et diam at aliquam.</p>
+                        <div class="user-image">
+                            <img src="assets/http://placehold.it/60x60" alt="">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="user-name">David Clark</h3>
+                            <span>Director of Finance</span>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <!-- ***** Testimonials Item End ***** -->
 
-                <div class="card-column">
-                    <div class="card">
-                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                        <p>Jean Doe</p>
-                        <p>Medical Director</p>
+            <!-- ***** Testimonials Item Start ***** -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="team-item">
+                    <div class="team-content">
+                        <i><img src="assets/images/testimonial-icon.png" alt=""></i>
+                        <p>Quisque diam odio, maximus ac consectetur eu, auctor non lorem. Cras quis est non ante ultrices molestie. Ut vehicula et diam at aliquam.</p>
+                        <div class="user-image">
+                            <img src="http://placehold.it/60x60" alt="">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="user-name">Eston Will</h3>
+                            <span>Health Care Director</span>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <!-- ***** Testimonials Item End ***** -->
+                            <!-- ***** Testimonials Item Start ***** -->
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="team-item">
+                                    <div class="team-content">
+                                        <i><img src="assets/images/testimonial-icon.png" alt=""></i>
+                                        <p>Quisque diam odio, maximus ac consectetur eu, auctor non lorem. Cras quis est non ante ultrices molestie. Ut vehicula et diam at aliquam.</p>
+                                        <div class="user-image">
+                                            <img src="http://placehold.it/60x60" alt="">
+                                        </div>
+                                        <div class="team-info">
+                                            <h3 class="user-name">Lisa Elderwood</h3>
+                                            <span>Systems Director</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ***** Testimonials Item End ***** -->
+        </div>
+    </div>
+</section>
+<!-- ***** Testimonials End ***** -->
 
-                <div class="card-column">
-                    <div class="card">
-                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                        <p>Kenneth Anderson</p>
-                        <p>Director of Nursing</p>
+
+<!-- ***** Blog Start ***** -->
+<section class="section" id="blog">
+    <div class="container">
+        <!-- ***** Section Title Start ***** -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="center-heading">
+                    <h2 class="section-title">Articles</h2>
+                </div>
+            </div>
+            <div class="offset-lg-3 col-lg-6">
+                <div class="center-text">
+                    <p>Integer molestie aliquam gravida. Nullam nec arcu finibus, imperdiet nulla vitae, placerat nibh. Cras maximus venenatis molestie.</p>
+                </div>
+            </div>
+        </div>
+        <!-- ***** Section Title End ***** -->
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="blog-post-thumb">
+                    <div class="img">
+                        <img src="assets/images/blog-item-01.png" alt="">
+                    </div>
+                    <div class="blog-content">
+                        <h3>
+                            <a href="#">Vivamus ac vehicula dui</a>
+                        </h3>
+                        <div class="text">
+                           Cras aliquet ligula dui, vitae fermentum velit tincidunt id. Praesent eu finibus nunc. Nulla in sagittis eros. Aliquam egestas augue.
+                        </div>
+                        <a href="#" class="main-button">Read More</a>
                     </div>
                 </div>
-
-                <div class="card-column">
-                    <div class="card">
-                        <img src="assets/images/img_avatar.png" alt="Avatar" style="width:100%">
-                        <p>Lyla Smith</p>
-                        <p>Director of Finance</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="blog-post-thumb">
+                    <div class="img">
+                        <img src="assets/images/blog-item-02.png" alt="">
+                    </div>
+                    <div class="blog-content">
+                        <h3>
+                            <a href="#">Phasellus convallis augue</a>
+                        </h3>
+                        <div class="text">
+                            Aliquam commodo ornare nisl, et scelerisque nisl dignissim ac. Vestibulum finibus urna ut velit venenatis, vel ultrices sapien mattis.
+                        </div>
+                        <a href="#" class="main-button">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="blog-post-thumb">
+                    <div class="img">
+                        <img src="assets/images/blog-item-03.png" alt="">
+                    </div>
+                    <div class="blog-content">
+                        <h3>
+                            <a href="#">Nam gravida purus non</a>
+                        </h3>
+                        <div class="text">
+                            Maecenas eu erat vitae dui convallis consequat vel gravida nulla. Vestibulum finibus euismod odio, ut tempus enim varius eu.
+                        </div>
+                        <a href="#" class="main-button">Read More</a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="about-us">
-            <h3>About Us</h3>
-
-            <p>
-                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
-                lorem leo, quis tincidunt mauris congue in.
-                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-                orci ac justo tincidunt fringilla.
-                Phasellus mattis vel massa at gravida.
-                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
-                lorem leo, quis tincidunt mauris congue in.
-                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-                orci ac justo tincidunt fringilla.
-                Phasellus mattis vel massa at gravida.
-                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
-                lorem leo, quis tincidunt mauris congue in.
-                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-                orci ac justo tincidunt fringilla.
-                Phasellus mattis vel massa at gravida.
-                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
-                lorem leo, quis tincidunt mauris congue in.
-                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-                orci ac justo tincidunt fringilla.
-                Phasellus mattis vel massa at gravida.
-                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
-                lorem leo, quis tincidunt mauris congue in.
-                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-                orci ac justo tincidunt fringilla.
-                Phasellus mattis vel massa at gravida.
-                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
-                lorem leo, quis tincidunt mauris congue in.
-                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-                orci ac justo tincidunt fringilla.
-                Phasellus mattis vel massa at gravida.
-                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
-                lorem leo, quis tincidunt mauris congue in.
-                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-                orci ac justo tincidunt fringilla.
-                Phasellus mattis vel massa at gravida.
-                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
-                lorem leo, quis tincidunt mauris congue in.
-                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-                orci ac justo tincidunt fringilla.
-                Phasellus mattis vel massa at gravida.
-                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
-                lorem leo, quis tincidunt mauris congue in.
-                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-                orci ac justo tincidunt fringilla.
-                Phasellus mattis vel massa at gravida.
-                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
-                lorem leo, quis tincidunt mauris congue in.
-                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-                orci ac justo tincidunt fringilla.
-                Phasellus mattis vel massa at gravida.
-                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
-                lorem leo, quis tincidunt mauris congue in.
-                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-                orci ac justo tincidunt fringilla.
-                Phasellus mattis vel massa at gravida.
-                Mauris aliquet orci id purus molestie mollis. Etiam lobortis convallis ex vitae suscipit. Nam rhoncus
-                lorem leo, quis tincidunt mauris congue in.
-                Nullam in rhoncus urna, nec fermentum risus. Donec viverra lorem ex, ac varius augue fringilla ac. Ut ac
-                orci ac justo tincidunt fringilla.
-                Phasellus mattis vel massa at gravida.
-            </p>
-
-        </div>
-
     </div>
+</section>
+<!-- ***** Blog End ***** -->
 
-    <div class="footer">
-        <section id="lab_social_icon_footer">
-            <div class="text-center center-block">
-                <a href="https://www.facebook.com/bootsnipp" target="_blank"><i id="social-fb"
-                        class="fa fa-facebook-square fa-3x social"></i></a>
-                <a href="https://twitter.com/bootsnipp" target="_blank"><i id="social-tw"
-                        class="fa fa-twitter-square fa-3x social"></i></a>
-                <a href="https://plus.google.com/+Bootsnipp-page" target="_blank"><i id="social-gp"
-                        class="fa fa-google-plus-square fa-3x social"></i></a>
-                <a href="mailto:#"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+
+<!-- ***** Footer Start ***** -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <ul class="social">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                </ul>
             </div>
-        </section>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <p class="copyright">Hospital Name</p>
+            </div>
+        </div>
     </div>
+</footer>

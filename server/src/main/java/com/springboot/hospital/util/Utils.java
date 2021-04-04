@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.springboot.hospital.model.Response;
-import com.springboot.hospital.model.User;
+import com.springboot.hospital.model.UserDetail;
 
 /**
  * 
@@ -21,8 +21,8 @@ public class Utils {
 		return new Response(status, message, data);
 	}
 	
-	public static String createFullName(User user) {
-		return user.getUserDetail().getFirstName() + " " + user.getUserDetail().getLastName();
+	public static String createFullName(UserDetail userDetail) {
+		return userDetail.getFirstName() + " " + userDetail.getLastName();
 	}
 	
 }

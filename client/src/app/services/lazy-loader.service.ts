@@ -12,7 +12,15 @@ export class LazyLoaderService {
 
   load(): Observable<any> {
     return forkJoin([
-      this.loadScript('assets/js/main.js')
+      this.loadScript('assets/js/main.js'),
+      // this.loadScript('assets/js/jquery-2.1.0.min.js'),
+      // this.loadScript('assets/js/popper.js'),
+      // this.loadScript('assets/js/bootstrap.min.js'),
+      // this.loadScript('assets/js/scrollreveal.min.js'),
+      // this.loadScript('assets/js/waypoints.min.js'),
+      // this.loadScript('assets/js/jquery.counterup.min.js'),
+      // this.loadScript('assets/js/imgfix.min.js'),
+      // this.loadScript('assets/js/custom.js'),
     ]);
   }
 

@@ -38,7 +38,6 @@ public class UserDetail {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "users_id", referencedColumnName = "id")
-	@JsonBackReference
 	private User user;
 	
 	@NotBlank(message="First Name is Required")
