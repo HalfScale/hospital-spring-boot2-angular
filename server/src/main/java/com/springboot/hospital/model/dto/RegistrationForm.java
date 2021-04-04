@@ -1,4 +1,4 @@
-package com.springboot.hospital.model;
+package com.springboot.hospital.model.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

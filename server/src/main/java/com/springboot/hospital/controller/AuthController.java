@@ -31,12 +31,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.hospital.model.AuthenticationResponse;
 import com.springboot.hospital.model.LoginRequest;
-import com.springboot.hospital.model.RegistrationForm;
 import com.springboot.hospital.model.Response;
 import com.springboot.hospital.model.User;
 import com.springboot.hospital.model.dto.PasswordResetNotificationRequest;
 import com.springboot.hospital.model.dto.PasswordResetRequest;
 import com.springboot.hospital.model.dto.RefreshTokenRequest;
+import com.springboot.hospital.model.dto.RegistrationForm;
 import com.springboot.hospital.service.RefreshTokenService;
 import com.springboot.hospital.service.UserService;
 import com.springboot.hospital.util.Utils;
@@ -97,7 +97,7 @@ public class AuthController {
 			response.sendRedirect(clientAppUrl + "/invalid-token");
 		}else {
 			
-			logger.info("User: {}, Successful verification", user.getUserDetail().getFirstName());
+//			logger.info("User: {}, Successful verification", user.getUserDetail().getFirstName());
 			user.setConfirmed(true);
 			userService.save(user);
 			response.sendRedirect(clientAppUrl + "/registration/confirm/" + token);

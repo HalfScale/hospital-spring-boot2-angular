@@ -2,6 +2,7 @@ package com.springboot.hospital.service;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import com.springboot.hospital.controller.UserController;
 import com.springboot.hospital.model.User;
+import com.springboot.hospital.model.UserDetail;
+import com.springboot.hospital.repository.UserDetailRepository;
 import com.springboot.hospital.repository.UserRepository;
 
 @Service
@@ -27,43 +30,47 @@ public class MyUserDetailsService implements UserDetailsService {
 	private UserRepository userRepository;
 	
 	@Autowired
+	private UserDetailRepository userDetailRepository;
+	
+	@Autowired
 	private DoctorCodeService doctorCodeService;
 
 	@Override
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		
-		logger.info("User '{}' logging in", userName);
-		
-		Optional<User> user = userRepository.findByEmail(userName);
+		logger.info("User => [{}] logging in", email);
 		
 		//Custom message for exceptions is handled in src/main/resources
-		User storedUser = user.orElseThrow(() -> new UsernameNotFoundException("Invalid Username and Password"));
+		UserDetail userDetail = userDetailRepository.findByUserEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException("Invalid Username and Password"));
+		User user = userDetail.getUser();
 		
-		if(!isUserValid(storedUser)) {
+		if(!isUserValid(userDetail)) {
 			throw new UsernameNotFoundException("Invalid Username and Password");
 		}
 		
 		
-		return new org.springframework.security.core.userdetails.User(storedUser.getEmail(), storedUser.getPassword(), 
-				storedUser.isConfirmed(), !storedUser.isDeleted(), true, true, getAuthorities("USER"));
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), 
+				user.isConfirmed(), !user.isDeleted(), true, true, getAuthorities("USER"));
 	}
 	
 	private Collection<? extends GrantedAuthority> getAuthorities(String role) {
 		return Collections.singletonList(new SimpleGrantedAuthority(role));
 	}
 	
-	private boolean isUserValid(User user) {
+	private boolean isUserValid(UserDetail userDetail) {
+		User user = userDetail.getUser();
 		
 		if(!User.Type.ALL.contains(user.getUserType())) {
 			return false;
 		}
 		
-		Integer doctorCode = user.getUserDetail().getDoctorCodeId();
-		if( doctorCode != null) {
+		Integer doctorCode = userDetail.getDoctorCodeId();
+		if(!Objects.isNull(userDetail)) {
 			return doctorCodeService.hasCode(String.valueOf(doctorCode));
 		}
 		
-		if(user.getUserDetail() == null ) {
+		if(userDetail == null ) {
 			return false;
 		}
 		

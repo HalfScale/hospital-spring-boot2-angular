@@ -21,6 +21,7 @@ import { UpdateForgotPasswordComponent } from './components/update-forgot-passwo
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReservationComponent } from './components/reservation/reservation.component';
 import { ForgotPasswordSuccessComponent } from './components/forgot-password-success/forgot-password-success.component';
+import { DoctorProfileComponent } from './components/doctor-profile/doctor-profile.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { ForgotPasswordSuccessComponent } from './components/forgot-password-suc
     ForgotPasswordComponent,
     UpdateForgotPasswordComponent,
     ReservationComponent,
-    ForgotPasswordSuccessComponent
+    ForgotPasswordSuccessComponent,
+    DoctorProfileComponent
   ],
   imports: [
     BrowserModule,

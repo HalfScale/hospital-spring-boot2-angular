@@ -2,10 +2,12 @@ package com.springboot.hospital.service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.junit.platform.commons.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +24,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.springboot.hospital.controller.UserController;
 import com.springboot.hospital.exception.HospitalException;
+import com.springboot.hospital.mapper.UserMapper;
 import com.springboot.hospital.model.AuthenticationResponse;
 import com.springboot.hospital.model.DoctorCode;
 import com.springboot.hospital.model.LoginRequest;
 import com.springboot.hospital.model.NotificationEmail;
-import com.springboot.hospital.model.RegistrationForm;
 import com.springboot.hospital.model.User;
 import com.springboot.hospital.model.UserDetail;
 import com.springboot.hospital.model.dto.PasswordResetNotificationRequest;
+import com.springboot.hospital.model.dto.ProfileDTO;
 import com.springboot.hospital.model.dto.RefreshTokenRequest;
+import com.springboot.hospital.model.dto.RegistrationForm;
 import com.springboot.hospital.repository.DoctorCodeRepository;
+import com.springboot.hospital.repository.UserDetailRepository;
 import com.springboot.hospital.repository.UserRepository;
 import com.springboot.hospital.security.JwtProvider;
+import com.springboot.hospital.util.Constants;
 import com.springboot.hospital.util.Utils;
 
 @Service
@@ -44,6 +50,10 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private UserDetailRepository userDetailRepository;
+	@Autowired
+	private UserMapper userMapper;
 	@Autowired
 	private DoctorCodeRepository doctorCodeRepository;
 	@Autowired
@@ -99,7 +109,7 @@ public class UserServiceImpl implements UserService{
 			user.setUserType(User.Type.DOCTOR);
 		}
 		
-		user.setUserDetail(userDetail);
+//		user.setUserDetail(userDetail);
 		userDetail.setUser(user);
 
 		userRepository.save(user);
@@ -130,7 +140,7 @@ public class UserServiceImpl implements UserService{
 		if (storedUser.isPresent()) {
 			User user = storedUser.get();
 			authResponse.setRole(user.getUserType());
-			authResponse.setName(user.getUserDetail().getFirstName() + " " + user.getUserDetail().getLastName());
+//			authResponse.setName(user.getUserDetail().getFirstName() + " " + user.getUserDetail().getLastName());
 		}
 		
 		return authResponse;
@@ -232,17 +242,46 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User getCurrentUser() {
+	public UserDetail getCurrentUser() {
 		org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
 				getContext().getAuthentication().getPrincipal();
 		
 		logger.info("Current user [{}]", principal.getUsername());
-		return userRepository.findByEmail(principal.getUsername())
+		return userDetailRepository.findByUserEmail(principal.getUsername())
 				.orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
 	}
 
 	@Override
 	public String getCurrentUserFullName() {
 		return Utils.createFullName(this.getCurrentUser());
+	}
+
+	@Override
+	public void updateProfile(ProfileDTO profileDto) {
+		
+		if(!this.isLoggedIn()) {
+			throw new HospitalException("Invalid access. No user is logged in!");
+		}
+		
+		UserDetail userDetail = this.getCurrentUser();
+		
+		if(userDetail.getUser().getUserType().equals(Constants.PATIENT) &&
+				this.isDoctor(profileDto)) {
+			
+			throw new HospitalException("Invalid data for user type!");
+		}
+		
+		UserDetail updatedUserDetail = userMapper.map(userDetail, profileDto);
+		userDetailRepository.save(updatedUserDetail);
+		
+	}
+	
+	private boolean isDoctor(ProfileDTO profileDto) {
+		return Arrays.asList(
+				profileDto.getSpecialization(),
+				profileDto.getNoOfYearsExperience().toString(),
+				profileDto.getEducation(),
+				profileDto.getDescription()
+		).stream().anyMatch(param -> !StringUtils.isBlank(param));
 	}
 }

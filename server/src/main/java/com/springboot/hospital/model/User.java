@@ -71,11 +71,6 @@ public class User {
 	@Column(name="deleted_date")
 	private LocalDateTime deletedDate;
 	
-	@OneToOne(mappedBy="user", cascade=CascadeType.ALL)
-	@Valid
-	@JsonManagedReference
-	private UserDetail userDetail;
-	
 	public User() {
 	
 	}
@@ -207,23 +202,6 @@ public class User {
 
 	public void setDeletedDate(LocalDateTime deletedDate) {
 		this.deletedDate = deletedDate;
-	}
-
-	public UserDetail getUserDetail() {
-		return userDetail;
-	}
-
-	public void setUserDetail(UserDetail userDetail) {
-		this.userDetail = userDetail;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", userType=" + userType + ", registrationToken=" + registrationToken
-				+ ", datetimePasswordReset=" + datetimePasswordReset + ", resetPassToken=" + resetPassToken + ", email="
-				+ email + ", password=" + password + ", isConfirmed=" + isConfirmed + ", enabled=" + enabled
-				+ ", created=" + created + ", modified=" + modified + ", deleted=" + deleted + ", deletedDate="
-				+ deletedDate + ", userDetail=" + userDetail + "]";
 	}
 	
 }
