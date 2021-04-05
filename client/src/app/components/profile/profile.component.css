@@ -1,0 +1,67 @@
+label {
+    font-weight: 600;
+    color: #555;
+}
+
+.page-body {
+    background-image: linear-gradient(#5162da, #7b88e3, #a5aeec);
+}
+
+.form-input {
+    height: 210px;
+    position: relative;
+    width: 210px;
+    padding: 3px;
+    background: #fff;
+    border: 2px dashed #6675df;
+    border-radius: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, 5%);
+    margin-bottom: 20px;
+}
+
+.form-input input {
+    display: none;
+}
+
+.form-input label {
+    display: block;
+    width: 200px;
+    height: auto;
+    max-height: 200px;
+    background: #333;
+    border-radius: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.form-input img {
+    width: 200px;
+    height: 200px;
+    margin: 2px;
+    opacity: .4;
+    border-radius: 50%;
+}
+
+.imgRemove {
+    position: relative;
+    bottom: 195px;
+    left: 68%;
+    background-color: transparent;
+    border-radius: none;
+    font-size: 30px;
+    outline: none;
+}
+
+.imgRemove::after {
+    content: ' \21BA';
+    color: #fff;
+    font-weight: 900;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.jumbotron {
+    min-height: auto;
+}
