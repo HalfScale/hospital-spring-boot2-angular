@@ -34,26 +34,21 @@ public class UserDetail {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Long id;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "users_id", referencedColumnName = "id")
 	private User user;
 	
-	@NotBlank(message="First Name is Required")
 	@Column(name="first_name")
 	private String firstName;
 	
-	@NotBlank(message="Last Name is Required")
 	@Column(name="last_name")
 	private String lastName;
 	
-	@Pattern(regexp = ".*(^[0-9]+$)", message = "Invalid Mobile No")
-	@NotBlank(message="Mobile No. is Required")
 	@Column(name="mobile_no")
 	private String mobileNo;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="birth_date")
 	private LocalDate birthDate;
 	
@@ -101,7 +96,7 @@ public class UserDetail {
 		
 	}
 
-	public UserDetail(int id, User user, String firstName, String lastName, String mobileNo, LocalDate birthDate,
+	public UserDetail(Long id, User user, String firstName, String lastName, String mobileNo, LocalDate birthDate,
 			int gender, String address, String profileImage, Integer doctorCodeId, String doctorDescription,
 			Integer noOfYearsExperience, String education, String schedule, String expertise, LocalDateTime created,
 			LocalDateTime modified, boolean deleted, LocalDateTime deletedDate) {
@@ -126,11 +121,11 @@ public class UserDetail {
 		this.deletedDate = deletedDate;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

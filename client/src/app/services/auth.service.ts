@@ -24,7 +24,7 @@ export class AuthService {
 
   refreshTokenPayload = {
     refreshToken: this.getRefreshToken(),
-    username: this.getEmail()
+    email: this.getEmail()
   }
 
   constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }

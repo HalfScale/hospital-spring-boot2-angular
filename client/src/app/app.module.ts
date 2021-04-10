@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmRegistrationComponent } from './components/confirm-registration/confirm-registration.component';
 import { NgxWebstorageModule } from 'ngx-webstorage';
@@ -22,6 +22,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReservationComponent } from './components/reservation/reservation.component';
 import { ForgotPasswordSuccessComponent } from './components/forgot-password-success/forgot-password-success.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { TokenInterceptor } from './interceptors/token-interceptor';
 
 
 @NgModule({
@@ -53,6 +54,11 @@ import { ProfileComponent } from './components/profile/profile.component';
     NgbModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

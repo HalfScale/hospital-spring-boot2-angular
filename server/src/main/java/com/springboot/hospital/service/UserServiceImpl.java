@@ -2,12 +2,11 @@ package com.springboot.hospital.service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.junit.platform.commons.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.hospital.controller.UserController;
 import com.springboot.hospital.exception.HospitalException;
 import com.springboot.hospital.mapper.UserMapper;
@@ -40,6 +43,8 @@ import com.springboot.hospital.repository.UserDetailRepository;
 import com.springboot.hospital.repository.UserRepository;
 import com.springboot.hospital.security.JwtProvider;
 import com.springboot.hospital.util.Constants;
+import com.springboot.hospital.util.FileStorageUtil;
+import com.springboot.hospital.util.Parser;
 import com.springboot.hospital.util.Utils;
 
 @Service
@@ -68,6 +73,12 @@ public class UserServiceImpl implements UserService{
 	private MailService mailService;
 	@Value("${mail.config.url}")
 	private String appUrl;
+	@Autowired
+	private FileService fileService;
+	@Autowired
+	private FileStorageUtil fileStorageUtil;
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Override
 	public void save(User user) {
@@ -125,22 +136,24 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public AuthenticationResponse login(LoginRequest loginRequest) {
+		
 		Authentication authenticate = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+		
 		SecurityContextHolder.getContext().setAuthentication(authenticate);
 		
 		String token = jwtProvider.generateToken(authenticate);
 		String refreshToken = refreshTokenService.generateRefreshToken().getToken();
 		
-		Optional<User> storedUser = userRepository.findByEmail(loginRequest.getEmail());
 		Instant expiresAt = Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis());
+		Optional<UserDetail> userDetail = userDetailRepository.findByUserEmail(loginRequest.getEmail());
 		
 		AuthenticationResponse authResponse = new AuthenticationResponse(token, loginRequest.getEmail(), refreshToken, expiresAt);
 		
-		if (storedUser.isPresent()) {
-			User user = storedUser.get();
+		if (userDetail.isPresent()) {
+			User user = userDetail.get().getUser();
 			authResponse.setRole(user.getUserType());
-//			authResponse.setName(user.getUserDetail().getFirstName() + " " + user.getUserDetail().getLastName());
+			authResponse.setName(Utils.createFullName(userDetail.get()));
 		}
 		
 		return authResponse;
@@ -148,6 +161,12 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
+		try {
+			logger.info("refreshTokenRequest => [{}]", objectMapper.writeValueAsString(refreshTokenRequest));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
 		refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
 		String token = jwtProvider.generateTokenWithEmail(refreshTokenRequest.getEmail());
 		
@@ -246,7 +265,7 @@ public class UserServiceImpl implements UserService{
 		org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
 				getContext().getAuthentication().getPrincipal();
 		
-		logger.info("Current user [{}]", principal.getUsername());
+		logger.info("CURRENT USER => [{}]", principal.getUsername());
 		return userDetailRepository.findByUserEmail(principal.getUsername())
 				.orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
 	}
@@ -257,7 +276,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void updateProfile(ProfileDTO profileDto) {
+	public void updateProfile(String profileDto, MultipartFile uploadedFile) {
 		
 		if(!this.isLoggedIn()) {
 			throw new HospitalException("Invalid access. No user is logged in!");
@@ -265,23 +284,61 @@ public class UserServiceImpl implements UserService{
 		
 		UserDetail userDetail = this.getCurrentUser();
 		
-		if(userDetail.getUser().getUserType().equals(Constants.PATIENT) &&
-				this.isDoctor(profileDto)) {
+		
+		try {
 			
-			throw new HospitalException("Invalid data for user type!");
+			ProfileDTO dto = Parser.parse(profileDto, ProfileDTO.class);
+			if(userDetail.getUser().getUserType().equals(Constants.PATIENT) &&
+					this.isDoctor(dto)) {
+				
+				throw new HospitalException("Invalid data for user type!");
+			}
+			
+			UserDetail updatedUserDetail = userMapper.map(userDetail, dto);
+			UserDetail savedUserDetail = userDetailRepository.save(updatedUserDetail);
+			
+			if(!Objects.isNull(uploadedFile) && !uploadedFile.isEmpty()) {
+				String hashedFile = fileService.id(savedUserDetail.getId())
+						.identifier(fileStorageUtil.getPath(Constants.PROFILE_IDENTIFIER))
+						.file(uploadedFile)
+						.upload();
+				savedUserDetail.setProfileImage(hashedFile);
+				userDetailRepository.save(savedUserDetail);
+			}
+			
+			
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
 		}
 		
-		UserDetail updatedUserDetail = userMapper.map(userDetail, profileDto);
-		userDetailRepository.save(updatedUserDetail);
 		
 	}
 	
 	private boolean isDoctor(ProfileDTO profileDto) {
-		return Arrays.asList(
-				profileDto.getSpecialization(),
-				profileDto.getNoOfYearsExperience().toString(),
-				profileDto.getEducation(),
-				profileDto.getDescription()
-		).stream().anyMatch(param -> !StringUtils.isBlank(param));
+		if(!Objects.isNull(profileDto.getSpecialization()))
+			return true;
+		
+		if(!Objects.isNull(profileDto.getNoOfYearsExperience())) 
+			return true;
+		
+		if(!Objects.isNull(profileDto.getEducation())) 
+			return true;
+		
+		if(!Objects.isNull(profileDto.getDescription())) 
+			return true;
+		
+		return false;
+	}
+
+	@Override
+	public ProfileDTO getUserProfile() {
+		
+		if(!this.isLoggedIn()) {
+			throw new HospitalException("User is not logged in.");
+		}
+		
+		return userMapper.mapToProfileDto(this.getCurrentUser());
 	}
 }

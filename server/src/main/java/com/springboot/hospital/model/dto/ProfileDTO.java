@@ -8,6 +8,7 @@ public class ProfileDTO {
 	private String lastName;
 	private String mobileNo;
 	private String address;
+	private String profileImage;
 	private LocalDate birthDate;
 	private Integer gender;
 	private String specialization;
@@ -74,6 +75,12 @@ public class ProfileDTO {
 	}
 	public void setEducation(String education) {
 		this.education = education;
+	}
+	public String getProfileImage() {
+		return profileImage;
+	}
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 	
 }

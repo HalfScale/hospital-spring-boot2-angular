@@ -86,18 +86,18 @@ public class HospitalRoomService {
 			hospitalRoom.setModified(LocalDateTime.now());
 			
 			//if table is empty
-			Long lastHospitalRoomId = hospitalRoomRepository.save(hospitalRoom).getId();
+			Long HospitalRoomId = hospitalRoomRepository.save(hospitalRoom).getId();
 			
 			if(!uploadedFile.isEmpty()) {
-				String hashedFile = fileService.id(lastHospitalRoomId)
+				String hashedFile = fileService.id(HospitalRoomId)
 						.identifier(fileStorageUtil.getPath(Constants.HOSPITAL_ROOM_IDENTIFIER))
 						.file(uploadedFile)
 						.upload();
 				
 				hospitalRoom.setRoomImage(hashedFile);
+				hospitalRoomRepository.save(hospitalRoom);
 			}
 			
-			hospitalRoomRepository.save(hospitalRoom);
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
