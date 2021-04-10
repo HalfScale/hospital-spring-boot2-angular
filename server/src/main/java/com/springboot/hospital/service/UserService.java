@@ -3,6 +3,8 @@ package com.springboot.hospital.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.springboot.hospital.model.AuthenticationResponse;
 import com.springboot.hospital.model.LoginRequest;
 import com.springboot.hospital.model.User;
@@ -32,5 +34,6 @@ public interface UserService {
 	boolean isLoggedIn();
 	UserDetail getCurrentUser();
 	String getCurrentUserFullName();
-	void updateProfile(ProfileDTO profileDto);
+	void updateProfile(String profileDto, MultipartFile file);
+	ProfileDTO getUserProfile();
 }

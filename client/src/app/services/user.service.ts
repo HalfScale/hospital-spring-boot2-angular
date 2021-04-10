@@ -13,7 +13,11 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  public updateProfile(userUpdateRequest: UserUpdateRequest): Observable<any> {
+  public updateProfile(userUpdateRequest: FormData): Observable<any> {
     return this.http.put<any>(this.apiUrl + '/api/users', userUpdateRequest);
+  }
+
+  public getLoggedUser(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + '/api/users');
   }
 }
