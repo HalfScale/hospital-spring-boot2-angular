@@ -21,6 +21,13 @@ import { UpdateForgotPasswordComponent } from './components/update-forgot-passwo
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReservationComponent } from './components/reservation/reservation.component';
 import { ForgotPasswordSuccessComponent } from './components/forgot-password-success/forgot-password-success.component';
+<<<<<<< Updated upstream
+=======
+import { ProfileComponent } from './components/profile/profile.component';
+import { TokenInterceptor } from './interceptors/token-interceptor';
+import { AddEditRoomComponent } from './components/hospital-room/add-edit-room/add-edit-room.component';
+import { ViewRoomComponent } from './components/hospital-room/view-room/view-room.component';
+>>>>>>> Stashed changes
 
 
 @NgModule({
@@ -36,7 +43,14 @@ import { ForgotPasswordSuccessComponent } from './components/forgot-password-suc
     ForgotPasswordComponent,
     UpdateForgotPasswordComponent,
     ReservationComponent,
+<<<<<<< Updated upstream
     ForgotPasswordSuccessComponent
+=======
+    ForgotPasswordSuccessComponent,
+    ProfileComponent,
+    AddEditRoomComponent,
+    ViewRoomComponent
+>>>>>>> Stashed changes
   ],
   imports: [
     BrowserModule,

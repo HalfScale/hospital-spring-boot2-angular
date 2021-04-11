@@ -12,19 +12,28 @@ export class HospitalRoomService {
 
   constructor(private http: HttpClient) { }
 
-  public getRooms(page: string, size: string) : Observable<any>{
+  public getRoomsPageable(requestParams: any) : Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }),
       params: new HttpParams({
-        fromObject: {
-          page: page,
-          size: size
-        }
+        fromObject: requestParams
       })
     };
-    return this.http.get<any>(this.baseApiUrl + '/api/test/rooms', httpOptions);
+    return this.http.get<any>(this.baseApiUrl + '/api/rooms/pageable', httpOptions);
+  }
+
+  public addRoom(formData: FormData): Observable<any> {
+    return this.http.post<any>(this.baseApiUrl + '/api/rooms', formData);
+  }
+
+  public updateRoom(formData: FormData): Observable<any> {
+    return this.http.put<any>(this.baseApiUrl + '/api/rooms', formData);
+  }
+
+  public deleteRoom(roomId: number): Observable<any>{
+    return this.http.delete(this.baseApiUrl + '/api/rooms/' + roomId);
   }
 }

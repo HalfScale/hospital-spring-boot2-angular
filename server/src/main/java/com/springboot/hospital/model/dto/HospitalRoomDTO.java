@@ -5,9 +5,10 @@ public class HospitalRoomDTO {
 	private Long id;
 	private String roomCode;
 	private String roomName;
-	private int status;
 	private String description;
 	private String roomImage;
+	private String createdBy;
+	private String updatedBy;
 	
 	public Long getId() {
 		return id;
@@ -27,12 +28,6 @@ public class HospitalRoomDTO {
 	public void setRoomName(String roomName) {
 		this.roomName = roomName;
 	}
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
-	}
 	public String getDescription() {
 		return description;
 	}
@@ -45,5 +40,18 @@ public class HospitalRoomDTO {
 	public void setRoomImage(String roomImage) {
 		this.roomImage = roomImage;
 	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	
 	
 }

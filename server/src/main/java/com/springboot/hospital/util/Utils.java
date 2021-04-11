@@ -24,5 +24,8 @@ public class Utils {
 	public static String createFullName(User user) {
 		return user.getUserDetail().getFirstName() + " " + user.getUserDetail().getLastName();
 	}
+<<<<<<< Updated upstream
 	
+=======
+>>>>>>> Stashed changes
 }
