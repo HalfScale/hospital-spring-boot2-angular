@@ -10,9 +10,14 @@ export class HospitalRoomComponent implements OnInit {
 
   config: any;
   collection = { data: [] as any };
+  roomCode: String;
+  roomName: String;
+  requestParams: any;
 
   constructor(private hospitalRoomService: HospitalRoomService) {
     this.initializeConfig();
+    this.roomCode = '';
+    this.roomName = '';
   }
 
   initializeConfig(): void {
@@ -21,6 +26,22 @@ export class HospitalRoomComponent implements OnInit {
       currentPage: 1,
       totalItems: 0
     };
+  }
+
+  public search(): void {
+    this.requestParams = {
+      page: this.getCurrentPage(),
+      size: this.getPageSize(),
+      roomCode: this.roomCode,
+      roomName: this.roomName,
+    }
+    console.log('requestParams', this.requestParams);
+    this.getHospitalRooms(this.requestParams);
+  }
+
+  public clear(): void {
+    this.roomCode = '';
+    this.roomName = '';
   }
 
   getCurrentPage(): string {
@@ -32,11 +53,11 @@ export class HospitalRoomComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getHospitalRooms();
+    this.getHospitalRooms(this.requestParams);
   }
 
-  getHospitalRooms(): void {
-    this.hospitalRoomService.getRooms(this.getCurrentPage(), this.getPageSize()).subscribe({
+  getHospitalRooms(params: any): void {
+    this.hospitalRoomService.getRoomsPageable(params).subscribe({
       next: data => {
         console.log('Query success', data);
         this.collection.data = data.content;
@@ -51,6 +72,6 @@ export class HospitalRoomComponent implements OnInit {
 
   pageChanged(currentPage: number) {
     this.config.currentPage = currentPage;
-    this.getHospitalRooms();
+    this.search();
   }
 }

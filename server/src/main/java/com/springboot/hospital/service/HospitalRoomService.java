@@ -54,18 +54,18 @@ public class HospitalRoomService {
 				.orElseThrow(() -> new HospitalException("Hospital Room not found!")));
 	}
 	
-	public Page<HospitalRoom> findAllByPage(String roomCode, String roomName, 
-			Integer status, Pageable pageable) {
+	public Page<HospitalRoomDTO> findAllByPage(String roomCode, String roomName, Pageable pageable) {
 		
 		roomCode = StringUtils.hasText(roomCode) ? roomCode : null;
 		roomName = StringUtils.hasText(roomName) ? roomName: null;
-		status = Objects.isNull(status) ? 0 : status;
 		
 		if(Objects.isNull(roomCode) && Objects.isNull(roomName)) {
-			return hospitalRoomRepository.findAllByStatusAndDeletedFalse(status, pageable);
+			return hospitalRoomRepository.findAllByDeletedFalse(pageable)
+					.map(hospitalRoomMapper::mapToDto);
 		}
 		
-		return hospitalRoomRepository.findAllHospitalRoomsByPage(roomCode, roomName, status, pageable);
+		return hospitalRoomRepository.findAllHospitalRoomsByPage(roomCode, roomName, pageable)
+				.map(hospitalRoomMapper::mapToDto);
 	}
 	
 	public void addHospitalRoom(String hospitalRoomDto, MultipartFile uploadedFile) {
@@ -117,7 +117,6 @@ public class HospitalRoomService {
 			
 			hospitalRoom.setRoomCode(parsedHospitalRoomDto.getRoomCode());
 			hospitalRoom.setRoomName(parsedHospitalRoomDto.getRoomName());
-			hospitalRoom.setStatus(parsedHospitalRoomDto.getStatus());
 			hospitalRoom.setDescription(parsedHospitalRoomDto.getDescription());
 			hospitalRoom.setUpdatedBy(userService.getCurrentUser().getUser().getId());
 			hospitalRoom.setModified(LocalDateTime.now());

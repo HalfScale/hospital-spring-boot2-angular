@@ -23,6 +23,8 @@ import { ReservationComponent } from './components/reservation/reservation.compo
 import { ForgotPasswordSuccessComponent } from './components/forgot-password-success/forgot-password-success.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { TokenInterceptor } from './interceptors/token-interceptor';
+import { AddEditRoomComponent } from './components/hospital-room/add-edit-room/add-edit-room.component';
+import { ViewRoomComponent } from './components/hospital-room/view-room/view-room.component';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { TokenInterceptor } from './interceptors/token-interceptor';
     UpdateForgotPasswordComponent,
     ReservationComponent,
     ForgotPasswordSuccessComponent,
-    ProfileComponent
+    ProfileComponent,
+    AddEditRoomComponent,
+    ViewRoomComponent
   ],
   imports: [
     BrowserModule,

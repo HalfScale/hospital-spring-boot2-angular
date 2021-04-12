@@ -24,9 +24,4 @@ public class Utils {
 	public static String createFullName(UserDetail userDetail) {
 		return userDetail.getFirstName() + " " + userDetail.getLastName();
 	}
-	
-//	public static String formatMobileNo(String mobileNo) {
-//		if(mobileNo.length() < 11) {
-//		}
-//	}
 }

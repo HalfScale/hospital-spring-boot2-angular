@@ -5,7 +5,9 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
 import { ForgotPasswordSuccessComponent } from './components/forgot-password-success/forgot-password-success.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { HomeComponent } from './components/home/home.component';
+import { AddEditRoomComponent } from './components/hospital-room/add-edit-room/add-edit-room.component';
 import { HospitalRoomComponent } from './components/hospital-room/hospital-room.component';
+import { ViewRoomComponent } from './components/hospital-room/view-room/view-room.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegistrationComponent } from './components/registration/registration.component';
@@ -32,6 +34,9 @@ const routes: Routes = [
   {path: 'password/update/:token', component: UpdateForgotPasswordComponent},
   {path: 'reservations', component: ReservationComponent},
   {path: 'hospital_rooms', component: HospitalRoomComponent},
+  {path: 'hospital_rooms/add', component: AddEditRoomComponent},
+  {path: 'hospital_rooms/edit/:roomId', component: AddEditRoomComponent},
+  {path: 'hospital_rooms/details/:roomId', component: ViewRoomComponent},
   {path: '**', component: ErrorPageComponent}
 ];
 

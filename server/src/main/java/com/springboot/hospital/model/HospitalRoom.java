@@ -35,9 +35,6 @@ public class HospitalRoom {
 	@Column(name="description")
 	private String description;
 	
-	@Column(name="status")
-	private int status;
-	
 	@Column(name="created_by")
 	private Long createdBy;
 	
@@ -96,14 +93,6 @@ public class HospitalRoom {
 		this.description = description;
 	}
 
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
 	public Long getCreatedBy() {
 		return createdBy;
 	}
@@ -151,14 +140,4 @@ public class HospitalRoom {
 	public void setDeletedDate(LocalDateTime deletedDate) {
 		this.deletedDate = deletedDate;
 	}
-
-	@Override
-	public String toString() {
-		return "HospitalRoom [id=" + id + ", roomCode=" + roomCode + ", roomName=" + roomName + ", roomImage="
-				+ roomImage + ", description=" + description + ", status=" + status + ", createdBy=" + createdBy
-				+ ", updatedBy=" + updatedBy + ", created=" + created + ", modified=" + modified + ", deleted="
-				+ deleted + ", deletedDate=" + deletedDate + "]";
-	}
-	
-	
 }
