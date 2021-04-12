@@ -1,35 +1,54 @@
+<app-header></app-header>
 <div style="text-align:center">
     <h1>Hospital Name</h1>
     <h4>List of Rooms</h4>
-    
+
+    <nav id="room-filter" class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="form-inline my-2 my-lg-0">
+                <label for="room-code">Room Code: </label>
+                <input name="roomCode" class="form-control mr-sm-2" type="search" [(ngModel)]="roomCode">
+                <label for="room-name">Room Name: </label>
+                <input name="roomName" class="form-control mr-sm-2" type="search" [(ngModel)]="roomName">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="search()">Search</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="clear()">Clear</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="text-left">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button">Add</button>
+    </div>
+
     <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
     <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Room Code</th>
-          <th scope="col">Room Name</th>
-          <th scope="col">Created By</th>
-          <th scope="col">Updated By</th>
-          <th scope="col">Status</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of collection.data | paginate: config">
-          <th scope="row">{{item.roomCode}}</th>
-          <td>{{item.roomName}}</td>
-          <td>{{item.createdBy}}</td>
-          <td>{{item.updatedBy}}</td>
-          <td *ngIf="item.status == 0"><span class="badge badge-success">Available</span></td>
-          <td *ngIf="item.status == 1"><span class="badge badge-warning">Under Reservation</span></td>
-          <td *ngIf="item.status == 3"><span class="badge badge-danger">Not Available</span></td>
-          <td>
-            <button type="button" class="btn btn-danger">Delete</button>
-            <button type="button" class="btn btn-info">View</button>
-            <button type="button" class="btn btn-warning">Edit</button>
-          </td>
-        </tr>
-      </tbody>
+        <thead>
+            <tr>
+                <th scope="col">Room Code</th>
+                <th scope="col">Room Name</th>
+                <th scope="col">Created By</th>
+                <th scope="col">Updated By</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="collection.data.length > 0">
+            <tr *ngFor="let item of collection.data | paginate: config">
+                <th scope="row">{{item.roomCode}}</th>
+                <td>{{item.roomName}}</td>
+                <td>{{item.createdBy}}</td>
+                <td>{{item.updatedBy}}</td>
+                <td>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-info">View</button>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="collection.data.length == 0">
+            <tr>
+                <td class="text-red" colspan="5">No data available</td>
+            </tr>
+        </tbody>
     </table>
-  
-  </div>
+
+</div>

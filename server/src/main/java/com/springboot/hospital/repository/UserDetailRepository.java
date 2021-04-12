@@ -9,4 +9,6 @@ import com.springboot.hospital.model.UserDetail;
 public interface UserDetailRepository extends JpaRepository<UserDetail, Long> {
 
 	Optional<UserDetail> findByUserEmail(String email);
+	
+	Optional<UserDetail> findByUserId(Long id);
 }

@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.springboot.hospital.model.HospitalRoom;
 import com.springboot.hospital.model.Response;
+import com.springboot.hospital.model.dto.HospitalRoomDTO;
 import com.springboot.hospital.service.HospitalRoomService;
 import com.springboot.hospital.util.Utils;
 
@@ -42,10 +43,10 @@ public class HospitalRoomController {
 	}
 	
 	@GetMapping("/pageable")
-	public Page<HospitalRoom> getAllHospitalRoomByPage(@RequestParam(name = "roomCode", required = false) String roomCode, 
+	public Page<HospitalRoomDTO> getAllHospitalRoomByPage(@RequestParam(name = "roomCode", required = false) String roomCode, 
 			@RequestParam(name = "roomName", required = false) String roomName, 
 			@RequestParam(name = "status", required = false) Integer status, Pageable pageable) {
-		return hospitalRoomService.findAllByPage(roomCode, roomName, status, pageable);
+		return hospitalRoomService.findAllByPage(roomCode, roomName, pageable);
 	}
 	
 	@PostMapping
