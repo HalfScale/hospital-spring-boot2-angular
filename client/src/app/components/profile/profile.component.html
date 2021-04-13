@@ -1,0 +1,82 @@
+<div class="page-body">
+    <div class="image-upload-one">
+        <div class="center">
+            <div class="form-input">
+                <label for="file-ip-1">
+                    <img id="file-ip-1-preview" [src]="imagePath">
+                </label>
+                <input type="file" name="profileImg" id="file-ip-1" accept="image/*" (change)="selectImg($event)">
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <form [formGroup]="userUpdateForm" (ngSubmit)="update()">
+            <div class="row jumbotron">
+
+                <div class="col-sm-6 form-group">
+                    <label for="name-f">First Name</label>
+                    <input type="text" [formControlName]="'firstName'" class="form-control" name="fname" id="name-f" required>
+                    <span class="error text-danger" *ngIf="!userUpdateForm.get('firstName')?.valid">
+                        First name field is invalid.
+                    </span>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="name-l">Last Name</label>
+                    <input type="text" [formControlName]="'lastName'" class="form-control" name="lname" id="name-l" required>
+                    <span class="error text-danger" *ngIf="!userUpdateForm.get('lastName')?.valid">
+                        Last name field is invalid.
+                    </span>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="mobile">Mobile No</label>
+                    <input type="number" [formControlName]="'mobileNo'" class="form-control" name="number" id="number" required>
+                    <span class="error text-danger" *ngIf="!userUpdateForm.get('mobileNo')?.valid">
+                        Mobile No field is invalid.
+                    </span>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="address-1">Address</label>
+                    <input type="address" [formControlName]="'address'" class="form-control" name="Locality" id="address-1" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="Date">Date Of Birth</label>
+                    <input type="Date" [formControlName]="'birthDate'" name="dob" class="form-control" id="Date" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="sex">Gender</label>
+                    <select id="sex" [formControlName]="'gender'" class="form-control browser-default custom-select">
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                        <option value="3">Others</option>
+                    </select>
+                </div>
+                <div *ngIf="userRole < 3" class="col-sm-4 form-group">
+                    <label for="Specialization">Specialization</label>
+                    <select [formControlName]="'specialization'" class="form-control custom-select browser-default">
+                        <option value="Specialization 1">Specialization 1</option>
+                        <option value="Specialization 2">Specialization 2</option>
+                        <option value="Specialization 3">Specialization 3</option>
+                        <option value="Specialization 4">Specialization 4</option>
+                    </select>
+                </div>
+                <div *ngIf="userRole < 3" class="col-sm-2 form-group">
+                    <label for="service">Years in Service</label>
+                    <input type="number" [formControlName]="'noOfYearsExperience'" class="form-control" name="Service" id="service" placeholder="Years in service.">
+                </div>
+                <div *ngIf="userRole < 3" class="col-sm-6 form-group">
+                    <label for="State">Education</label>
+                    <input type="text" [formControlName]="'education'" class="form-control" name="Education" id="education" placeholder="Enter Graduated School.">
+                </div>
+                <div *ngIf="userRole < 3" class="col-sm-6 form-group w-50">
+                    <label for="service">Services</label>
+                    <textarea type="text" [formControlName]="'description'" class="form-control" id="service" rows="4"></textarea>
+                </div>
+                <div class="col-sm-12 form-group mb-0">
+                    <button type="submit" class="btn btn-primary btn-lg float-right" [disabled]="!userUpdateForm.valid">Save</button>
+                    <button type="button" routerLink="/" class="btn btn-secondary btn-lg">Back</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

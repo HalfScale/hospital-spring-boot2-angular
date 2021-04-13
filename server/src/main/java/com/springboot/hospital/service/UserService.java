@@ -3,12 +3,16 @@ package com.springboot.hospital.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.springboot.hospital.model.AuthenticationResponse;
 import com.springboot.hospital.model.LoginRequest;
-import com.springboot.hospital.model.RegistrationForm;
 import com.springboot.hospital.model.User;
+import com.springboot.hospital.model.UserDetail;
 import com.springboot.hospital.model.dto.PasswordResetNotificationRequest;
+import com.springboot.hospital.model.dto.ProfileDTO;
 import com.springboot.hospital.model.dto.RefreshTokenRequest;
+import com.springboot.hospital.model.dto.RegistrationForm;
 
 
 public interface UserService {
@@ -28,6 +32,8 @@ public interface UserService {
 	Optional<User> findByResetPassToken(String token);
 	boolean isValidResetPassToken(String token);
 	boolean isLoggedIn();
-	User getCurrentUser();
+	UserDetail getCurrentUser();
 	String getCurrentUserFullName();
+	void updateProfile(String profileDto, MultipartFile file);
+	ProfileDTO getUserProfile();
 }

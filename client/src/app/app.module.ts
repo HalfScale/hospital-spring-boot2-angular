@@ -6,10 +6,10 @@ import { AppComponent } from './app.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmRegistrationComponent } from './components/confirm-registration/confirm-registration.component';
-import {NgxWebstorageModule} from 'ngx-webstorage';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HospitalRoomComponent } from './components/hospital-room/hospital-room.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
@@ -21,13 +21,10 @@ import { UpdateForgotPasswordComponent } from './components/update-forgot-passwo
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReservationComponent } from './components/reservation/reservation.component';
 import { ForgotPasswordSuccessComponent } from './components/forgot-password-success/forgot-password-success.component';
-<<<<<<< Updated upstream
-=======
 import { ProfileComponent } from './components/profile/profile.component';
 import { TokenInterceptor } from './interceptors/token-interceptor';
 import { AddEditRoomComponent } from './components/hospital-room/add-edit-room/add-edit-room.component';
 import { ViewRoomComponent } from './components/hospital-room/view-room/view-room.component';
->>>>>>> Stashed changes
 
 
 @NgModule({
@@ -43,19 +40,16 @@ import { ViewRoomComponent } from './components/hospital-room/view-room/view-roo
     ForgotPasswordComponent,
     UpdateForgotPasswordComponent,
     ReservationComponent,
-<<<<<<< Updated upstream
-    ForgotPasswordSuccessComponent
-=======
     ForgotPasswordSuccessComponent,
     ProfileComponent,
     AddEditRoomComponent,
     ViewRoomComponent
->>>>>>> Stashed changes
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     FormsModule,
     NgxWebstorageModule.forRoot(),
     NgxPaginationModule,
@@ -64,6 +58,11 @@ import { ViewRoomComponent } from './components/hospital-room/view-room/view-roo
     NgbModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

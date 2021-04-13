@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.springboot.hospital.exception.HospitalException;
 import com.springboot.hospital.mapper.HospitalRoomMapper;
 import com.springboot.hospital.model.HospitalRoom;
-import com.springboot.hospital.model.User;
+import com.springboot.hospital.model.UserDetail;
 import com.springboot.hospital.model.dto.HospitalRoomDTO;
 import com.springboot.hospital.repository.HospitalRoomRepository;
 import com.springboot.hospital.util.Constants;
@@ -74,30 +74,30 @@ public class HospitalRoomService {
 			throw new HospitalException("User not logged in!");
 		}
 		
-		User currentUser = userService.getCurrentUser();
+		UserDetail currentUser = userService.getCurrentUser();
 		
 		try {
 			
 			HospitalRoom hospitalRoom = hospitalRoomMapper
 					.map(Parser.parse(hospitalRoomDto, HospitalRoomDTO.class));
-			hospitalRoom.setCreatedBy(currentUser.getId());
-			hospitalRoom.setUpdatedBy(currentUser.getId());
+			hospitalRoom.setCreatedBy(currentUser.getUser().getId());
+			hospitalRoom.setUpdatedBy(currentUser.getUser().getId());
 			hospitalRoom.setCreated(LocalDateTime.now());
 			hospitalRoom.setModified(LocalDateTime.now());
 			
 			//if table is empty
-			Long lastHospitalRoomId = hospitalRoomRepository.save(hospitalRoom).getId();
+			Long HospitalRoomId = hospitalRoomRepository.save(hospitalRoom).getId();
 			
 			if(!uploadedFile.isEmpty()) {
-				String hashedFile = fileService.id(lastHospitalRoomId)
+				String hashedFile = fileService.id(HospitalRoomId)
 						.identifier(fileStorageUtil.getPath(Constants.HOSPITAL_ROOM_IDENTIFIER))
 						.file(uploadedFile)
 						.upload();
 				
 				hospitalRoom.setRoomImage(hashedFile);
+				hospitalRoomRepository.save(hospitalRoom);
 			}
 			
-			hospitalRoomRepository.save(hospitalRoom);
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
@@ -118,7 +118,7 @@ public class HospitalRoomService {
 			hospitalRoom.setRoomCode(parsedHospitalRoomDto.getRoomCode());
 			hospitalRoom.setRoomName(parsedHospitalRoomDto.getRoomName());
 			hospitalRoom.setDescription(parsedHospitalRoomDto.getDescription());
-			hospitalRoom.setUpdatedBy(userService.getCurrentUser().getId());
+			hospitalRoom.setUpdatedBy(userService.getCurrentUser().getUser().getId());
 			hospitalRoom.setModified(LocalDateTime.now());
 			
 			if(!uploadedFile.isEmpty()) {
@@ -146,7 +146,7 @@ public class HospitalRoomService {
 		hospitalRoom.setDeleted(true);
 		hospitalRoom.setDeletedDate(LocalDateTime.now());
 		hospitalRoom.setModified(LocalDateTime.now());
-		hospitalRoom.setUpdatedBy(userService.getCurrentUser().getId());
+		hospitalRoom.setUpdatedBy(userService.getCurrentUser().getUser().getId());
 		hospitalRoomRepository.save(hospitalRoom);
 	}
 }

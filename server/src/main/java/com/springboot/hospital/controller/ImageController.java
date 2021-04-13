@@ -31,12 +31,6 @@ public class ImageController {
 	@Autowired
 	private FileService imageService;
 	
-	@Autowired
-	private ObjectMapper objectMapper;
-	
-	@Autowired
-	private FileStorageUtil fileStorageUtil;
-	
 	@ResponseBody
 	@GetMapping(value = "/{identifier}/{imageName:.+}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
 	public byte[] getImageWithMediaType(@PathVariable String imageName, @PathVariable String identifier) throws IOException {

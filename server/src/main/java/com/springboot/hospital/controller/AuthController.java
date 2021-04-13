@@ -15,13 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,12 +31,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.hospital.model.AuthenticationResponse;
 import com.springboot.hospital.model.LoginRequest;
-import com.springboot.hospital.model.RegistrationForm;
 import com.springboot.hospital.model.Response;
 import com.springboot.hospital.model.User;
 import com.springboot.hospital.model.dto.PasswordResetNotificationRequest;
 import com.springboot.hospital.model.dto.PasswordResetRequest;
 import com.springboot.hospital.model.dto.RefreshTokenRequest;
+import com.springboot.hospital.model.dto.RegistrationForm;
 import com.springboot.hospital.service.RefreshTokenService;
 import com.springboot.hospital.service.UserService;
 import com.springboot.hospital.util.Utils;
@@ -97,7 +97,7 @@ public class AuthController {
 			response.sendRedirect(clientAppUrl + "/invalid-token");
 		}else {
 			
-			logger.info("User: {}, Successful verification", user.getUserDetail().getFirstName());
+//			logger.info("User: {}, Successful verification", user.getUserDetail().getFirstName());
 			user.setConfirmed(true);
 			userService.save(user);
 			response.sendRedirect(clientAppUrl + "/registration/confirm/" + token);

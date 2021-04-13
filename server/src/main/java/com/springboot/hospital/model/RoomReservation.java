@@ -34,7 +34,7 @@ public class RoomReservation {
 	private String roomCode;
 	
 	@Column(name="reserved_by_user_id")
-	private String reservedByUserId;
+	private Long reservedByUserId;
 	
 	@Column(name="has_associated_appointment")
 	private boolean hasAssociatedAppointment;
@@ -55,10 +55,10 @@ public class RoomReservation {
 	private LocalTime reservedEndTime;
 	
 	@Column(name="created_by")
-	private String createdBy;
+	private Long createdBy;
 	
 	@Column(name="updated_by")
-	private String updatedBy;
+	private Long updatedBy;
 	
 	@Column(name="reservation_status")
 	private int reservationStatus;
@@ -99,11 +99,11 @@ public class RoomReservation {
 		this.roomCode = roomCode;
 	}
 
-	public String getReservedByUserId() {
+	public Long getReservedByUserId() {
 		return reservedByUserId;
 	}
 
-	public void setReservedByUserId(String reservedByUserId) {
+	public void setReservedByUserId(Long reservedByUserId) {
 		this.reservedByUserId = reservedByUserId;
 	}
 
@@ -155,19 +155,19 @@ public class RoomReservation {
 		this.reservedEndTime = reservedEndTime;
 	}
 
-	public String getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public String getUpdatedBy() {
+	public Long getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(Long updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

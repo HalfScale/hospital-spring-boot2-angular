@@ -24,7 +24,7 @@ import com.springboot.hospital.controller.UserController;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	
-	Logger logger = LoggerFactory.getLogger(UserController.class);
+	private final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private JwtProvider jwtProvider;
@@ -38,19 +38,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			FilterChain filterChain)
 			throws ServletException, IOException {
 
-		//retrieve the username from the JWT Token
 		String jwt = getJwtFromRequest(request);
+		LOGGER.info("JWT TOKEN => [{}]", jwt);
 		
 		if(StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
 			String username = jwtProvider.getUsernameFromtJwt(jwt);
-			
-			
 			UserDetails userDetails = userDetailsSerivce.loadUserByUsername(username);
+			
 			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,
 					null, userDetails.getAuthorities());
 			authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 			
 			SecurityContextHolder.getContext().setAuthentication(authentication);
+			LOGGER.info("JWT TOKEN => [{}] IS VALID", jwt);
 		}
 		
 		filterChain.doFilter(request, response);
@@ -58,13 +58,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private String getJwtFromRequest(HttpServletRequest request) {
 		String bearerToken = request.getHeader("Authorization");
-		
+		LOGGER.info("BEARER TOKEN => [{}]", request.getHeaderNames());
+		LOGGER.info("HEADERS => [{}]", bearerToken);
 		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-			logger.info("Has bearer token: {}", bearerToken);
 			return bearerToken.substring(7);
 		}
 		
-		logger.info("No bearer token: {}", bearerToken);
 		return bearerToken;
 	}
 
