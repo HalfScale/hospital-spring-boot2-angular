@@ -17,11 +17,4 @@ public class SpringbootHospitalApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootHospitalApplication.class, args);
 	}
-	
-	@Bean
-	public MessageSource messageSource() {
-		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-	    messageSource.addBasenames("classpath:messages");
-	    return messageSource;
-	}
 }
