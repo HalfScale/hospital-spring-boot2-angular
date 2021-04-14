@@ -122,9 +122,4 @@ export class ProfileComponent implements OnInit {
       this.profileImage = file;
     }
   }
-
-  public removeImg() {
-    this.imagePath = 'https://i.ibb.co/ZVFsg37/default.png';
-    this.profileImage = null;
-  }
 }

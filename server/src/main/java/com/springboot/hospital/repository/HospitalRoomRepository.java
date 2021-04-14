@@ -21,4 +21,10 @@ public interface HospitalRoomRepository extends JpaRepository<HospitalRoom, Long
 			String roomName, Pageable pageable);
 	
 	Page<HospitalRoom> findAllByDeletedFalse(Pageable pageable);
+	
+	Optional<HospitalRoom> findByRoomCodeAndRoomName(String roomCode, String roomName);
+	
+	Optional<HospitalRoom> findByRoomCode(String roomCode);
+	
+	Optional<HospitalRoom> findByRoomName(String roomName);
 }

@@ -6,38 +6,49 @@
 
     <div class="text-center">
         <div id="hospital-img-container" class="w-25 mx-auto">
-            <img id="room-image" src="https://i.ibb.co/ZVFsg37/default.png" class="shadow rounded" alt="hospital room image">
+            <div id="room-img-container">
+                <img id="room-image" [src]="imagePath" class="shadow rounded" alt="hospital room image">
+            </div>
             <div class="custom-file mb-3">
-                <input type="file" class="custom-file-input" id="validatedCustomFile" required>
+                <input type="file" class="custom-file-input" id="validatedCustomFile" (change)="selectImg($event)" required>
                 <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
             </div>
         </div>
     </div>
 
     <!-- FORM -->
-    <form class="w-75 mb-2 mx-auto">
+    <form [formGroup]="hospitalForm" (ngSubmit)="submit()" class="w-75 mb-2 mx-auto">
         <div class="form-group row">
             <label for="room-code" class="col-sm-2 col-form-label">Room Code</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="room-code">
+                <input [formControlName]="'roomCode'" type="text" class="form-control" id="room-code">
+                <span class="error text-danger" *ngIf="!hospitalForm.get('roomCode')?.valid && hospitalForm.get('roomCode')?.touched">
+                    Room Code field is invalid.
+                </span>
             </div>
         </div>
         <div class="form-group row">
             <label for="room-name" class="col-sm-2 col-form-label">Room Name</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="room-name">
+                <input [formControlName]="'roomName'" type="text" class="form-control" id="room-name">
+                <span class="error text-danger" *ngIf="!hospitalForm.get('roomName')?.valid && hospitalForm.get('roomName')?.touched">
+                    Room Name field is invalid.
+                </span>
             </div>
         </div>
         <div class="form-group row">
             <label for="room-desc" class="col-sm-2 col-form-label">Room Description</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="room-desc">
+                <input [formControlName]="'description'" type="text" class="form-control" id="room-desc">
+                <span class="error text-danger" *ngIf="!hospitalForm.get('description')?.valid && hospitalForm.get('description')?.touched">
+                    Description field is invalid.
+                </span>
             </div>
         </div>
         <div class="form-group row mx-auto">
-            <button type="button" class="btn btn-primary m-2">Back</button>
-            <button type="button" class="btn btn-primary m-2">View</button>
-            <button type="button" class="btn btn-primary m-2">Register</button>
+            <button routerLink="/hospital_rooms" type="button" class="btn btn-primary m-2">Back</button>
+            <button routerLink="/hospital_rooms" type="button" class="btn btn-primary m-2">View</button>
+            <button type="submit" class="btn btn-primary m-2" [disabled]="!hospitalForm.valid">Register</button>
         </div>
     </form>
 </div>

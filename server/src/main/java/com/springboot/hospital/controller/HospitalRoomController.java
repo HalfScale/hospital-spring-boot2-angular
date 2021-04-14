@@ -51,7 +51,8 @@ public class HospitalRoomController {
 	
 	@PostMapping
 	public ResponseEntity<?> addHospitalRoom(@RequestPart("hospitalRoomDto") String hopsitalRoomDto, 
-			@RequestPart("file") MultipartFile file) {
+			@RequestPart(value = "file", required = false) MultipartFile file) {
+		
 		hospitalRoomService.addHospitalRoom(hopsitalRoomDto, file);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
