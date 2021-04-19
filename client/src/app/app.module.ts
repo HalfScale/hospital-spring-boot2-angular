@@ -25,6 +25,9 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { TokenInterceptor } from './interceptors/token-interceptor';
 import { AddEditRoomComponent } from './components/hospital-room/add-edit-room/add-edit-room.component';
 import { ViewRoomComponent } from './components/hospital-room/view-room/view-room.component';
+import { EditRoomComponent } from './components/hospital-room/edit-room/edit-room.component';
+import { ViewEditRoomComponent } from './components/hospital-room/view-edit-room/view-edit-room.component';
+import { DetailsRoomComponent } from './components/hospital-room/details-room/details-room.component';
 
 
 @NgModule({
@@ -43,7 +46,10 @@ import { ViewRoomComponent } from './components/hospital-room/view-room/view-roo
     ForgotPasswordSuccessComponent,
     ProfileComponent,
     AddEditRoomComponent,
-    ViewRoomComponent
+    ViewRoomComponent,
+    EditRoomComponent,
+    ViewEditRoomComponent,
+    DetailsRoomComponent
   ],
   imports: [
     BrowserModule,

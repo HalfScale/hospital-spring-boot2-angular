@@ -8,7 +8,7 @@ import { GlobalVariable } from '../globals';
 })
 export class HospitalRoomService {
 
-  private baseApiUrl = GlobalVariable.BASE_API_URL;
+  private baseApiUrl = GlobalVariable.BASE_API_URL + '/api/rooms';
 
   constructor(private http: HttpClient) { }
 
@@ -22,18 +22,22 @@ export class HospitalRoomService {
         fromObject: requestParams
       })
     };
-    return this.http.get<any>(this.baseApiUrl + '/api/rooms/pageable', httpOptions);
+    return this.http.get<any>(this.baseApiUrl + '/pageable', httpOptions);
+  }
+
+  public getRoomById(roomId: number): Observable<any> {
+    return this.http.get(this.baseApiUrl + `/${roomId}`);
   }
 
   public addRoom(formData: FormData): Observable<any> {
-    return this.http.post<any>(this.baseApiUrl + '/api/rooms', formData);
+    return this.http.post<any>(this.baseApiUrl, formData);
   }
 
-  public updateRoom(formData: FormData): Observable<any> {
-    return this.http.put<any>(this.baseApiUrl + '/api/rooms', formData);
+  public updateRoom(roomId: number, formData: FormData): Observable<any> {
+    return this.http.put<any>(this.baseApiUrl + `/${roomId}`, formData);
   }
 
   public deleteRoom(roomId: number): Observable<any>{
-    return this.http.delete(this.baseApiUrl + '/api/rooms/' + roomId);
+    return this.http.delete(this.baseApiUrl + `/${roomId}`);
   }
 }
