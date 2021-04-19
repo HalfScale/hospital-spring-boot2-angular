@@ -7,9 +7,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <form class="form-inline my-2 my-lg-0">
                 <label for="room-code">Room Code: </label>
-                <input name="roomCode" class="form-control mr-sm-2" type="search" [(ngModel)]="roomCode">
+                <input name="roomCode" class="ml-2 form-control mr-sm-2" type="search" [(ngModel)]="roomCode">
                 <label for="room-name">Room Name: </label>
-                <input name="roomName" class="form-control mr-sm-2" type="search" [(ngModel)]="roomName">
+                <input name="roomName" class="ml-2 form-control mr-sm-2" type="search" [(ngModel)]="roomName">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="search()">Search</button>
                 <button class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="clear()">Clear</button>
             </form>
@@ -39,7 +39,7 @@
                 <td>{{item.updatedBy}}</td>
                 <td>
                     <button type="button" class="btn btn-danger">Delete</button>
-                    <button type="button" class="btn btn-info">View</button>
+                    <button type="button" class="ml-2 mr-2 btn btn-info">View</button>
                     <button type="button" class="btn btn-warning">Edit</button>
                 </td>
             </tr>

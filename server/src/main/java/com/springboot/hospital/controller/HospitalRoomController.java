@@ -2,6 +2,8 @@ package com.springboot.hospital.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.hospital.model.HospitalRoom;
 import com.springboot.hospital.model.Response;
 import com.springboot.hospital.model.dto.HospitalRoomDTO;
@@ -28,8 +31,13 @@ import com.springboot.hospital.util.Utils;
 @RequestMapping("/api/rooms")
 public class HospitalRoomController {
 	
+	private final Logger LOGGER = LoggerFactory.getLogger(HospitalRoomController.class);
+	
 	@Autowired
 	private HospitalRoomService hospitalRoomService;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 	
 	@GetMapping
 	public Response getAllRooms() {
@@ -38,7 +46,8 @@ public class HospitalRoomController {
 	}
 	
 	@GetMapping("/{roomId}")
-	public ResponseEntity<?> getRoomById(@PathVariable Long roomId) {
+	public ResponseEntity<HospitalRoomDTO> getRoomById(@PathVariable Long roomId) {
+		LOGGER.info("getRoomById => [{}]", roomId);
 		return ResponseEntity.ok(hospitalRoomService.findById(roomId));
 	}
 	
@@ -46,27 +55,30 @@ public class HospitalRoomController {
 	public Page<HospitalRoomDTO> getAllHospitalRoomByPage(@RequestParam(name = "roomCode", required = false) String roomCode, 
 			@RequestParam(name = "roomName", required = false) String roomName, 
 			@RequestParam(name = "status", required = false) Integer status, Pageable pageable) {
+		LOGGER.info("getAllHospitalRoomByPage => [{}, {}, {}]", roomCode, roomName, status);
 		return hospitalRoomService.findAllByPage(roomCode, roomName, pageable);
 	}
 	
 	@PostMapping
 	public ResponseEntity<?> addHospitalRoom(@RequestPart("hospitalRoomDto") String hopsitalRoomDto, 
 			@RequestPart(value = "file", required = false) MultipartFile file) {
-		
+		LOGGER.info("addHospitalRoom => hopsitalRoomDto [{}]", hopsitalRoomDto);
 		hospitalRoomService.addHospitalRoom(hopsitalRoomDto, file);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
 	@PutMapping("/{roomId}")
 	public ResponseEntity<?> updateRoom(@RequestPart("hospitalRoomDto") String hopsitalRoomDto, 
-			@RequestPart("file") MultipartFile file, @PathVariable Long roomId) {
+			@RequestPart(required = false, value = "file") MultipartFile file, @PathVariable Long roomId) {
 		
+		LOGGER.info("updateRoom => hopsitalRoomDto [{}], roomId [{}]", hopsitalRoomDto, roomId);
 		hospitalRoomService.updateHospitalRoom(roomId, hopsitalRoomDto, file);
 		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping("/{roomId}")
 	public ResponseEntity<?> deleteRoom(@PathVariable Long roomId) {
+		LOGGER.info("deleteRoom => roomId [{}]", roomId);
 		hospitalRoomService.deleteHospitalRoom(roomId);
 		return ResponseEntity.ok().build(); 
 	}
