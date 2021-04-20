@@ -1,4 +1,5 @@
 <app-header></app-header>
+
 <div style="text-align:center">
     <h1>Hospital Name</h1>
     <h4>List of Rooms</h4>
@@ -31,20 +32,20 @@
                 <th scope="col">Action</th>
             </tr>
         </thead>
-        <tbody *ngIf="collection.data.length > 0">
-            <tr *ngFor="let item of collection.data | paginate: config">
-                <th scope="row">{{item.roomCode}}</th>
-                <td>{{item.roomName}}</td>
-                <td>{{item.createdBy}}</td>
-                <td>{{item.updatedBy}}</td>
+        <tbody *ngIf="roomList.data.length > 0">
+            <tr *ngFor="let room of roomList.data | paginate: config">
+                <th scope="row">{{room.roomCode}}</th>
+                <td>{{room.roomName}}</td>
+                <td>{{room.createdBy}}</td>
+                <td>{{room.updatedBy}}</td>
                 <td>
-                    <button type="button" class="btn btn-danger">Delete</button>
-                    <button type="button" class="ml-2 mr-2 btn btn-info">View</button>
-                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button (click)="open(room)" type="button" class="btn btn-danger">Delete</button>
+                    <button routerLink="/hospital_rooms/details/{{room.id}}" type="button" class="ml-2 mr-2 btn btn-info">View</button>
+                    <button routerLink="/hospital_rooms/edit/{{room.id}}" type="button" class="btn btn-warning">Edit</button>
                 </td>
             </tr>
         </tbody>
-        <tbody *ngIf="collection.data.length == 0">
+        <tbody *ngIf="roomList.data.length == 0">
             <tr>
                 <td class="text-red" colspan="5">No data available</td>
             </tr>

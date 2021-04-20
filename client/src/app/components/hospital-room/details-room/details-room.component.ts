@@ -21,7 +21,7 @@ export class DetailsRoomComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router) {
 
-    const roomId = this.activatedRoute.snapshot.paramMap.get('roomId');
+    const roomId = this.getRoomIdFromPathVariable();
     hospitalRoomService.getRoomById(Number(roomId))
       .subscribe(data => {
         console.log('getRoomById =>', data);
@@ -29,8 +29,13 @@ export class DetailsRoomComponent implements OnInit {
       });
   }
 
+  private getRoomIdFromPathVariable() {
+    return this.activatedRoute.snapshot.paramMap.get('roomId');
+  }
+
   private setRoomData(data: any) {
     this.roomData = {
+      id: data.id,
       roomCode: data.roomCode,
       roomName: data.roomName,
       description: data.description
@@ -39,6 +44,10 @@ export class DetailsRoomComponent implements OnInit {
     if(data.roomImage) {
       this.roomImagePath = data.roomImage;
     }
+  }
+
+  public editRoom() {
+    this.router.navigateByUrl(`/hospital_rooms/edit/${this.roomData.id}`)
   }
 
   ngOnInit(): void {
