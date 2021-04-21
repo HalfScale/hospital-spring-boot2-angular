@@ -1,0 +1,86 @@
+<app-header class="mb-10"></app-header>
+
+<div id="container" class="w-75 rounded shadow mx-auto">
+    <h1 class="text-center">Hospital Name</h1>
+    <h3 class="text-center">Room Reservation</h3>
+
+    <div class="text-center">
+        <div id="hospital-img-container" class="w-25 mx-auto">
+            <div id="room-img-container">
+                <img id="room-image" [src]="imagePath" class="shadow rounded" alt="hospital room image">
+            </div>
+            <h3 class="mt-2">Room Name</h3>
+        </div>
+    </div>
+
+    <!-- FORM -->
+    <form [formGroup]="reservationForm" (ngSubmit)="submit()" class="w-75 mb-2 mx-auto">
+        <div class="form-group row">
+            <label for="room-code" class="col-sm-2 col-form-label">Room Code</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="room-code">
+                <span class="error text-danger">
+                    Room Code field is invalid.
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="room-code" class="col-sm-2 col-form-label">Has Associated Appointment</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="room-code">
+                <span class="error text-danger">
+                    Room Code field is invalid.
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="room-code" class="col-sm-2 col-form-label">Associated Appointment ID</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="room-code">
+                <span class="error text-danger">
+                    Room Code field is invalid.
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="room-name" class="col-sm-2 col-form-label">Reservation Date</label>
+            <div class="input-group date-wrapper">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="reserveDate" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="room-desc" class="col-sm-2 col-form-label">Reservation Time</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="room-desc">
+                <span class="error text-danger">
+                    Description field is invalid.
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="room-desc" class="col-sm-2 col-form-label">Reservation End Date</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="room-desc">
+                <span class="error text-danger">
+                    Description field is invalid.
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="room-desc" class="col-sm-2 col-form-label">Reservation End Time</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="room-desc">
+                <span class="error text-danger">
+                    Description field is invalid.
+                </span>
+            </div>
+        </div>
+        <div class="form-group row mx-auto">
+            <button type="button" class="btn btn-primary m-2">Back</button>
+            <button type="submit" class="btn btn-primary m-2">Create</button>
+        </div>
+    </form>
+</div>
