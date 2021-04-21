@@ -28,6 +28,7 @@ import { ViewRoomComponent } from './components/hospital-room/view-room/view-roo
 import { EditRoomComponent } from './components/hospital-room/edit-room/edit-room.component';
 import { ViewEditRoomComponent } from './components/hospital-room/view-edit-room/view-edit-room.component';
 import { DetailsRoomComponent } from './components/hospital-room/details-room/details-room.component';
+import { AddReservationComponent } from './components/reservation/add-reservation/add-reservation.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { DetailsRoomComponent } from './components/hospital-room/details-room/de
     ViewRoomComponent,
     EditRoomComponent,
     ViewEditRoomComponent,
-    DetailsRoomComponent
+    DetailsRoomComponent,
+    AddReservationComponent
   ],
   imports: [
     BrowserModule,

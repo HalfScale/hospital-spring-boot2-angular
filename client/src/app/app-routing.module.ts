@@ -14,6 +14,7 @@ import { ViewRoomComponent } from './components/hospital-room/view-room/view-roo
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { AddReservationComponent } from './components/reservation/add-reservation/add-reservation.component';
 import { ReservationComponent } from './components/reservation/reservation.component';
 import { UpdateForgotPasswordComponent } from './components/update-forgot-password/update-forgot-password.component';
 
@@ -42,6 +43,7 @@ const routes: Routes = [
   {path: 'hospital_rooms/view', component: ViewRoomComponent},
   {path: 'hospital_rooms/view/edit', component: ViewEditRoomComponent},
   {path: 'hospital_rooms/details/:roomId', component: DetailsRoomComponent},
+  {path: 'reservations/add/:roomId', component: AddReservationComponent},
   {path: '**', component: ErrorPageComponent}
 ];
 
