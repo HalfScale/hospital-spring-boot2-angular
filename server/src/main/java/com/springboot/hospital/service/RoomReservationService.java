@@ -1,6 +1,9 @@
 package com.springboot.hospital.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,5 +39,17 @@ public class RoomReservationService {
 		roomReservation.setReservedByUserId(currentUser.getId());
 		
 		roomReservationRepository.save(roomReservation);
+	}
+	
+	public LocalDate getAvailableReservationDate() {
+		
+		RoomReservation roomReservation = roomReservationRepository.findTopByOrderByIdDesc().orElse(null);
+		
+		if(!Objects.isNull(roomReservation)) {
+			
+			return roomReservation.getReservedEndDate();
+		}
+		
+		return LocalDate.now();
 	}
 }

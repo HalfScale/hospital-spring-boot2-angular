@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @SpringBootApplication
 @EnableAsync
@@ -14,9 +15,5 @@ public class SpringbootHospitalApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootHospitalApplication.class, args);
 	}
-	
-	@Bean
-	public ObjectMapper objectMapper() {
-		return new ObjectMapper();
-	}
+
 }
