@@ -16,8 +16,8 @@
     <!-- FORM -->
     <form [formGroup]="reservationForm" (ngSubmit)="submit()" class="w-75 mb-2 mx-auto">
         <div class="form-group row">
-            <label for="room-code" class="col-sm-2 col-form-label">Room Code</label>
-            <div class="col-sm-10">
+            <label for="room-code" class="col-sm-3 col-form-label">Room Code</label>
+            <div class="col-sm-9">
                 <input type="text" class="form-control" id="room-code">
                 <span class="error text-danger">
                     Room Code field is invalid.
@@ -25,8 +25,8 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="room-code" class="col-sm-2 col-form-label">Has Associated Appointment</label>
-            <div class="col-sm-10">
+            <label for="room-code" class="col-sm-3 col-form-label">Has Associated Appointment</label>
+            <div class="col-sm-9">
                 <input type="text" class="form-control" id="room-code">
                 <span class="error text-danger">
                     Room Code field is invalid.
@@ -34,8 +34,8 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="room-code" class="col-sm-2 col-form-label">Associated Appointment ID</label>
-            <div class="col-sm-10">
+            <label for="room-code" class="col-sm-3 col-form-label">Associated Appointment ID</label>
+            <div class="col-sm-9">
                 <input type="text" class="form-control" id="room-code">
                 <span class="error text-danger">
                     Room Code field is invalid.
@@ -43,17 +43,17 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="room-name" class="col-sm-2 col-form-label">Reservation Date</label>
+            <label for="room-name" class="col-sm-3 col-form-label">Reservation Date</label>
             <div class="input-group date-wrapper">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="reserveDate" ngbDatepicker #d="ngbDatepicker">
+                <input #reserveDate="ngbDatepicker" [formControlName]="'reserveDate'" [minDate]="minDate" class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker>
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                    <button class="btn btn-outline-secondary calendar" (click)="reserveDate.toggle()" type="button"></button>
                 </div>
             </div>
         </div>
         <div class="form-group row">
-            <label for="room-desc" class="col-sm-2 col-form-label">Reservation Time</label>
-            <div class="col-sm-10">
+            <label for="room-desc" class="col-sm-3 col-form-label">Reservation Time</label>
+            <div class="col-sm-9">
                 <input type="text" class="form-control" id="room-desc">
                 <span class="error text-danger">
                     Description field is invalid.
@@ -61,17 +61,17 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="room-desc" class="col-sm-2 col-form-label">Reservation End Date</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="room-desc">
-                <span class="error text-danger">
-                    Description field is invalid.
-                </span>
+            <label for="room-desc" class="col-sm-3 col-form-label">Reservation End Date</label>
+            <div class="input-group date-wrapper">
+                <input #reserveEndDate="ngbDatepicker" [formControlName]="'reserveEndDate'" [minDate]="minDate" class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="reserveEndDate.toggle()" type="button"></button>
+                </div>
             </div>
         </div>
         <div class="form-group row">
-            <label for="room-desc" class="col-sm-2 col-form-label">Reservation End Time</label>
-            <div class="col-sm-10">
+            <label for="room-desc" class="col-sm-3 col-form-label">Reservation End Time</label>
+            <div class="col-sm-9">
                 <input type="text" class="form-control" id="room-desc">
                 <span class="error text-danger">
                     Description field is invalid.
