@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalVariable } from 'src/app/globals';
 import { HospitalRoomService } from 'src/app/services/hospital-room.service';
-import {NgbCalendar, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {NgbCalendar, NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import { ReservationService } from 'src/app/services/reservation.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-reservation',
@@ -19,10 +21,17 @@ export class AddReservationComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private hospitalRoomService: HospitalRoomService,
-    private ngbCalendar: NgbCalendar) { 
+    private ngbCalendar: NgbCalendar,
+    private reservationService: ReservationService,
+    private dateParser: NgbDateParserFormatter) { 
     
     let dateToday = ngbCalendar.getToday();
     console.log('date today', dateToday);
+    
+
+    this.getAvailableReservationDate().subscribe(data => {
+      this.minDate = dateParser.parse(data);
+    });
     
     this.minDate = dateToday;
     this.reservationForm = this.formBuilder.group({
@@ -33,6 +42,10 @@ export class AddReservationComponent implements OnInit {
     });
 
     // this.getHospitalRoom();
+  }
+
+  private getAvailableReservationDate(): Observable<any> {
+    return this.reservationService.getAvailableReservationDate();
   }
 
   private getHospitalRoom() {
