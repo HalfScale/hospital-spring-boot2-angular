@@ -1,5 +1,7 @@
 package com.springboot.hospital.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.hospital.model.dto.RoomReservationDTO;
@@ -28,5 +31,10 @@ public class RoomReservationController {
 	@GetMapping("/available_date")
 	public ResponseEntity<?> getAvailableReservationDate() {
 		return ResponseEntity.ok(roomReservationService.getAvailableReservationDate());
+	}
+	
+	@GetMapping("/reserved_time")
+	public ResponseEntity<?> getReservedTime(@RequestParam("date") String date) {
+		return ResponseEntity.ok(roomReservationService.getReservedTime(LocalDate.parse(date)));
 	}
 }

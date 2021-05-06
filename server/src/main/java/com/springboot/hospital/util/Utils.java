@@ -1,5 +1,7 @@
 package com.springboot.hospital.util;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,4 +26,10 @@ public class Utils {
 	public static String createFullName(UserDetail userDetail) {
 		return userDetail.getFirstName() + " " + userDetail.getLastName();
 	}
+	
+	public static String formatLocalTime(String pattern, LocalTime localTime) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern(pattern);
+		return dtf.format(localTime);
+	}
+	
 }
