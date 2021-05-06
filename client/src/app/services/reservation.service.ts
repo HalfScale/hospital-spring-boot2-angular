@@ -15,4 +15,12 @@ export class ReservationService {
   public getAvailableReservationDate(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/api/reservations/available_date");
   }
+
+  public getReservedTime(date: string): Observable<any> {
+    return this.http.get<any>(this.apiUrl + "/api/reservations/reserved_time", {
+      params: {
+        date: date
+      }
+    });
+  }
 }
