@@ -7,6 +7,7 @@ export class Time {
 
     isReserved: boolean = false;
     isStartTime: boolean = false;
+    inBetween: boolean = false;
 
     constructor(hour: string) {
         this.hour = hour;
