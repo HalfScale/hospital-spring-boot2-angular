@@ -22,25 +22,39 @@ export class TimeManager {
 
     public setTime(reservedTime: string[]) {
 
-        reservedTime.forEach(val => {
+        reservedTime.forEach((val) => {
             const splittedTime = val.split('-');
             const startTime = splittedTime[0];
+            const startTimeHourPart = startTime.split(':')[0];
+            const startTimeMinutePart = startTime.split(':')[1];
             const endTime = splittedTime[1];
+            const endTimeHourPart = endTime.split(':')[0];
+            const endTimeMinutePart = endTime.split(':')[1];
 
-            this.timeList.forEach(val => {
-                if(val.hour == startTime.split(':')[0]) {
+            // traverse and get the first and last index
+            // traverse and get the in between
+            this.timeList.forEach((val, i) => {
+                if(val.hour == startTimeHourPart) {
                     val.isStartTime = true;
                     val.isReserved = true;
                     Object.keys(val.minutes).forEach(key => {
-                        if(key == startTime.split(':')[1]) {
+                        if(key == startTimeMinutePart) {
                             val.minutes[key] = false;
                         }
                     });
                 }
 
-                if(val.hour == endTime.split(':')[0]) {
+                const startIndex = this.findHourIndex(startTimeHourPart);
+                const endIndex = this.findHourIndex(endTimeHourPart);
+                if(i > startIndex && i < endIndex) {
+                    console.log('time in between', this.timeList[i]);
+                    val.isReserved = true;
+                    val.inBetween = true;
+                }
+
+                if(val.hour == endTimeHourPart) {
                     Object.keys(val.minutes).forEach(key => {
-                        if(key == endTime.split(':')[1]) {
+                        if(key == endTimeMinutePart) {
                             val.minutes[key] = false;
                             val.isReserved = true;
                         }
@@ -83,6 +97,10 @@ export class TimeManager {
             const currentHour = moment().format('HH');
             return time.getHourInInteger() > this.getCurrentHour();
         });
+    }
+
+    public findHourIndex(hour: string) {
+        return this.timeList.findIndex(val => val.hour == hour);
     }
 
     private getCurrentHour(): Number {
