@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { TimeManager } from '../models/time-manager';
 import { Time } from '../models/time';
 import { NgbDateStructAdapter } from '@ng-bootstrap/ng-bootstrap/datepicker/adapters/ngb-date-adapter';
+import { ReservationRequest } from '../models/reservation-request';
 
 const Default = Object.freeze({
   HOUR: 'HH',
@@ -40,6 +41,7 @@ export class AddReservationComponent implements OnInit {
   imagePath: any = GlobalVariable.DEFAULT_PROFILE_IMG;
   reservationForm: FormGroup;
   minDate: any;
+  reservationRequest: ReservationRequest;
 
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -49,24 +51,8 @@ export class AddReservationComponent implements OnInit {
     private dateParser: NgbDateParserFormatter) {
 
     this.timeManager = new TimeManager();
-
+    this.timeManager.filterTime();
     let dateToday = ngbCalendar.getToday();
-    console.log('ngbCalendar', this.ngbCalendar.getNext(dateToday));
-
-
-    // this.getAvailableReservationDate().subscribe(data => {
-    //   this.minDate = dateParser.parse(data);
-    // });
-
-    this.getReservedTime(this.createDate(dateToday)).subscribe((data: string[]) => {
-      let reservedTime = data;
-      this.timeManager.setTime(['10:00-15:00']);
-      this.timeListTracker = this.timeManager.getTime();
-
-      this.timeListTrackerStart = this.filterStartTime();
-      console.log('timeListTrackerStart', this.timeListTrackerStart);
-    });
-
 
     this.minDate = dateToday;
     this.reservationForm = this.formBuilder.group({
@@ -87,8 +73,58 @@ export class AddReservationComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  private getAvailableReservationTime() {
+    let dateToday = this.ngbCalendar.getToday();
+    // get first the available time for today
+    this.getReservedTime(this.createDate(dateToday)).subscribe((data: string[]) => {
+      let reservedTime = data;
+      this.timeManager.setTime(reservedTime);
+      this.timeListTracker = this.timeManager.getTime();
 
+      //check for the available time for the next day
+      const nextDay = this.ngbCalendar.getNext(dateToday);
+      this.getReservedTime(this.createDate(nextDay)).subscribe((data: string[]) => {
+        // make an instance of time maanger and set a time
+        let reservedEndTime = data;
+        const tempTimeManager = new TimeManager();
+        tempTimeManager.setTime(reservedEndTime);
+
+        //Check the possible time for the next day
+        //this is for the endTime checking
+        let availableTimeForEnd = [];
+        for (let time of tempTimeManager.getTime()) {
+          const previousTime = tempTimeManager.getPreviousTime(time.hour);
+          if ((time.isReserved && !time.isStartTime) ||
+            (time.isReserved && (previousTime && previousTime.isReserved))) { break; }
+
+          availableTimeForEnd.push(time);
+        }
+
+        //check if there is still an available time for the next day
+        //if only the available hour for the star time is 23
+        //true move to the next day and use this function again
+        //till we get a valid time
+        //else filter the possible startTime
+        let availableTimeForStart = this.filterStartTime();
+        if(availableTimeForStart.length == 1 && availableTimeForEnd.length == 1) {
+          const selectedStartTime = availableTimeForStart[0];
+          const selectedEndTime = availableTimeForEnd[0];
+          if(!selectedStartTime.minutes['30'] && selectedStartTime.isReserved &&
+            !selectedEndTime.minutes['00']) {
+              this.reservationForm.controls['reserveDate'].setValue(nextDay);
+              this.reservationForm.controls['reserveEndDate'].setValue(nextDay);
+              this.minDate = nextDay;
+              this.getAvailableReservationTime();
+          }
+        }else {
+          this.timeListTrackerStart = this.filterStartTime();
+        }
+      });
+    });
+  }
+
+  ngOnInit(): void {
+    this.getAvailableReservationTime();
   }
 
   private createDate(date: NgbDate) {
@@ -161,6 +197,7 @@ export class AddReservationComponent implements OnInit {
         console.log('getReservedTime for endDate =>', endDate);
         const reservedTime = data;
         this.timeEndManager = new TimeManager();
+        this.timeEndManager.filterTime();
         this.timeEndManager.setTime(reservedTime);
         this.enableEndTimeFormInputs();
 
@@ -172,11 +209,9 @@ export class AddReservationComponent implements OnInit {
 
           availableTimeForEnd.push(time);
         }
-
         this.timeListTrackerEnd = availableTimeForEnd;
         console.log('timeListTrackerEnd', this.timeListTrackerEnd);
         const enableEndDate = availableTimeForEnd.some(time => time.hour == '23' && !time.isReserved);
-        console.log('timeListTrackerEnd', this.timeListTrackerEnd);
         if (!enableEndDate) {
           this.maxEndDate = this.reservationForm.controls['reserveEndDate'].value;
         } else {
@@ -310,12 +345,14 @@ export class AddReservationComponent implements OnInit {
       this.enableEndTimeFormInputs();
     }
 
+    // possibleEndTime for the same date
     let availableTimeForEnd: Time[] = this.setPossibleEndTime(targetHour);
     this.checkEndDateAvailability(availableTimeForEnd);
 
     let exceedsCurrentDay = this.timeListTracker.some(time => {
       return time.hour == '23' && (!time.isReserved || (time.isReserved && !time.isStartTime));
     });
+
 
     const dateToday = this.reservationForm.controls['reserveDate'].value;
     if (targetHour == '23') {
@@ -328,6 +365,7 @@ export class AddReservationComponent implements OnInit {
       } else {
         this.minEndDate = dateToday;
       }
+      // possible end time for different dates
       this.onEndDateSelection(nextDay);
 
     } else {
@@ -424,8 +462,20 @@ export class AddReservationComponent implements OnInit {
 
   }
 
-  public submit() {
+  private createTime(hours: string, mins: string) {
+    return `${hours}:${mins}`
+  }
 
+  public submit() {
+    this.reservationRequest = new ReservationRequest();
+    const startTime = this.createTime(this.reservationForm.controls['reserveTimeHour'].value, this.reservationForm.controls['reserveTimeMinutes'].value);
+    const endTime = this.createTime(this.reservationForm.controls['reserveEndTimeHour'].value, this.reservationForm.controls['reserveEndTimeMinutes'].value);
+    this.reservationRequest.associatedAppointmentId = this.reservationForm.controls['associatedAppointmentId'].value;
+    this.reservationRequest.reservedDate = this.createDate(this.reservationForm.controls['reserveDate'].value);
+    this.reservationRequest.reservedTime = startTime;
+    this.reservationRequest.reservedEndDate = this.createDate(this.reservationForm.controls['reserveEndDate'].value);
+    this.reservationRequest.reservedEndTime = endTime;
+    console.log('data before submit', this.reservationRequest);
   }
 
 }
