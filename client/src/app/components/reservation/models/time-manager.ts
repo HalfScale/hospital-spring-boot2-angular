@@ -47,7 +47,6 @@ export class TimeManager {
                 const startIndex = this.findHourIndex(startTimeHourPart);
                 const endIndex = this.findHourIndex(endTimeHourPart);
                 if(i > startIndex && i < endIndex) {
-                    console.log('time in between', this.timeList[i]);
                     val.isReserved = true;
                     val.inBetween = true;
                 }
