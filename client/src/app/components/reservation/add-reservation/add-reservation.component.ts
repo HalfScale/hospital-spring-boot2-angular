@@ -124,7 +124,28 @@ export class AddReservationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAvailableReservationTime();
+    const mockTimeManager = new TimeManager();
+    mockTimeManager.mockSetTargetDate('2021-05-09');
+    mockTimeManager.mockSetReservedTime(this.mockGetTime());
+  }
+
+  private mockGetTime() {
+    return {
+      data: [
+        {
+          startDate: '2021-05-09', 
+          endDate: '2021-05-09',
+          startTime: '05:00',
+          endTime: '12:00'
+        },
+        {
+          startDate: '2021-05-09', 
+          endDate: '2021-05-10',
+          startTime: '12:30',
+          endTime: '08:00'
+        }
+      ]
+    }
   }
 
   private createDate(date: NgbDate) {
@@ -194,7 +215,6 @@ export class AddReservationComponent implements OnInit {
 
     if (!this.isDateEqual()) {
       this.getReservedTime(this.createDate(endDate)).subscribe((data: string[]) => {
-        console.log('getReservedTime for endDate =>', endDate);
         const reservedTime = data;
         this.timeEndManager = new TimeManager();
         this.timeEndManager.filterTime();

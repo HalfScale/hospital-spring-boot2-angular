@@ -1,8 +1,16 @@
 export class Time {
     hour: string;
     minutes: any = {
-        '00': true,
-        '30': true
+        '00': {
+            isStartTime: false,
+            isInBetween: false,
+            isEndTime: false
+        },
+        '30':{
+            isStartTime: false,
+            isInBetween: false,
+            isEndTime: false
+        }
     }
 
     isReserved: boolean = false;
