@@ -20,7 +20,7 @@ export class TimeManager {
     public mockSetReservedTime(result: any) {
         console.log('result data', result);
         result.data.forEach(data => {
-            console.log('data', data);
+            // console.log('data', data);
             //1.traverse through the data
             //2.only set the time that is within the target date
             //3. get the start and end time
@@ -36,47 +36,83 @@ export class TimeManager {
             const endTime = this.getHourInTime(endHour);
             endTime.isReserved = true;
             endTime.minutes[endMinutes].isEndTime = true;
-            console.log('startHour', startHour);
-            console.log('endHour', endHour);
+
+            // console.log('startHour', startHour);
+            // console.log('endHour', endHour);
 
             if (data.startDate == this.targetDate && data.endDate == this.targetDate) {
                 this.timeList.forEach((time, i) => {
-                    //check if its a start_time, in between or end_time
-                    //
+
                     if (i > this.findHourIndex(startHour) && i < this.findHourIndex(endHour)) {
                         time.inBetween = true;
                         time.isReserved = true;
                     }
                 });
             }
+
+            //different start date and end date
+            // if(data.startDate == this.targetDate && data.endDate != this.targetDate) {
+            //     this.timeList.forEach((time, i) => {
+            //         //if start date and end date is different
+            //         //then all time from the start hour is reserved and the rest is in between
+            //         if(i == this.findHourIndex(startHour)) {
+            //             time.isReserved = true;
+            //             time.isStartTime = true;
+            //         }
+
+            //         if(i > this.findHourIndex(startHour)) {
+            //             time.isReserved = true;
+            //             time.inBetween = true;
+            //         }
+            //     });
+                
+            // }
         });
 
         // console.log('timeList', this.timeList);
-        this.getAvailableTime();
-        this.filterStartTime();
+        // this.getAvailableTime();
+        // this.filterStartTime();
     }
 
-    private getAvailableTime(): Time[] {
-        //iterate through the array
-        //filter the time that is not reserved, or reserved but is a start time,
-        const result = this.timeList.filter(time => {
-            return !time.isReserved || time.isReserved && time.isStartTime
-        });
-        console.log('getAvailableTime result', result);
-        return result;
-    }
+    // private getAvailableTime(): Time[] {
+    //     //iterate through the array
+    //     //filter the time that is not reserved, or reserved but is a start time,
+    //     const result = this.timeList.filter(time => {
+    //         let flag = false;
 
-    private filterStartTime() {
+    //         if(!time.isReserved) {
+    //             flag = true;
+    //         }
+    //         return flag;
+    //     });
+    //     // console.log('getAvailableTime result', result);
+    //     return result;
+    // }
+
+    public filterStartTime(): Time[] {
         //if hour is reserved
         //check the available minutes
         //if any of the mins is labeled as end time, then display
         //it as available start time
-        const reuslt = this.getAvailableTime().filter(time => {
-            const minsFlag = Object.keys(time.minutes).some(key => time.minutes[key].isEndTime);
-            return !time.isReserved || (time.isReserved && !time.isStartTime) ||
-                time.isReserved && minsFlag;
+        const result = this.timeList.filter(time => {
+            let isTimeValid = false;
+
+            if(!time.isReserved) {
+                isTimeValid = true;
+            }
+            
+            // time is reserved but end time, but check available mins
+            if(time.isReserved && !time.isStartTime && !time.inBetween) {
+                isTimeValid = true;
+                console.log('is reserved, end or inbetween');
+            }
+            // const minsFlag = Object.keys(time.minutes).some(key => time.minutes[key].isEndTime);
+            //     time.isReserved && minsFlag;
+
+            return isTimeValid;
         });
-        console.log('filterStartTime result', reuslt);
+        // console.log('filterStartTime result', result);
+        return result;
     }
 
     private getHourInString(timeString: string) {
@@ -158,12 +194,18 @@ export class TimeManager {
         return this.timeList[targetTimeIndex - 1];
     }
 
-    public getAvailableMins(hour: string) {
+    public getAvailableMins(hour: string): string[] {
         const time = this.timeList.find(time => {
             return hour == time.hour;
         });
 
-        return time.minutes;
+        const availableMins = [];
+        for (const [key, value] of Object.entries(time.minutes)) {
+            if(!value['isStartTime'] && !value['isInBetween'] && !value['isEndTime']) {
+                availableMins.push(key);
+            }
+        }
+        return availableMins;
     }
 
     public filterTime() {
