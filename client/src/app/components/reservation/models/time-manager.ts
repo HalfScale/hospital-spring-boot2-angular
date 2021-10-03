@@ -115,6 +115,14 @@ export class TimeManager {
         return result;
     }
 
+    public getUnfilteredTime(): Time[] {
+        //get unfiltered time from time manager
+        // Set the scheduled time first is needed
+        //returns back all the time including the reserved schedule time
+
+        return this.timeList;
+    }
+
     private getHourInString(timeString: string) {
         return timeString.split(':')[0];
     }

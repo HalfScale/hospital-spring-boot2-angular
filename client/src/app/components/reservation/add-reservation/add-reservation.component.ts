@@ -29,8 +29,8 @@ export class AddReservationComponent implements OnInit {
   timeListTrackerFromUnequalDates: Time[];
   timeListTracker: Time[];
   timeListTrackerStart: Time[];
-  reserveTimeAvailableMins: string[] = ['00', '30'];
   timeListTrackerEnd: Time[];
+  reserveTimeAvailableMins: string[] = ['00', '30'];
   reserveEndTimeAvailableMins: string[] = ['00', '30'];
   timeManager: TimeManager;
   timeEndManager: TimeManager;
@@ -77,6 +77,8 @@ export class AddReservationComponent implements OnInit {
     this.timeManager.mockSetReservedTime(this.mockGetTime());
     this.timeListTrackerStart = this.timeManager.filterStartTime();
     console.log('available reservation time =>', this.timeListTrackerStart);
+    console.log('unfiltered time =>', this.timeManager.getUnfilteredTime());
+    
   }
 
   private mockGetTime() {
@@ -153,12 +155,6 @@ export class AddReservationComponent implements OnInit {
     return NgbDate.from(reserveDate).before(reserveEndDate);
   }
 
-  private filterStartTime() {
-    return this.timeListTracker.filter((time, i, arr) => {
-      return !time.isReserved || (time.isReserved && !time.isStartTime && !time.inBetween);
-    });
-  }
-
   private getHospitalRoom() {
     const roomId = this.route.snapshot.paramMap.get('roomId');
     this.hospitalRoomService.getRoomById(Number(roomId)).subscribe(data => {
@@ -176,6 +172,32 @@ export class AddReservationComponent implements OnInit {
     console.log('reservationTimeChange => availMins', availMins);
     this.reservationForm.controls['reserveTimeMinutes'].setValue('MM');
     this.reserveTimeAvailableMins = availMins;
+    this.reservationForm.get('reserveEndTimeHour').enable();
+
+    console.log("selected start hour", this.reservationForm.controls['reserveTimeHour'].value);
+
+    // upon selected of start time or hour, get unfiltered time
+    // filter through the time, and only return back that is
+    // exclude the current selected start hour, if the next
+    // time into the iteration is a start time end the loop
+    const selectedStartHour = this.reservationForm.controls['reserveTimeHour'].value;
+    const selectedStartHourIndex = this.timeManager.findHourIndex(selectedStartHour);
+    const validEndTime = [];
+
+    // exclude the selected start time
+    const slicedListForEndTime = this.timeManager.getUnfilteredTime().slice(selectedStartHourIndex + 1);
+
+    slicedListForEndTime.some((time: Time, index) => {
+      if(!time.isStartTime) {
+        validEndTime.push(time);
+        return false;
+      }
+
+      return true;
+    });
+
+    console.log('result for available end time =>', validEndTime);
+    this.timeListTrackerEnd = validEndTime;
   }
 
   public reservationTimeMinsChange() {
